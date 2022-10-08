@@ -1,0 +1,27 @@
+version: 0.1
+cli:
+  version: 0.13.1-beta
+
+lint:
+  enabled:
+    - shellcheck@0.8.0
+    - shfmt@3.5.0
+    - goimports@0.1.10
+    - actionlint@1.6.13
+    - semgrep@0.97.0
+    - prettier@2.7.0
+    - gitleaks@8.8.7
+    - gofmt@1.16.7
+    - golangci-lint@1.46.2
+    - hadolint@2.10.0
+    - buf-breaking@1.5.0
+    - buf-lint@1.5.0
+
+  ignore:
+    - linters: [golangci-lint]
+      paths:
+        - tools
+
+    - linters: [goimports]
+      paths:
+        - "**/wire_gen.go"
