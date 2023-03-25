@@ -1,21 +1,55 @@
 version: 0.1
+runtimes:
+  enabled:
+    - go@1.18.3
+    - node@16.14.2
+    - python@3.10.3
+actions:
+  enabled:
+    - trunk-announce
+    - trunk-upgrade-available
+    - buf-mod-update
+    - trunk-fmt-pre-commit
+    - trunk-check-pre-push
+    - trunk-cache-prune
+    - generate-di
+    - buf-gen
+
+  definitions:
+    - id: generate-di
+      triggers:
+        - files: [di/wire.go]
+      run: go run github.com/google/wire/cmd/wire
+      run_from: di
+
+    - id: buf-mod-update
+      triggers:
+        - files: [api/proto/**/buf.yaml]
+      run: buf mod update api/proto
+
 cli:
-  version: 0.13.1-beta
+  version: 1.2.1
+plugins:
+  sources:
+    - id: trunk
+      ref: v0.0.8
+      uri: https://github.com/trunk-io/plugins
 
 lint:
   enabled:
-    - shellcheck@0.8.0
+    - git-diff-check
+    - shellcheck@0.9.0
     - shfmt@3.5.0
     - goimports@0.1.10
-    - actionlint@1.6.13
-    - semgrep@0.97.0
-    - prettier@2.7.0
-    - gitleaks@8.8.7
-    - gofmt@1.16.7
-    - golangci-lint@1.46.2
-    - hadolint@2.10.0
-    - buf-breaking@1.5.0
-    - buf-lint@1.5.0
+    - actionlint@1.6.22
+    - semgrep@1.2.1
+    - prettier@2.8.1
+    - gitleaks@8.15.2
+    - gofmt@1.19.3
+    - golangci-lint@1.50.1
+    - hadolint@2.12.0
+    - buf-breaking@1.11.0
+    - buf-lint@1.11.0
 
   ignore:
     - linters: [golangci-lint]
