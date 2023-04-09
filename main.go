@@ -2,19 +2,20 @@ package main
 
 import (
 	"fmt"
-	"net"
+	"net/http"
 	"os"
 	"path"
 	"runtime"
 	"strings"
 
 	"github.com/ilyakaznacheev/cleanenv"
-	pb "github.com/ride-app/entity-service/api/gen/ride/entity/v1alpha1"
-	"github.com/ride-app/entity-service/config"
-	"github.com/ride-app/entity-service/di"
+	"github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1/driverv1alpha1connect"
+	"github.com/ride-app/driver-service/config"
+	"github.com/ride-app/driver-service/di"
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
 
 	log "github.com/sirupsen/logrus"
-	"google.golang.org/grpc"
 )
 
 func init() {
@@ -39,7 +40,7 @@ func init() {
 		})
 	}
 
-	err := cleanenv.ReadConfig(".env", &config.Config)
+	err := cleanenv.ReadConfig(".env", &config.Env)
 
 	if err != nil {
 		log.Warnf("Could not load config: %v", err)
@@ -47,21 +48,21 @@ func init() {
 }
 
 func main() {
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", config.Config.Port))
+	// lis, err := net.Listen("tcp", fmt.Sprintf(":%d", config.Env.Port))
 
-	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
-	}
+	// if err != nil {
+	// 	log.Fatalf("Failed to listen: %v", err)
+	// }
 
-	log.Infof("Listening to port: %d", config.Config.Port)
+	// log.Infof("Listening to port: %d", config.Env.Port)
 
-	var opts []grpc.ServerOption
+	// var opts []grpc.ServerOption
 
-	// if config.Config.Debug == false {
-	// 	creds, err := credentials.NewServerTLSFromFile()
-	// 	if err != nil {
-	// 		log.Fatalf("Failed to generate credentials %v", err)
-	// 	}
+	// if !config.Env.Debug {
+	// 	creds := credentials.NewTLS(&tls.Config{
+	// 		MinVersion: tls.VersionTLS13,
+	// 	})
+
 	// 	opts = []grpc.ServerOption{grpc.Creds(creds)}
 	// }
 
@@ -73,7 +74,17 @@ func main() {
 
 	log.Info("Service Initialized")
 
-	grpcServer := grpc.NewServer(opts...)
-	pb.RegisterEntityServiceServer(grpcServer, service)
-	panic(grpcServer.Serve(lis))
+	// grpcServer := grpc.NewServer(opts...)
+	// pb.RegisterDriverServiceServer(grpcServer, service)
+	// panic(grpcServer.Serve(lis))
+
+	path, handler := driverv1alpha1connect.NewDriverServiceHandler(service)
+	mux := http.NewServeMux()
+	mux.Handle(path, handler)
+
+	panic(http.ListenAndServe(
+		fmt.Sprintf("localhost:%d", config.Env.Port),
+		// Use h2c so we can serve HTTP/2 without TLS.
+		h2c.NewHandler(mux, &http2.Server{}),
+	))
 }

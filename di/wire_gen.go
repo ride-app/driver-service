@@ -7,17 +7,32 @@
 package di
 
 import (
-	"github.com/ride-app/entity-service/repositories/entity"
-	"github.com/ride-app/entity-service/service"
+	"github.com/ride-app/driver-service/repositories/driver"
+	"github.com/ride-app/driver-service/repositories/vehicle"
+	"github.com/ride-app/driver-service/repositories/wallet"
+	"github.com/ride-app/driver-service/service"
+	"github.com/ride-app/driver-service/third-party"
 )
 
 // Injectors from wire.go:
 
-func InitializeService() (*service.EntityServiceServer, error) {
-	someImpl, err := entityrepository.NewSomeEntityRepository()
+func InitializeService() (*service.DriverServiceServer, error) {
+	app, err := thirdparty.NewFirebaseApp()
 	if err != nil {
 		return nil, err
 	}
-	entityServiceServer := service.New(someImpl)
-	return entityServiceServer, nil
+	firebaseImpl, err := driverrepository.NewFirebaseDriverRepository(app)
+	if err != nil {
+		return nil, err
+	}
+	vehiclerepositoryFirebaseImpl, err := vehiclerepository.NewFirebaseVehicleRepository(app)
+	if err != nil {
+		return nil, err
+	}
+	impl, err := walletrepository.New()
+	if err != nil {
+		return nil, err
+	}
+	driverServiceServer := service.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl)
+	return driverServiceServer, nil
 }

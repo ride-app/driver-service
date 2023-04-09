@@ -1,0 +1,80 @@
+name: pr
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    name: Unit Test
+    env:
+      GOPRIVATE: buf.build/gen/go
+      BUF_USER: debkanchan
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: go.mod
+
+      - uses: bufbuild/buf-setup-action@v1.16.0
+        with:
+          github_token: ${{ github.token }}
+
+      - name: Authenticate buf
+        run: echo ${{ secrets.BUF_TOKEN }} | buf registry login --username ${{ env.BUF_USER }} --token-stdin
+
+      - name: Build protobuf
+        run: buf generate
+
+      - name: Lint
+        uses: trunk-io/trunk-action@v1
+
+  preview:
+    name: Preview Infra
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      SERVICE_NAME: driver-service
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - run: npm install
+        working-directory: infra
+
+      - name: Cache node_modules
+        uses: actions/cache@v3.3.1
+        with:
+          path: |
+            **/node_modules
+          key: |
+            node-${{ hashfiles('**/package-lock.json') }}
+          restore-keys: |
+            node-
+
+      - name: Authenticate Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          token_format: access_token
+          workload_identity_provider: projects/486946551871/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
+          service_account: artifact-registry-admin@ride-app-prod.iam.gserviceaccount.com
+
+      - uses: pulumi/actions@v4
+        with:
+          work-dir: infra
+          command: preview
+          stack-name: ride/prod
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

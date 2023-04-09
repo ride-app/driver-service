@@ -1,9 +1,9 @@
 version: 0.1
 runtimes:
   enabled:
-    - go@1.18.3
-    - node@16.14.2
-    - python@3.10.3
+    - go@1.19.5
+    - node@18.12.1
+    - python@3.10.8
 actions:
   enabled:
     - trunk-announce
@@ -28,28 +28,29 @@ actions:
       run: buf mod update api/proto
 
 cli:
-  version: 1.2.1
+  version: 1.7.0
 plugins:
   sources:
     - id: trunk
-      ref: v0.0.8
+      ref: v0.0.15
       uri: https://github.com/trunk-io/plugins
 
 lint:
   enabled:
+    - yamllint@1.30.0
     - git-diff-check
     - shellcheck@0.9.0
     - shfmt@3.5.0
     - goimports@0.1.10
-    - actionlint@1.6.22
-    - semgrep@1.2.1
-    - prettier@2.8.1
-    - gitleaks@8.15.2
+    - actionlint@1.6.24
+    - semgrep@1.17.1
+    - prettier@2.8.7
+    - gitleaks@8.16.2
     - gofmt@1.19.3
-    - golangci-lint@1.50.1
+    - golangci-lint@1.52.2
     - hadolint@2.12.0
-    - buf-breaking@1.11.0
-    - buf-lint@1.11.0
+    - buf-breaking@1.15.1
+    - buf-lint@1.17.0
 
   ignore:
     - linters: [golangci-lint]
