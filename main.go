@@ -48,24 +48,6 @@ func init() {
 }
 
 func main() {
-	// lis, err := net.Listen("tcp", fmt.Sprintf(":%d", config.Env.Port))
-
-	// if err != nil {
-	// 	log.Fatalf("Failed to listen: %v", err)
-	// }
-
-	// log.Infof("Listening to port: %d", config.Env.Port)
-
-	// var opts []grpc.ServerOption
-
-	// if !config.Env.Debug {
-	// 	creds := credentials.NewTLS(&tls.Config{
-	// 		MinVersion: tls.VersionTLS13,
-	// 	})
-
-	// 	opts = []grpc.ServerOption{grpc.Creds(creds)}
-	// }
-
 	service, err := di.InitializeService()
 
 	if err != nil {
@@ -73,10 +55,6 @@ func main() {
 	}
 
 	log.Info("Service Initialized")
-
-	// grpcServer := grpc.NewServer(opts...)
-	// pb.RegisterDriverServiceServer(grpcServer, service)
-	// panic(grpcServer.Serve(lis))
 
 	path, handler := driverv1alpha1connect.NewDriverServiceHandler(service)
 	mux := http.NewServeMux()
