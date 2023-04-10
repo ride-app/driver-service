@@ -15,7 +15,7 @@ FROM golang:1.18-alpine as build
 WORKDIR /go/src/app
 
 COPY --from=buf /root/.netrc /root/.netrc
-ENV GOPRIVATE=go.buf.build
+ENV GOPRIVATE=buf.build/gen/go
 
 COPY go.mod go.sum /
 RUN go mod download && go mod verify
@@ -29,7 +29,6 @@ FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 
 COPY --from=build /go/bin/app .
-COPY .env .env
 
 EXPOSE 50051
 CMD ["/app"]
