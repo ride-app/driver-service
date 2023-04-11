@@ -60,9 +60,14 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle(path, handler)
 
+	addr := fmt.Sprintf("0.0.0.0:%d", config.Env.Port)
+
+	log.Info(addr)
+
 	panic(http.ListenAndServe(
-		fmt.Sprintf("localhost:%d", config.Env.Port),
+		addr,
 		// Use h2c so we can serve HTTP/2 without TLS.
 		h2c.NewHandler(mux, &http2.Server{}),
 	))
+
 }
