@@ -40,7 +40,7 @@ func init() {
 		})
 	}
 
-	err := cleanenv.ReadConfig(".env", &config.Env)
+	err := cleanenv.ReadEnv(&config.Env)
 
 	if err != nil {
 		log.Warnf("Could not load config: %v", err)

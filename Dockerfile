@@ -10,7 +10,7 @@ RUN --mount=type=secret,id=BUF_TOKEN \
   buf registry login --username=$BUF_USERNAME --token-stdin < /run/secrets/BUF_TOKEN
 
 # Build go binary
-FROM golang:1.18-alpine as build
+FROM golang:1.20-alpine as build
 
 WORKDIR /go/src/app
 
@@ -21,7 +21,7 @@ COPY go.mod go.sum /
 RUN go mod download && go mod verify
 
 COPY . .
-RUN CGO_ENABLED=0 go build -o /go/bin/app
+RUN CGO_ENABLED=0 go build -o /go/bin/app -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn"
 
 # Run
 FROM gcr.io/distroless/static:nonroot
