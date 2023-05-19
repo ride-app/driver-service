@@ -18,6 +18,8 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 
 	driverId := strings.Split(req.Msg.Name, "/")[1]
 
+	notificationToken := req.Msg.NotificationToken
+
 	wallet, err := service.walletrepository.GetWallet(ctx, driverId)
 
 	if err != nil {
@@ -38,7 +40,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("vehicle not found"))
 	}
 
-	status, err := service.driverRepository.GoOnline(ctx, driverId, vehicle.Type)
+	status, err := service.driverRepository.GoOnline(ctx, driverId, vehicle, notificationToken)
 
 	if err != nil {
 		return nil, err
