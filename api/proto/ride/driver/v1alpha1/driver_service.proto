@@ -260,6 +260,9 @@ message Vehicle {
 
     // The Vehicle is an auto-rickshaw.
     TYPE_AUTORICKSHAW = 2;
+
+    // The Vehicle is a motorcycle.
+    TYPE_MOTORCYCLE = 3;
   }
 }
 
