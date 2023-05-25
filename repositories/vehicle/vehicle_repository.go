@@ -47,11 +47,11 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	var vehicleType pb.Vehicle_Type
 
 	switch doc.Data()["type"] {
-	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_AUTORICKSHAW.String(), "_")[1]):
+	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_AUTORICKSHAW.String(), "_")[2]):
 		vehicleType = pb.Vehicle_TYPE_AUTORICKSHAW
-	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_ERICKSHAW.String(), "_")[1]):
+	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_ERICKSHAW.String(), "_")[2]):
 		vehicleType = pb.Vehicle_TYPE_ERICKSHAW
-	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_MOTORCYCLE.String(), "_")[1]):
+	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_MOTORCYCLE.String(), "_")[2]):
 		vehicleType = pb.Vehicle_TYPE_MOTORCYCLE
 	default:
 		vehicleType = pb.Vehicle_TYPE_UNSPECIFIED
