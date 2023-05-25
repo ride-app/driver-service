@@ -5,7 +5,6 @@ package vehiclerepository
 import (
 	"context"
 	"errors"
-	"fmt"
 	"strings"
 
 	"cloud.google.com/go/firestore"
@@ -64,10 +63,10 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	vehicle := pb.Vehicle{
 		Name:         "drivers/" + id + "/vehicle",
 		Type:         vehicleType,
-		DisplayName:  "E-Rickshaw",
+		DisplayName:  doc.Data()["display_name"].(string),
 		CreateTime:   timestamppb.New(doc.CreateTime),
 		UpdateTime:   timestamppb.New(doc.UpdateTime),
-		LicensePlate: fmt.Sprintf("%v", doc.Data()["license_plate"]),
+		LicensePlate: doc.Data()["license_plate"].(string),
 	}
 
 	return &vehicle, nil
@@ -77,6 +76,7 @@ func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, vehicle *pb.Vehicle) (
 	x, err := r.firestore.Collection("vehicles").Doc(strings.Split(vehicle.Name, "/")[1]).Set(ctx, map[string]interface{}{
 		"license_plate": vehicle.LicensePlate,
 		"type":          strings.ToLower(strings.Split(vehicle.Type.String(), "_")[1]),
+		"display_name":  vehicle.DisplayName,
 	})
 
 	if err != nil {
