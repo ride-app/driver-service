@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  SERVICE_NAME: trip-service
+
 jobs:
   build:
     name: Build+Push
@@ -15,6 +18,14 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    strategy:
+      matrix:
+        stack: [prod, dev-2]
+        include:
+          - stack: prod
+            project-number: 486946551871
+          - stack: dev-2
+            project-number: 785768451767
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -41,7 +52,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            asia-south2-docker.pkg.dev/ride-app-prod/delhi-container-registry/driver-service
+            asia-south2-docker.pkg.dev/ride-app-${{ matrix.stack }}/docker-registry/${{ env.SERVICE_NAME }}
           tags: |
             type=semver,pattern={{version}}
             type=sha
@@ -55,8 +66,8 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           token_format: access_token
-          workload_identity_provider: projects/486946551871/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
-          service_account: artifact-registry-admin@ride-app-prod.iam.gserviceaccount.com
+          workload_identity_provider: projects/${{ matrix.project-number }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
+          service_account: artifact-registry-admin@ride-app-${{ matrix.stack }}.iam.gserviceaccount.com
 
       - name: Login to GAR
         uses: docker/login-action@v2
@@ -86,8 +97,17 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    strategy:
+      matrix:
+        stack: [prod, dev]
+        include:
+          - stack: prod
+            project-number: 486946551871
+            project-stack: prod
+          - stack: dev
+            project-number: 785768451767
+            project-stack: dev-2
     env:
-      SERVICE_NAME: driver-service
       PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
     steps:
       - name: Checkout Code
@@ -113,20 +133,20 @@ jobs:
       - name: Authenticate Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: projects/486946551871/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
-          service_account: cloud-run-service-manager@ride-app-prod.iam.gserviceaccount.com
+          workload_identity_provider: projects/${{ matrix.project-number }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider
+          service_account: cloud-run-service-manager@ride-app-${{ matrix.project-stack }}.iam.gserviceaccount.com
 
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v1
 
       - name: Set current sha in pulumi config
         run: |
-          pulumi config set image:tag sha-${{ github.sha }} -s ride/prod
+          pulumi config set image:tag sha-${{ github.sha }} -s ride/${{ matrix.stack }}
         working-directory: infra
 
       - uses: pulumi/actions@v4
         with:
           work-dir: infra
           command: up
-          stack-name: ride/prod
+          stack-name: ride/${{ matrix.stack }}
           refresh: true
