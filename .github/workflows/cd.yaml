@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  SERVICE_NAME: trip-service
+  SERVICE_NAME: driver-service
 
 jobs:
   build:
