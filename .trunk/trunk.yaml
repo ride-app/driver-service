@@ -60,3 +60,6 @@ lint:
     - linters: [goimports]
       paths:
         - "**/wire_gen.go"
+merge:
+  required_statuses:
+    - test
