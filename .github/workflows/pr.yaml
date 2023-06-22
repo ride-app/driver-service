@@ -6,7 +6,7 @@ on:
       - main
   push:
     branches:
-      - trunk/**
+      - trunk-merge/**
   workflow_dispatch:
 
 jobs:
