@@ -23,7 +23,11 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	return connect.NewResponse(&pb.GetDriverResponse{
+	res, err := connect.NewResponse(&pb.GetDriverResponse{
 		Driver: driver,
 	}), nil
+
+	res.Header().Add("Access-Control-Allow-Origin", "https://buf.build")
+
+	return res, err
 }
