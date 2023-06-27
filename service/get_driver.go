@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"strings"
 
 	"github.com/bufbuild/connect-go"
@@ -13,6 +14,10 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 
 	if err := req.Msg.Validate(); err != nil {
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+	}
+
+	if len(strings.Split(req.Msg.Name, "/")) != 2 {
+		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("invalid driver name"))
 	}
 
 	driverId := strings.Split(req.Msg.Name, "/")[1]
