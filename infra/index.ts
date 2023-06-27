@@ -26,6 +26,12 @@ const service = new gcp.cloudrun.Service("service", {
             imageconfig.get("tag") ?? "latest"
           }`,
           ports: [{ containerPort: 50051, name: "h2c" }],
+          envs: [
+            {
+              name: "FIREBASE_PROJECT_ID",
+              value: gcp.config.project,
+            },
+          ],
         },
       ],
     },
