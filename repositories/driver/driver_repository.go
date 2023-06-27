@@ -90,7 +90,7 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, id string) (*pb.Driver, er
 	}
 
 	if !doc.Exists() {
-		return nil, connect.NewError(connect.CodeNotFound, errors.New("driver not found"))
+		return nil, nil
 	}
 
 	user, err := r.auth.GetUser(ctx, id)
@@ -152,6 +152,10 @@ func (r *FirebaseImpl) GetStatus(ctx context.Context, id string) (*pb.Status, er
 		return nil, err
 	}
 
+	if !doc.Exists() {
+		return nil, nil
+	}
+
 	status := pb.Status{
 		Name:       "drivers/" + id + "/status",
 		Online:     doc.Exists(),
@@ -200,6 +204,10 @@ func (r *FirebaseImpl) GetLocation(ctx context.Context, id string) (*pb.Location
 
 	if err != nil {
 		return nil, err
+	}
+
+	if !doc.Exists() {
+		return nil, nil
 	}
 
 	data := doc.Data()

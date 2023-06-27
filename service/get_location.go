@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"strings"
 
 	"github.com/bufbuild/connect-go"
@@ -21,6 +22,10 @@ func (service *DriverServiceServer) GetLocation(ctx context.Context,
 
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	if location == nil {
+		return nil, connect.NewError(connect.CodeNotFound, errors.New("location not found"))
 	}
 
 	return connect.NewResponse(&pb.GetLocationResponse{

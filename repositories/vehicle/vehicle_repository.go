@@ -43,6 +43,10 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 		return nil, err
 	}
 
+	if !doc.Exists() {
+		return nil, nil
+	}
+
 	var vehicleType pb.Vehicle_Type
 
 	switch doc.Data()["type"] {

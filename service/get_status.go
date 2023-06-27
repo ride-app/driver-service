@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"strings"
 
 	"github.com/bufbuild/connect-go"
@@ -21,6 +22,10 @@ func (service *DriverServiceServer) GetStatus(ctx context.Context,
 
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	if status == nil {
+		return nil, connect.NewError(connect.CodeNotFound, errors.New("status not found"))
 	}
 
 	return connect.NewResponse(&pb.GetStatusResponse{

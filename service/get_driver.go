@@ -16,7 +16,7 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	if len(strings.Split(req.Msg.Name, "/")) != 2 {
+	if req.Msg.Name == "" {
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("invalid driver name"))
 	}
 
@@ -26,6 +26,10 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	if driver == nil {
+		return nil, connect.NewError(connect.CodeNotFound, errors.New("driver not found"))
 	}
 
 	return connect.NewResponse(&pb.GetDriverResponse{
