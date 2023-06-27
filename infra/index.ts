@@ -15,6 +15,7 @@ const service = new gcp.cloudrun.Service("service", {
     metadata: {
       annotations: {
         "autoscaling.knative.dev/maxScale": "10",
+        "run.googleapis.com/ingress": "internal",
       },
     },
     spec: {
