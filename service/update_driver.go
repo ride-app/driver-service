@@ -16,7 +16,7 @@ func (service *DriverServiceServer) UpdateDriver(ctx context.Context,
 	}
 
 	if req.Msg.Driver.Name == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("invalid driver name"))
+		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("name cannot be empty"))
 	}
 
 	_, err := service.driverRepository.UpdateDriver(ctx, req.Msg.Driver)
