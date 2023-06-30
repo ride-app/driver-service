@@ -111,7 +111,7 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, id string) (*pb.Driver, er
 	return &driver, nil
 }
 
-func (r *FirebaseImpl) UpdateDriver(ctx context.Context, driver *pb.Driver) (createTime *time.Time, err error) {
+func (r *FirebaseImpl) UpdateDriver(ctx context.Context, driver *pb.Driver) (updateTime *time.Time, err error) {
 	_, err = r.auth.UpdateUser(ctx, strings.Split(driver.Name, "/")[1], (&auth.UserToUpdate{}).DisplayName(driver.DisplayName).PhotoURL(driver.PhotoUri).PhoneNumber(driver.PhoneNumber))
 
 	if err != nil {
@@ -123,7 +123,7 @@ func (r *FirebaseImpl) UpdateDriver(ctx context.Context, driver *pb.Driver) (cre
 	return &timestamp, nil
 }
 
-func (r *FirebaseImpl) DeleteDriver(ctx context.Context, id string) (createTime *time.Time, err error) {
+func (r *FirebaseImpl) DeleteDriver(ctx context.Context, id string) (deleteTime *time.Time, err error) {
 	status, err := r.GetStatus(ctx, id)
 
 	if err != nil {
