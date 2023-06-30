@@ -6,6 +6,7 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (service *DriverServiceServer) UpdateDriver(ctx context.Context,
@@ -19,9 +20,15 @@ func (service *DriverServiceServer) UpdateDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("name cannot be empty"))
 	}
 
-	_, err := service.driverRepository.UpdateDriver(ctx, req.Msg.Driver)
+	updateTime, err := service.driverRepository.UpdateDriver(ctx, req.Msg.Driver)
 
 	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	req.Msg.Driver.UpdateTime = timestamppb.New(*updateTime)
+
+	if err := req.Msg.Validate(); err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 

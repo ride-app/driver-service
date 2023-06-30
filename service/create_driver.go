@@ -6,6 +6,7 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (service *DriverServiceServer) CreateDriver(ctx context.Context,
@@ -25,9 +26,16 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodeAlreadyExists, err)
 	}
 
-	_, err = service.driverRepository.CreateDriver(ctx, req.Msg.Driver)
+	createTime, err := service.driverRepository.CreateDriver(ctx, req.Msg.Driver)
 
 	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	req.Msg.Driver.CreateTime = timestamppb.New(*createTime)
+	req.Msg.Driver.UpdateTime = timestamppb.New(*createTime)
+
+	if err := req.Msg.Validate(); err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
