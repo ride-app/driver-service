@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	walletv1alpha1 "buf.build/gen/go/ride/wallet/protocolbuffers/go/ride/wallet/v1alpha1"
-	gomock "github.com/golang/mock/gomock"
+	gomock "go.uber.org/mock/gomock"
 )
 
 // MockWalletRepository is a mock of WalletRepository interface.

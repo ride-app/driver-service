@@ -9,13 +9,13 @@ require (
 	firebase.google.com/go v3.13.0+incompatible
 	github.com/bufbuild/connect-go v1.6.0
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
-	github.com/golang/mock v1.6.0
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.4.2
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/onsi/ginkgo/v2 v2.9.2
 	github.com/onsi/gomega v1.27.6
 	github.com/sirupsen/logrus v1.9.0
+	go.uber.org/mock v0.2.0
 	golang.org/x/net v0.9.0
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1
 	google.golang.org/protobuf v1.30.0

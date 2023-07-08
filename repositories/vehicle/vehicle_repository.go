@@ -1,4 +1,4 @@
-//go:generate go run github.com/golang/mock/mockgen -destination ../../mocks/$GOFILE -package mocks . VehicleRepository
+//go:generate go run go.uber.org/mock/mockgen -destination ../../mocks/$GOFILE -package mocks . VehicleRepository
 
 package vehiclerepository
 

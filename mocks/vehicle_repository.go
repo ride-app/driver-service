@@ -8,8 +8,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	gomock "github.com/golang/mock/gomock"
 	driverv1alpha1 "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	gomock "go.uber.org/mock/gomock"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
 

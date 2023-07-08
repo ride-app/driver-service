@@ -9,8 +9,8 @@ import (
 	reflect "reflect"
 	time "time"
 
-	gomock "github.com/golang/mock/gomock"
 	driverv1alpha1 "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	gomock "go.uber.org/mock/gomock"
 )
 
 // MockDriverRepository is a mock of DriverRepository interface.
@@ -36,6 +36,36 @@ func (m *MockDriverRepository) EXPECT() *MockDriverRepositoryMockRecorder {
 	return m.recorder
 }
 
+// CreateDriver mocks base method.
+func (m *MockDriverRepository) CreateDriver(arg0 context.Context, arg1 *driverv1alpha1.Driver) (*time.Time, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateDriver", arg0, arg1)
+	ret0, _ := ret[0].(*time.Time)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateDriver indicates an expected call of CreateDriver.
+func (mr *MockDriverRepositoryMockRecorder) CreateDriver(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDriver", reflect.TypeOf((*MockDriverRepository)(nil).CreateDriver), arg0, arg1)
+}
+
+// DeleteDriver mocks base method.
+func (m *MockDriverRepository) DeleteDriver(arg0 context.Context, arg1 string) (*time.Time, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteDriver", arg0, arg1)
+	ret0, _ := ret[0].(*time.Time)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteDriver indicates an expected call of DeleteDriver.
+func (mr *MockDriverRepositoryMockRecorder) DeleteDriver(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteDriver", reflect.TypeOf((*MockDriverRepository)(nil).DeleteDriver), arg0, arg1)
+}
+
 // GetDriver mocks base method.
 func (m *MockDriverRepository) GetDriver(arg0 context.Context, arg1 string) (*driverv1alpha1.Driver, error) {
 	m.ctrl.T.Helper()
@@ -51,19 +81,34 @@ func (mr *MockDriverRepositoryMockRecorder) GetDriver(arg0, arg1 interface{}) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDriver", reflect.TypeOf((*MockDriverRepository)(nil).GetDriver), arg0, arg1)
 }
 
-// GetDrivers mocks base method.
-func (m *MockDriverRepository) GetDrivers(arg0 context.Context, arg1 string) ([]*driverv1alpha1.Driver, error) {
+// GetLocation mocks base method.
+func (m *MockDriverRepository) GetLocation(arg0 context.Context, arg1 string) (*driverv1alpha1.Location, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetDrivers", arg0, arg1)
-	ret0, _ := ret[0].([]*driverv1alpha1.Driver)
+	ret := m.ctrl.Call(m, "GetLocation", arg0, arg1)
+	ret0, _ := ret[0].(*driverv1alpha1.Location)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetDrivers indicates an expected call of GetDrivers.
-func (mr *MockDriverRepositoryMockRecorder) GetDrivers(arg0, arg1 interface{}) *gomock.Call {
+// GetLocation indicates an expected call of GetLocation.
+func (mr *MockDriverRepositoryMockRecorder) GetLocation(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDrivers", reflect.TypeOf((*MockDriverRepository)(nil).GetDrivers), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLocation", reflect.TypeOf((*MockDriverRepository)(nil).GetLocation), arg0, arg1)
+}
+
+// GetStatus mocks base method.
+func (m *MockDriverRepository) GetStatus(arg0 context.Context, arg1 string) (*driverv1alpha1.Status, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetStatus", arg0, arg1)
+	ret0, _ := ret[0].(*driverv1alpha1.Status)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetStatus indicates an expected call of GetStatus.
+func (mr *MockDriverRepositoryMockRecorder) GetStatus(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStatus", reflect.TypeOf((*MockDriverRepository)(nil).GetStatus), arg0, arg1)
 }
 
 // GoOffline mocks base method.
@@ -82,18 +127,18 @@ func (mr *MockDriverRepositoryMockRecorder) GoOffline(arg0, arg1 interface{}) *g
 }
 
 // GoOnline mocks base method.
-func (m *MockDriverRepository) GoOnline(arg0 context.Context, arg1 string, arg2 driverv1alpha1.Vehicle_Type) (*driverv1alpha1.Status, error) {
+func (m *MockDriverRepository) GoOnline(arg0 context.Context, arg1 string, arg2 *driverv1alpha1.Vehicle, arg3 string) (*driverv1alpha1.Status, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GoOnline", arg0, arg1, arg2)
+	ret := m.ctrl.Call(m, "GoOnline", arg0, arg1, arg2, arg3)
 	ret0, _ := ret[0].(*driverv1alpha1.Status)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GoOnline indicates an expected call of GoOnline.
-func (mr *MockDriverRepositoryMockRecorder) GoOnline(arg0, arg1, arg2 interface{}) *gomock.Call {
+func (mr *MockDriverRepositoryMockRecorder) GoOnline(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GoOnline", reflect.TypeOf((*MockDriverRepository)(nil).GoOnline), arg0, arg1, arg2)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GoOnline", reflect.TypeOf((*MockDriverRepository)(nil).GoOnline), arg0, arg1, arg2, arg3)
 }
 
 // UpdateDriver mocks base method.
