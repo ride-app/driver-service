@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  unit-test:
+  lint:
     runs-on: ubuntu-latest
-    name: Unit Test
+    name: Lint
     env:
       GOPRIVATE: buf.build/gen/go
       BUF_USER: debkanchan
