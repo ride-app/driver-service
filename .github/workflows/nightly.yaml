@@ -10,7 +10,7 @@ jobs:
     name: Trunk Check Upload
     runs-on: ubuntu-latest
     env:
-      GOPRIVATE: go.buf.build
+      GOPRIVATE: buf.build/gen/go
       BUF_USER: debkanchan
 
     steps:
