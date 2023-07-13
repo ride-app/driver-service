@@ -22,6 +22,10 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 
 	driverId := strings.Split(req.Msg.Name, "/")[1]
 
+	if driverId != req.Header().Get("Authorization") {
+		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
+	}
+
 	driver, err := service.driverRepository.GetDriver(ctx, driverId)
 
 	if err != nil {

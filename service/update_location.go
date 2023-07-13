@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"strings"
 
 	"github.com/bufbuild/connect-go"
@@ -16,6 +17,10 @@ func (service *DriverServiceServer) UpdateLocation(ctx context.Context,
 	}
 
 	driverId := strings.Split(req.Msg.Parent, "/")[1]
+
+	if driverId != req.Header().Get("Authorization") {
+		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
+	}
 
 	status, err := service.driverRepository.GetStatus(ctx, driverId)
 

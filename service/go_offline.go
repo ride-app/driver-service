@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"strings"
 
 	"github.com/bufbuild/connect-go"
@@ -15,6 +16,10 @@ func (service *DriverServiceServer) GoOffline(ctx context.Context,
 	}
 
 	driverId := strings.Split(req.Msg.Name, "/")[1]
+
+	if driverId != req.Header().Get("Authorization") {
+		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
+	}
 
 	status, err := service.driverRepository.GoOffline(ctx, driverId)
 

@@ -18,6 +18,10 @@ func (service *DriverServiceServer) GetLocation(ctx context.Context,
 
 	driverId := strings.Split(req.Msg.Name, "/")[1]
 
+	if driverId != req.Header().Get("Authorization") {
+		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
+	}
+
 	location, err := service.driverRepository.GetLocation(ctx, driverId)
 
 	if err != nil {
