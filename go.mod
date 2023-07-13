@@ -7,8 +7,10 @@ require (
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.30.0-20230330072029-6fadc6e89697.1
 	cloud.google.com/go/firestore v1.9.0
 	firebase.google.com/go v3.13.0+incompatible
+	github.com/MicahParks/keyfunc/v2 v2.1.0
 	github.com/bufbuild/connect-go v1.6.0
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
+	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.4.2
 	github.com/mmcloughlin/geohash v0.10.0
