@@ -236,7 +236,7 @@ message Vehicle {
   string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/vehicle$"];
 
   // The type of the Vehicle.
-  Type type = 2;
+  Type type = 2 [(validate.rules).enum = {not_in: [0]}];
 
   // The make of the Vehicle.
   string display_name = 3;
