@@ -20,7 +20,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 
 	notificationToken := req.Msg.NotificationToken
 
-	wallet, err := service.walletrepository.GetWallet(ctx, driverId)
+	wallet, err := service.walletrepository.GetWallet(ctx, driverId, req.Header().Get("Authorization"))
 
 	if err != nil {
 		return nil, err

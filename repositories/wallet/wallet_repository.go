@@ -13,7 +13,7 @@ import (
 )
 
 type WalletRepository interface {
-	GetWallet(ctx context.Context, id string) (*pb.Wallet, error)
+	GetWallet(ctx context.Context, id string, authToken string) (*pb.Wallet, error)
 }
 
 type Impl struct {
@@ -29,10 +29,13 @@ func New() (*Impl, error) {
 	return &Impl{walletApi: client}, nil
 }
 
-func (r *Impl) GetWallet(ctx context.Context, id string) (*pb.Wallet, error) {
-	res, err := r.walletApi.GetWallet(ctx, connect.NewRequest(&pb.GetWalletRequest{
+func (r *Impl) GetWallet(ctx context.Context, id string, authToken string) (*pb.Wallet, error) {
+	req := connect.NewRequest(&pb.GetWalletRequest{
 		Name: "users/" + id + "/wallet",
-	}))
+	})
+	req.Header().Add("Authorization", authToken)
+
+	res, err := r.walletApi.GetWallet(ctx, req)
 
 	if err != nil {
 		return nil, err
