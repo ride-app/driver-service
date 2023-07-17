@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Create .netrc file for private go module
-FROM bufbuild/buf:1.23.1 as buf
+FROM bufbuild/buf:1.24.0 as buf
 
 ARG BUF_USERNAME ""
 
