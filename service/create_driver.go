@@ -30,7 +30,11 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	}
 
 	if driver != nil {
-		return nil, connect.NewError(connect.CodeAlreadyExists, err)
+		return connect.NewResponse(
+			&pb.CreateDriverResponse{
+				Driver: driver,
+			},
+		), nil
 	}
 
 	createTime, err := service.driverRepository.CreateDriver(ctx, req.Msg.Driver)
