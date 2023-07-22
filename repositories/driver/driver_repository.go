@@ -70,7 +70,11 @@ func (r *FirebaseImpl) CreateDriver(ctx context.Context, driver *pb.Driver) (cre
 	}
 
 	writeResult, err := r.firestore.Collection("drivers").Doc(strings.Split(driver.Name, "/")[1]).Create(ctx, map[string]interface{}{
-		"createTime": time.Now(),
+		"dateOfBirth": map[string]int32{
+			"day":   driver.DateOfBirth.Day,
+			"month": driver.DateOfBirth.Month,
+			"year":  driver.DateOfBirth.Year,
+		},
 	})
 
 	if err != nil {

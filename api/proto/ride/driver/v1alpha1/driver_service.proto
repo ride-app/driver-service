@@ -3,6 +3,7 @@ syntax = "proto3";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
+import "google/type/date.proto";
 import "validate/validate.proto";
 
 package ride.driver.v1alpha1;
@@ -56,6 +57,12 @@ service DriverService {
     };
   }
 
+  rpc WatchStatus (WatchStatusRequest) returns (stream WatchStatusResponse) {
+    option (google.api.http) = {
+      get: "/v1alpha1/{name=drivers/*}/status:watch"
+    };
+  }
+
   rpc GetLocation(GetLocationRequest) returns (GetLocationResponse) {
     option (google.api.http) = {
       get: "/v1alpha1/{name=drivers/*/location}"
@@ -98,6 +105,9 @@ message Driver {
 
   // The phone number of the driver. Example "+911234567890"
   string phone_number = 4;
+
+  // The date of birth of the driver.
+  google.type.Date date_of_birth = 5;
   
   // Output only. Timestamp when the Driver was created.
   google.protobuf.Timestamp create_time = 9;
@@ -193,6 +203,16 @@ message GetStatusRequest {
 }
 
 message GetStatusResponse {
+  // The current status of the Driver.
+  Status status = 1;
+}
+
+message WatchStatusRequest {
+  // The relative resource name of the Status. Example: "drivers/driver1/status"
+  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/status$"];
+}
+
+message WatchStatusResponse {
   // The current status of the Driver.
   Status status = 1;
 }
