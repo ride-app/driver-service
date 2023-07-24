@@ -10,29 +10,29 @@ import (
 )
 
 func (service *DriverServiceServer) WatchStatus(ctx context.Context,
-	req *connect.Request[pb.WatchStatusRequest]) (*connect.ServerStream[pb.WatchStatusResponse], error) {
+	req *connect.Request[pb.WatchStatusRequest], res *connect.ServerStream[pb.WatchStatusResponse]) error {
 
 	if err := req.Msg.Validate(); err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+		return connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	driverId := strings.Split(req.Msg.Name, "/")[1]
 
 	if driverId != req.Header().Get("Authorization") {
-		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
+		return connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
 	status, err := service.driverRepository.GetStatus(ctx, driverId)
 
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return connect.NewError(connect.CodeInternal, err)
 	}
 
 	if status == nil {
-		return nil, connect.NewError(connect.CodeNotFound, errors.New("status not found"))
+		return connect.NewError(connect.CodeNotFound, errors.New("status not found"))
 	}
 
-	return connect.NewServerStreamHandler(&pb.GetStatusResponse{
-		Status: status,
-	}), nil
+	res.Send(&pb.WatchStatusResponse{})
+
+	return nil
 }
