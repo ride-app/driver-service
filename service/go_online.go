@@ -22,8 +22,6 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	notificationToken := req.Msg.NotificationToken
-
 	wallet, err := service.walletrepository.GetWallet(ctx, driverId, req.Header().Get("Authorization"))
 
 	if err != nil {
