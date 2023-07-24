@@ -178,8 +178,6 @@ message GoOnlineRequest {
 
   // The location of the Driver.
   Location location = 2 [(validate.rules).message.required = true];
-
-  string notification_token = 3;
 }
 
 message GoOnlineResponse {

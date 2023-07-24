@@ -29,7 +29,7 @@ type DriverRepository interface {
 
 	GetStatus(ctx context.Context, id string) (*pb.Status, error)
 
-	GoOnline(ctx context.Context, id string, vehicleType *pb.Vehicle, notificationToken string) (*pb.Status, error)
+	GoOnline(ctx context.Context, id string, vehicleType *pb.Vehicle) (*pb.Status, error)
 
 	GoOffline(ctx context.Context, id string) (*pb.Status, error)
 
@@ -169,13 +169,12 @@ func (r *FirebaseImpl) GetStatus(ctx context.Context, id string) (*pb.Status, er
 	return &status, nil
 }
 
-func (r *FirebaseImpl) GoOnline(ctx context.Context, id string, vehicle *pb.Vehicle, notificationToken string) (*pb.Status, error) {
+func (r *FirebaseImpl) GoOnline(ctx context.Context, id string, vehicle *pb.Vehicle) (*pb.Status, error) {
 	_, err := r.firestore.Collection("activeDrivers").Doc(id).Set(ctx, map[string]interface{}{
-		"vehicleId":         strings.Split(vehicle.Name, "/")[1],
-		"licensePlate":      vehicle.LicensePlate,
-		"vehicleType":       strings.ToLower(vehicle.Type.String()),
-		"capacity":          4,
-		"notificationToken": notificationToken,
+		"vehicleId":    strings.Split(vehicle.Name, "/")[1],
+		"licensePlate": vehicle.LicensePlate,
+		"vehicleType":  strings.ToLower(vehicle.Type.String()),
+		"capacity":     4,
 	})
 
 	if err != nil {

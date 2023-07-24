@@ -44,7 +44,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("vehicle not found"))
 	}
 
-	status, err := service.driverRepository.GoOnline(ctx, driverId, vehicle, notificationToken)
+	status, err := service.driverRepository.GoOnline(ctx, driverId, vehicle)
 
 	if err != nil {
 		return nil, err
