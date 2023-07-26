@@ -4,6 +4,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
 import "google/type/date.proto";
+import "google/type/phone_number.proto";
 import "validate/validate.proto";
 
 package ride.driver.v1alpha1;
@@ -104,7 +105,7 @@ message Driver {
   string photo_uri = 3 [(validate.rules).string.uri = true];
 
   // The phone number of the driver. Example "+911234567890"
-  string phone_number = 4;
+  google.type.PhoneNumber phone_number = 4;
 
   google.type.Date date_of_birth = 5;
 

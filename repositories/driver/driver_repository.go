@@ -13,6 +13,7 @@ import (
 	"firebase.google.com/go/auth"
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"google.golang.org/genproto/googleapis/type/phone_number"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/mmcloughlin/geohash"
@@ -108,16 +109,20 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, id string) (*pb.Driver, er
 		Name:        "drivers/" + id,
 		DisplayName: user.DisplayName,
 		PhotoUri:    user.PhotoURL,
-		PhoneNumber: user.PhoneNumber,
-		CreateTime:  timestamppb.New(doc.CreateTime),
-		UpdateTime:  timestamppb.New(doc.UpdateTime),
+		PhoneNumber: &phone_number.PhoneNumber{
+			Kind: &phone_number.PhoneNumber_E164Number{
+				E164Number: user.PhoneNumber,
+			},
+		},
+		CreateTime: timestamppb.New(doc.CreateTime),
+		UpdateTime: timestamppb.New(doc.UpdateTime),
 	}
 
 	return &driver, nil
 }
 
 func (r *FirebaseImpl) UpdateDriver(ctx context.Context, driver *pb.Driver) (updateTime *time.Time, err error) {
-	_, err = r.auth.UpdateUser(ctx, strings.Split(driver.Name, "/")[1], (&auth.UserToUpdate{}).DisplayName(driver.DisplayName).PhotoURL(driver.PhotoUri).PhoneNumber(driver.PhoneNumber))
+	_, err = r.auth.UpdateUser(ctx, strings.Split(driver.Name, "/")[1], (&auth.UserToUpdate{}).DisplayName(driver.DisplayName).PhotoURL(driver.PhotoUri).PhoneNumber(driver.PhoneNumber.GetE164Number()))
 
 	if err != nil {
 		return nil, err
