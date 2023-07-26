@@ -106,14 +106,23 @@ message Driver {
   // The phone number of the driver. Example "+911234567890"
   string phone_number = 4;
 
-  // The date of birth of the driver.
   google.type.Date date_of_birth = 5;
+
+  Gender gender = 6 [(validate.rules).enum = {not_in: [1]}];
   
   // Output only. Timestamp when the Driver was created.
   google.protobuf.Timestamp create_time = 9;
 
   // Output only. Timestamp when the Driver was last updated.
   google.protobuf.Timestamp update_time = 10;
+
+  enum Gender {
+    GENDER_UNSPECIFIED = 0;
+    GENDER_MALE = 1;
+    GENDER_FEMALE = 2;
+    GENDER_TRANSGENDER = 3;
+    GENDER_OTHER = 4;
+  }
 }
 
 message GetDriverRequest {
