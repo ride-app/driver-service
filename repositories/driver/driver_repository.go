@@ -76,7 +76,7 @@ func (r *FirebaseImpl) CreateDriver(ctx context.Context, driver *pb.Driver) (cre
 			"month": driver.DateOfBirth.Month,
 			"year":  driver.DateOfBirth.Year,
 		},
-		"gender": pb.Driver_Gender_name[int32(driver.Gender.Number())],
+		"gender": strings.Split(pb.Driver_Gender_name[int32(driver.Gender.Number())], "_")[1],
 	})
 
 	if err != nil {
