@@ -58,12 +58,6 @@ service DriverService {
     };
   }
 
-  rpc WatchStatus (WatchStatusRequest) returns (stream WatchStatusResponse) {
-    option (google.api.http) = {
-      get: "/v1alpha1/{name=drivers/*}/status:watch"
-    };
-  }
-
   rpc GetLocation(GetLocationRequest) returns (GetLocationResponse) {
     option (google.api.http) = {
       get: "/v1alpha1/{name=drivers/*/location}"
@@ -211,16 +205,6 @@ message GetStatusRequest {
 }
 
 message GetStatusResponse {
-  // The current status of the Driver.
-  Status status = 1;
-}
-
-message WatchStatusRequest {
-  // The relative resource name of the Status. Example: "drivers/driver1/status"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/status$"];
-}
-
-message WatchStatusResponse {
   // The current status of the Driver.
   Status status = 1;
 }
