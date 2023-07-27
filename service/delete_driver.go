@@ -33,7 +33,24 @@ func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	_, err := service.driverRepository.DeleteDriver(ctx, uid)
+	status, err := service.driverRepository.GetStatus(ctx, uid)
+
+	if err != nil {
+		logrus.WithError(err).Error("Failed to get driver status")
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	if status == nil {
+		logrus.Info("Status not found")
+		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("Driver status unkown"))
+	}
+
+	if status.Online {
+		logrus.Info("Driver is online")
+		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("Driver is online"))
+	}
+
+	_, err = service.driverRepository.DeleteDriver(ctx, uid)
 
 	if err != nil {
 		logrus.WithError(err).Error("Failed to delete driver")

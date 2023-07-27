@@ -4,14 +4,13 @@ package driverrepository
 
 import (
 	"context"
-	"errors"
 	"strings"
 	"time"
 
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/auth"
-	"github.com/bufbuild/connect-go"
+	"firebase.google.com/go/v4/errorutils"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/genproto/googleapis/type/phone_number"
@@ -148,21 +147,13 @@ func (r *FirebaseImpl) UpdateDriver(ctx context.Context, driver *pb.Driver) (upd
 }
 
 func (r *FirebaseImpl) DeleteDriver(ctx context.Context, id string) (deleteTime *time.Time, err error) {
-	logrus.Info("Getting driver status")
-	status, err := r.GetStatus(ctx, id)
-
-	if err != nil {
-		logrus.WithError(err).Error("Error getting driver status")
-		return nil, err
-	}
-
-	if status.Online {
-		logrus.WithError(err).Error("Driver is online")
-		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("driver is online"))
-	}
-
 	logrus.Info("Deleting driver from firestore")
 	writeResult, err := r.firestore.Collection("drivers").Doc(id).Delete(ctx)
+
+	if errorutils.IsNotFound(err) {
+		logrus.Info("Driver does not exist in firestore")
+		return nil, nil
+	}
 
 	if err != nil {
 		logrus.WithError(err).Error("Error deleting driver from firestore")
@@ -177,6 +168,11 @@ func (r *FirebaseImpl) DeleteDriver(ctx context.Context, id string) (deleteTime 
 func (r *FirebaseImpl) GetStatus(ctx context.Context, id string) (*pb.Status, error) {
 	logrus.Info("Getting status from firestore")
 	doc, err := r.firestore.Collection("activeDrivers").Doc(id).Get(ctx)
+
+	if errorutils.IsNotFound(err) {
+		logrus.Info("Driver does not exist in firestore")
+		return nil, nil
+	}
 
 	if err != nil {
 		logrus.WithError(err).Error("Error getting status from firestore")
