@@ -33,7 +33,7 @@ func NewFirebaseVehicleRepository(firebaseApp *firebase.App) (*FirebaseImpl, err
 		return nil, err
 	}
 
-	logrus.Info("FirebaseVehicleRepository initialized")
+	logrus.Info("Firebase vehicle repository initialized")
 	return &FirebaseImpl{
 		firestore: firestore,
 	}, nil
