@@ -101,7 +101,7 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, id string) (*pb.Driver, er
 	doc, err := r.firestore.Collection("drivers").Doc(id).Get(ctx)
 
 	if err != nil {
-		logrus.Error("Error getting driver from firestore: ", err)
+		logrus.WithError(err).Error("Error getting driver from firestore")
 		return nil, err
 	}
 
