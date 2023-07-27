@@ -29,7 +29,7 @@ func NewFirebaseVehicleRepository(firebaseApp *firebase.App) (*FirebaseImpl, err
 	firestore, err := firebaseApp.Firestore(context.Background())
 
 	if err != nil {
-		logrus.Error("Error initializing firestore client: ", err)
+		logrus.WithError(err).Error("Error initializing firestore client")
 		return nil, err
 	}
 
@@ -44,12 +44,12 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	doc, err := r.firestore.Collection("vehicles").Doc(id).Get(ctx)
 
 	if err != nil {
-		logrus.Error("Error getting vehicle from firestore: ", err)
+		logrus.WithError(err).Error("Error getting vehicle from firestore")
 		return nil, err
 	}
 
 	if !doc.Exists() {
-		logrus.Error("Vehicle does not exist")
+		logrus.WithError(err).Error("Vehicle does not exist")
 		return nil, nil
 	}
 
@@ -67,7 +67,7 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	}
 
 	if vehicleType == pb.Vehicle_TYPE_UNSPECIFIED {
-		logrus.Error("Unknown vehicle type")
+		logrus.WithError(err).Error("Unknown vehicle type")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("unknown vehicle type"))
 	}
 	// Hardcode e-rickshaw for now
@@ -92,7 +92,7 @@ func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, vehicle *pb.Vehicle) (
 	})
 
 	if err != nil {
-		logrus.Error("Error updating vehicle in firestore: ", err)
+		logrus.WithError(err).Error("Error updating vehicle in firestore")
 		return nil, err
 	}
 

@@ -14,7 +14,7 @@ import (
 func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	req *connect.Request[pb.GoOnlineRequest]) (*connect.Response[pb.GoOnlineResponse], error) {
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Info("Invalid request: ", err)
+		logrus.Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
@@ -31,7 +31,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	wallet, err := service.walletrepository.GetWallet(ctx, uid, req.Header().Get("Authorization"))
 
 	if err != nil {
-		logrus.Error("Failed to get wallet: ", err)
+		logrus.WithError(err).Error("Failed to get wallet")
 		return nil, err
 	}
 
@@ -44,7 +44,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	vehicle, err := service.vehicleRepository.GetVehicle(ctx, uid)
 
 	if err != nil {
-		logrus.Error("Failed to get vehicle: ", err)
+		logrus.WithError(err).Error("Failed to get vehicle")
 		return nil, err
 	}
 
@@ -56,7 +56,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	status, err := service.driverRepository.GoOnline(ctx, uid, vehicle)
 
 	if err != nil {
-		logrus.Error("Failed to go online: ", err)
+		logrus.WithError(err).Error("Failed to go online")
 		return nil, err
 	}
 
@@ -65,7 +65,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	updateTime, err := service.driverRepository.UpdateLocation(ctx, uid, req.Msg.Location)
 
 	if err != nil {
-		logrus.Error("Failed to update location: ", err)
+		logrus.WithError(err).Error("Failed to update location")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -76,7 +76,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	}
 
 	if err := res.Validate(); err != nil {
-		logrus.Error("Invalid response: ", err)
+		logrus.WithError(err).Error("Invalid response")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 

@@ -13,7 +13,7 @@ import (
 func (service *DriverServiceServer) UpdateLocation(ctx context.Context,
 	req *connect.Request[pb.UpdateLocationRequest]) (*connect.Response[pb.UpdateLocationResponse], error) {
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Info("Invalid request: ", err)
+		logrus.Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
@@ -30,7 +30,7 @@ func (service *DriverServiceServer) UpdateLocation(ctx context.Context,
 	status, err := service.driverRepository.GetStatus(ctx, uid)
 
 	if err != nil {
-		logrus.Error("Failed to get status: ", err)
+		logrus.WithError(err).Error("Failed to get status")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -42,7 +42,7 @@ func (service *DriverServiceServer) UpdateLocation(ctx context.Context,
 	_, err = service.driverRepository.UpdateLocation(ctx, uid, req.Msg.Location)
 
 	if err != nil {
-		logrus.Error("Failed to update location: ", err)
+		logrus.WithError(err).Error("Failed to update location")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 

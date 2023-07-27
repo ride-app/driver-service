@@ -15,7 +15,7 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	req *connect.Request[pb.CreateDriverRequest]) (*connect.Response[pb.CreateDriverResponse], error) {
 
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Info("Invalid request: ", err)
+		logrus.Info("Invalid request")
 
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
@@ -34,7 +34,7 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	driver, err := service.driverRepository.GetDriver(ctx, uid)
 
 	if err != nil {
-		logrus.Error("Failed to get driver: ", err)
+		logrus.WithError(err).Error("Failed to get driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -51,7 +51,7 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	createTime, err := service.driverRepository.CreateDriver(ctx, req.Msg.Driver)
 
 	if err != nil {
-		logrus.Error("Failed to create driver: ", err)
+		logrus.WithError(err).Error("Failed to create driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -59,7 +59,7 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	req.Msg.Driver.UpdateTime = timestamppb.New(*createTime)
 
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Error("Invalid response: ", err)
+		logrus.WithError(err).Error("Invalid response")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 

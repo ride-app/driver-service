@@ -42,7 +42,7 @@ func (r *Impl) GetWallet(ctx context.Context, id string, authToken string) (*pb.
 	res, err := r.walletApi.GetWallet(ctx, req)
 
 	if err != nil {
-		logrus.Error("Error getting wallet from wallet service: ", err)
+		logrus.WithError(err).Error("Error getting wallet from wallet service")
 		return nil, err
 	}
 

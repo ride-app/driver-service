@@ -14,7 +14,7 @@ func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
 	req *connect.Request[pb.DeleteDriverRequest]) (*connect.Response[pb.DeleteDriverResponse], error) {
 
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Info("Invalid request: ", err)
+		logrus.Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
@@ -36,7 +36,7 @@ func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
 	_, err := service.driverRepository.DeleteDriver(ctx, uid)
 
 	if err != nil {
-		logrus.Error("Failed to delete driver: ", err)
+		logrus.WithError(err).Error("Failed to delete driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 

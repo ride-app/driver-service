@@ -13,7 +13,7 @@ import (
 func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
 	req *connect.Request[pb.UpdateVehicleRequest]) (*connect.Response[pb.UpdateVehicleResponse], error) {
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Info("Invalid request: ", err)
+		logrus.Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
@@ -30,7 +30,7 @@ func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
 	_, err := service.vehicleRepository.UpdateVehicle(ctx, req.Msg.Vehicle)
 
 	if err != nil {
-		logrus.Error("Failed to update vehicle: ", err)
+		logrus.WithError(err).Error("Failed to update vehicle")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -39,7 +39,7 @@ func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
 	}
 
 	if err := res.Validate(); err != nil {
-		logrus.Error("Invalid response: ", err)
+		logrus.WithError(err).Error("Invalid response")
 		return nil, err
 	}
 

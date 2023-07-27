@@ -13,7 +13,7 @@ import (
 func (service *DriverServiceServer) GoOffline(ctx context.Context,
 	req *connect.Request[pb.GoOfflineRequest]) (*connect.Response[pb.GoOfflineResponse], error) {
 	if err := req.Msg.Validate(); err != nil {
-		log.Info("Invalid request: ", err)
+		log.Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
@@ -32,7 +32,7 @@ func (service *DriverServiceServer) GoOffline(ctx context.Context,
 	log.Info("Status: ", status)
 
 	if err != nil {
-		log.Error("Failed to go offline: ", err)
+		log.Error("Failed to go offline")
 		return nil, err
 	}
 
@@ -41,7 +41,7 @@ func (service *DriverServiceServer) GoOffline(ctx context.Context,
 	}
 
 	if err := res.Validate(); err != nil {
-		log.Error("Invalid response: ", err)
+		log.Error("Invalid response")
 		return nil, err
 	}
 
