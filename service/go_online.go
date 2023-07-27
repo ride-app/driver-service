@@ -28,11 +28,23 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
+	driver, err := service.driverRepository.GetDriver(ctx, uid)
+
+	if err != nil {
+		logrus.WithError(err).Error("Failed to get driver")
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	if driver == nil {
+		logrus.Info("Driver not found")
+		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("driver not found"))
+	}
+
 	wallet, err := service.walletrepository.GetWallet(ctx, uid, req.Header().Get("Authorization"))
 
 	if err != nil {
 		logrus.WithError(err).Error("Failed to get wallet")
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if wallet.Balance <= 0 {
@@ -45,7 +57,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 
 	if err != nil {
 		logrus.WithError(err).Error("Failed to get vehicle")
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if vehicle == nil {
@@ -57,7 +69,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 
 	if err != nil {
 		logrus.WithError(err).Error("Failed to go online")
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	logrus.Info("Status: ", status.Online)

@@ -46,7 +46,7 @@ func (service *DriverServiceServer) GetLocation(ctx context.Context,
 
 	if err := res.Validate(); err != nil {
 		logrus.WithError(err).Error("Invalid response")
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	logrus.Info("Location found")

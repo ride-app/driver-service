@@ -33,7 +33,7 @@ func (service *DriverServiceServer) GoOffline(ctx context.Context,
 
 	if err != nil {
 		log.Error("Failed to go offline")
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	res := &pb.GoOfflineResponse{
@@ -42,7 +42,7 @@ func (service *DriverServiceServer) GoOffline(ctx context.Context,
 
 	if err := res.Validate(); err != nil {
 		log.Error("Invalid response")
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	log.Info("Driver went offline")

@@ -40,7 +40,7 @@ func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
 
 	if err := res.Validate(); err != nil {
 		logrus.WithError(err).Error("Invalid response")
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	logrus.Info("Vehicle updated")
