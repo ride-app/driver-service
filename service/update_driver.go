@@ -7,39 +7,50 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (service *DriverServiceServer) UpdateDriver(ctx context.Context,
 	req *connect.Request[pb.UpdateDriverRequest]) (*connect.Response[pb.UpdateDriverResponse], error) {
-
 	if err := req.Msg.Validate(); err != nil {
+		logrus.Info("Invalid request: ", err)
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	if req.Msg.Driver.Name == "" {
+		logrus.Info("Driver name is empty")
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("name cannot be empty"))
 	}
 
-	driverId := strings.Split(req.Msg.Driver.Name, "/")[1]
+	uid := strings.Split(req.Msg.Driver.Name, "/")[1]
 
-	if driverId != req.Header().Get("Authorization") {
+	logrus.Info("uid: ", uid)
+	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
+
+	if uid != req.Header().Get("uid") {
+		logrus.Info("Permission denied")
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
 	updateTime, err := service.driverRepository.UpdateDriver(ctx, req.Msg.Driver)
 
 	if err != nil {
+		logrus.Error("Failed to update driver: ", err)
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	req.Msg.Driver.UpdateTime = timestamppb.New(*updateTime)
 
-	if err := req.Msg.Validate(); err != nil {
+	res := &pb.UpdateDriverResponse{
+		Driver: req.Msg.Driver,
+	}
+
+	if err := res.Validate(); err != nil {
+		logrus.Error("Invalid response: ", err)
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	return connect.NewResponse(&pb.UpdateDriverResponse{
-		Driver: req.Msg.Driver,
-	}), nil
+	logrus.Info("Driver updated")
+	return connect.NewResponse(res), nil
 }

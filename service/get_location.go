@@ -7,32 +7,48 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"github.com/sirupsen/logrus"
 )
 
 func (service *DriverServiceServer) GetLocation(ctx context.Context,
 	req *connect.Request[pb.GetLocationRequest]) (*connect.Response[pb.GetLocationResponse], error) {
 
 	if err := req.Msg.Validate(); err != nil {
+		logrus.Info("Invalid request: ", err)
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	driverId := strings.Split(req.Msg.Name, "/")[1]
+	uid := strings.Split(req.Msg.Name, "/")[1]
 
-	if driverId != req.Header().Get("Authorization") {
+	logrus.Info("uid: ", uid)
+	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
+
+	if uid != req.Header().Get("uid") {
+		logrus.Info("Permission denied")
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	location, err := service.driverRepository.GetLocation(ctx, driverId)
+	location, err := service.driverRepository.GetLocation(ctx, uid)
 
 	if err != nil {
+		logrus.Error("Failed to get location: ", err)
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if location == nil {
+		logrus.Info("Location not found")
 		return nil, connect.NewError(connect.CodeNotFound, errors.New("location not found"))
 	}
 
-	return connect.NewResponse(&pb.GetLocationResponse{
+	res := &pb.GetLocationResponse{
 		Location: location,
-	}), nil
+	}
+
+	if err := res.Validate(); err != nil {
+		logrus.Error("Invalid response: ", err)
+		return nil, err
+	}
+
+	logrus.Info("Location found")
+	return connect.NewResponse(res), nil
 }

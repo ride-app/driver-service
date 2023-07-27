@@ -8,7 +8,7 @@ import (
 	"github.com/MicahParks/keyfunc/v2"
 	"github.com/bufbuild/connect-go"
 	"github.com/golang-jwt/jwt/v5"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 func NewAuthInterceptor(ctx context.Context) (*connect.UnaryInterceptorFunc, error) {
@@ -17,7 +17,7 @@ func NewAuthInterceptor(ctx context.Context) (*connect.UnaryInterceptorFunc, err
 	options := keyfunc.Options{
 		Ctx: ctx,
 		RefreshErrorHandler: func(err error) {
-			log.Fatalf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
+			logrus.Fatalf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
 		},
 		RefreshInterval:   time.Hour,
 		RefreshRateLimit:  time.Minute * 5,

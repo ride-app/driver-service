@@ -7,32 +7,47 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"github.com/sirupsen/logrus"
 )
 
 func (service *DriverServiceServer) GetStatus(ctx context.Context,
 	req *connect.Request[pb.GetStatusRequest]) (*connect.Response[pb.GetStatusResponse], error) {
 
 	if err := req.Msg.Validate(); err != nil {
+		logrus.Info("Invalid request: ", err)
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	driverId := strings.Split(req.Msg.Name, "/")[1]
+	uid := strings.Split(req.Msg.Name, "/")[1]
 
-	if driverId != req.Header().Get("Authorization") {
+	logrus.Info("uid: ", uid)
+	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
+
+	if uid != req.Header().Get("uid") {
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	status, err := service.driverRepository.GetStatus(ctx, driverId)
+	status, err := service.driverRepository.GetStatus(ctx, uid)
 
 	if err != nil {
+		logrus.Error("Failed to get status: ", err)
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if status == nil {
+		logrus.Info("Status not found")
 		return nil, connect.NewError(connect.CodeNotFound, errors.New("status not found"))
 	}
 
-	return connect.NewResponse(&pb.GetStatusResponse{
+	res := &pb.GetStatusResponse{
 		Status: status,
-	}), nil
+	}
+
+	if err := res.Validate(); err != nil {
+		logrus.Error("Invalid response: ", err)
+		return nil, err
+	}
+
+	logrus.Info("Status found")
+	return connect.NewResponse(res), nil
 }

@@ -7,56 +7,79 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	req *connect.Request[pb.GoOnlineRequest]) (*connect.Response[pb.GoOnlineResponse], error) {
 	if err := req.Msg.Validate(); err != nil {
+		logrus.Info("Invalid request: ", err)
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	driverId := strings.Split(req.Msg.Name, "/")[1]
+	uid := strings.Split(req.Msg.Name, "/")[1]
 
-	if driverId != req.Header().Get("Authorization") {
+	logrus.Info("uid: ", uid)
+	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
+
+	if uid != req.Header().Get("uid") {
+		logrus.Info("Permission denied")
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	wallet, err := service.walletrepository.GetWallet(ctx, driverId, req.Header().Get("Authorization"))
+	wallet, err := service.walletrepository.GetWallet(ctx, uid, req.Header().Get("Authorization"))
 
 	if err != nil {
+		logrus.Error("Failed to get wallet: ", err)
 		return nil, err
 	}
 
 	if wallet.Balance <= 0 {
+		logrus.Info("Insufficient wallet balance: ", wallet.Balance)
+
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("insufficient wallet balance"))
 	}
 
-	vehicle, err := service.vehicleRepository.GetVehicle(ctx, driverId)
+	vehicle, err := service.vehicleRepository.GetVehicle(ctx, uid)
 
 	if err != nil {
+		logrus.Error("Failed to get vehicle: ", err)
 		return nil, err
 	}
 
 	if vehicle == nil {
+		logrus.Info("Vehicle not found")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("vehicle not found"))
 	}
 
-	status, err := service.driverRepository.GoOnline(ctx, driverId, vehicle)
+	status, err := service.driverRepository.GoOnline(ctx, uid, vehicle)
 
 	if err != nil {
+		logrus.Error("Failed to go online: ", err)
 		return nil, err
 	}
 
-	updateTime, err := service.driverRepository.UpdateLocation(ctx, driverId, req.Msg.Location)
+	logrus.Info("Status: ", status.Online)
+
+	updateTime, err := service.driverRepository.UpdateLocation(ctx, uid, req.Msg.Location)
 
 	if err != nil {
+		logrus.Error("Failed to update location: ", err)
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	status.UpdateTime = timestamppb.New(*updateTime)
 
-	return connect.NewResponse(&pb.GoOnlineResponse{
+	res := &pb.GoOnlineResponse{
 		Status: status,
-	}), nil
+	}
+
+	if err := res.Validate(); err != nil {
+		logrus.Error("Invalid response: ", err)
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	logrus.Info("Driver is online")
+	return connect.NewResponse(res), nil
 }

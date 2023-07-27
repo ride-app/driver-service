@@ -13,6 +13,7 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"github.com/sirupsen/logrus"
 )
 
 type VehicleRepository interface {
@@ -28,22 +29,27 @@ func NewFirebaseVehicleRepository(firebaseApp *firebase.App) (*FirebaseImpl, err
 	firestore, err := firebaseApp.Firestore(context.Background())
 
 	if err != nil {
+		logrus.Error("Error initializing firestore client: ", err)
 		return nil, err
 	}
 
+	logrus.Info("FirebaseVehicleRepository initialized")
 	return &FirebaseImpl{
 		firestore: firestore,
 	}, nil
 }
 
 func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, error) {
+	logrus.Info("Getting vehicle from firestore")
 	doc, err := r.firestore.Collection("vehicles").Doc(id).Get(ctx)
 
 	if err != nil {
+		logrus.Error("Error getting vehicle from firestore: ", err)
 		return nil, err
 	}
 
 	if !doc.Exists() {
+		logrus.Error("Vehicle does not exist")
 		return nil, nil
 	}
 
@@ -61,6 +67,7 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	}
 
 	if vehicleType == pb.Vehicle_TYPE_UNSPECIFIED {
+		logrus.Error("Unknown vehicle type")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("unknown vehicle type"))
 	}
 	// Hardcode e-rickshaw for now
@@ -77,6 +84,7 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 }
 
 func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, vehicle *pb.Vehicle) (updateTime *timestamppb.Timestamp, err error) {
+	logrus.Info("Updating vehicle in firestore")
 	x, err := r.firestore.Collection("vehicles").Doc(strings.Split(vehicle.Name, "/")[1]).Set(ctx, map[string]interface{}{
 		"license_plate": vehicle.LicensePlate,
 		"type":          strings.ToLower(strings.Split(vehicle.Type.String(), "_")[1]),
@@ -84,6 +92,7 @@ func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, vehicle *pb.Vehicle) (
 	})
 
 	if err != nil {
+		logrus.Error("Error updating vehicle in firestore: ", err)
 		return nil, err
 	}
 

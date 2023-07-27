@@ -7,30 +7,39 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"github.com/sirupsen/logrus"
 )
 
 func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
 	req *connect.Request[pb.DeleteDriverRequest]) (*connect.Response[pb.DeleteDriverResponse], error) {
 
 	if err := req.Msg.Validate(); err != nil {
+		logrus.Info("Invalid request: ", err)
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	if req.Msg.Name == "" {
+		logrus.Info("Name is empty")
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("name cannot be empty"))
 	}
 
-	driverId := strings.Split(req.Msg.Name, "/")[1]
+	uid := strings.Split(req.Msg.Name, "/")[1]
 
-	if driverId != req.Header().Get("Authorization") {
+	logrus.Info("uid: ", uid)
+	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
+
+	if uid != req.Header().Get("uid") {
+		logrus.Info("Permission denied")
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	_, err := service.driverRepository.DeleteDriver(ctx, driverId)
+	_, err := service.driverRepository.DeleteDriver(ctx, uid)
 
 	if err != nil {
+		logrus.Error("Failed to delete driver: ", err)
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
+	logrus.Info("Driver deleted")
 	return connect.NewResponse(&pb.DeleteDriverResponse{}), nil
 }

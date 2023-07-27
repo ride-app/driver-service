@@ -13,6 +13,7 @@ import (
 	"firebase.google.com/go/auth"
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/genproto/googleapis/type/phone_number"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
@@ -48,15 +49,18 @@ func NewFirebaseDriverRepository(firebaseApp *firebase.App) (*FirebaseImpl, erro
 	firestore, err := firebaseApp.Firestore(context.Background())
 
 	if err != nil {
+		logrus.Error("Error initializing firestore client: ", err)
 		return nil, err
 	}
 
 	auth, err := firebaseApp.Auth(context.Background())
 
 	if err != nil {
+		logrus.Error("Error initializing auth client: ", err)
 		return nil, err
 	}
 
+	logrus.Info("Firebase driver repository initialized")
 	return &FirebaseImpl{
 		firestore: firestore,
 		auth:      auth,
@@ -64,12 +68,15 @@ func NewFirebaseDriverRepository(firebaseApp *firebase.App) (*FirebaseImpl, erro
 }
 
 func (r *FirebaseImpl) CreateDriver(ctx context.Context, driver *pb.Driver) (createTime *time.Time, err error) {
+	logrus.Info("Updating driver in auth")
 	_, err = r.auth.UpdateUser(ctx, strings.Split(driver.Name, "/")[1], (&auth.UserToUpdate{}).DisplayName(driver.DisplayName).PhotoURL(driver.PhotoUri))
 
 	if err != nil {
+		logrus.Error("Error updating driver in auth: ", err)
 		return nil, err
 	}
 
+	logrus.Info("Creating driver in firestore")
 	writeResult, err := r.firestore.Collection("drivers").Doc(strings.Split(driver.Name, "/")[1]).Create(ctx, map[string]interface{}{
 		"dateOfBirth": map[string]int32{
 			"day":   driver.DateOfBirth.Day,
@@ -80,6 +87,7 @@ func (r *FirebaseImpl) CreateDriver(ctx context.Context, driver *pb.Driver) (cre
 	})
 
 	if err != nil {
+		logrus.Error("Error creating driver in firestore: ", err)
 		return nil, err
 	}
 
@@ -89,19 +97,23 @@ func (r *FirebaseImpl) CreateDriver(ctx context.Context, driver *pb.Driver) (cre
 }
 
 func (r *FirebaseImpl) GetDriver(ctx context.Context, id string) (*pb.Driver, error) {
+	logrus.Info("Getting driver from firestore")
 	doc, err := r.firestore.Collection("drivers").Doc(id).Get(ctx)
 
 	if err != nil {
+		logrus.Error("Error getting driver from firestore: ", err)
 		return nil, err
 	}
 
 	if !doc.Exists() {
+		logrus.Info("Driver does not exist in firestore")
 		return nil, nil
 	}
 
 	user, err := r.auth.GetUser(ctx, id)
 
 	if err != nil {
+		logrus.Error("Error getting driver from auth: ", err)
 		return nil, err
 	}
 
@@ -122,9 +134,11 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, id string) (*pb.Driver, er
 }
 
 func (r *FirebaseImpl) UpdateDriver(ctx context.Context, driver *pb.Driver) (updateTime *time.Time, err error) {
+	logrus.Info("Updating driver in auth")
 	_, err = r.auth.UpdateUser(ctx, strings.Split(driver.Name, "/")[1], (&auth.UserToUpdate{}).DisplayName(driver.DisplayName).PhotoURL(driver.PhotoUri).PhoneNumber(driver.PhoneNumber.GetE164Number()))
 
 	if err != nil {
+		logrus.Error("Error updating driver in auth: ", err)
 		return nil, err
 	}
 
@@ -134,19 +148,24 @@ func (r *FirebaseImpl) UpdateDriver(ctx context.Context, driver *pb.Driver) (upd
 }
 
 func (r *FirebaseImpl) DeleteDriver(ctx context.Context, id string) (deleteTime *time.Time, err error) {
+	logrus.Info("Getting driver status")
 	status, err := r.GetStatus(ctx, id)
 
 	if err != nil {
+		logrus.Error("Error getting driver status: ", err)
 		return nil, err
 	}
 
 	if status.Online {
+		logrus.Error("Driver is online")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("driver is online"))
 	}
 
+	logrus.Info("Deleting driver from firestore")
 	writeResult, err := r.firestore.Collection("drivers").Doc(id).Delete(ctx)
 
 	if err != nil {
+		logrus.Error("Error deleting driver from firestore: ", err)
 		return nil, err
 	}
 
@@ -156,13 +175,16 @@ func (r *FirebaseImpl) DeleteDriver(ctx context.Context, id string) (deleteTime 
 }
 
 func (r *FirebaseImpl) GetStatus(ctx context.Context, id string) (*pb.Status, error) {
+	logrus.Info("Getting status from firestore")
 	doc, err := r.firestore.Collection("activeDrivers").Doc(id).Get(ctx)
 
 	if err != nil {
+		logrus.Error("Error getting status from firestore: ", err)
 		return nil, err
 	}
 
 	if !doc.Exists() {
+		logrus.Info("Driver does not exist in firestore")
 		return nil, nil
 	}
 
@@ -176,6 +198,7 @@ func (r *FirebaseImpl) GetStatus(ctx context.Context, id string) (*pb.Status, er
 }
 
 func (r *FirebaseImpl) GoOnline(ctx context.Context, id string, vehicle *pb.Vehicle) (*pb.Status, error) {
+	logrus.Info("Updating active driver in firestore")
 	_, err := r.firestore.Collection("activeDrivers").Doc(id).Set(ctx, map[string]interface{}{
 		"vehicleId":    strings.Split(vehicle.Name, "/")[1],
 		"licensePlate": vehicle.LicensePlate,
@@ -184,6 +207,7 @@ func (r *FirebaseImpl) GoOnline(ctx context.Context, id string, vehicle *pb.Vehi
 	})
 
 	if err != nil {
+		logrus.Error("Error updating active driver in firestore: ", err)
 		return nil, err
 	}
 
@@ -195,9 +219,11 @@ func (r *FirebaseImpl) GoOnline(ctx context.Context, id string, vehicle *pb.Vehi
 }
 
 func (r *FirebaseImpl) GoOffline(ctx context.Context, id string) (*pb.Status, error) {
+	logrus.Info("Deleting active driver from firestore")
 	_, err := r.firestore.Collection("activeDrivers").Doc(id).Delete(ctx)
 
 	if err != nil {
+		logrus.Error("Error deleting active driver from firestore: ", err)
 		return nil, err
 	}
 
@@ -209,13 +235,16 @@ func (r *FirebaseImpl) GoOffline(ctx context.Context, id string) (*pb.Status, er
 }
 
 func (r *FirebaseImpl) GetLocation(ctx context.Context, id string) (*pb.Location, error) {
+	logrus.Info("Checking if driver is active in firestore")
 	doc, err := r.firestore.Collection("activeDrivers").Doc(id).Get(ctx)
 
 	if err != nil {
+		logrus.Error("Error checking if driver is active in firestore: ", err)
 		return nil, err
 	}
 
 	if !doc.Exists() {
+		logrus.Info("Driver is not active in firestore")
 		return nil, nil
 	}
 
@@ -233,8 +262,10 @@ func (r *FirebaseImpl) GetLocation(ctx context.Context, id string) (*pb.Location
 
 func (r *FirebaseImpl) UpdateLocation(ctx context.Context, id string, location *pb.Location) (updateTime *time.Time, err error) {
 
+	logrus.Info("Calculating geohash")
 	hash := geohash.Encode(location.Latitude, location.Longitude)
 
+	logrus.Info("Updating driver location in firestore")
 	res, err := r.firestore.Collection("activeDrivers").Doc(id).Update(ctx, []firestore.Update{
 		{
 			Path:  "location.latitude",
@@ -251,6 +282,7 @@ func (r *FirebaseImpl) UpdateLocation(ctx context.Context, id string, location *
 	})
 
 	if err != nil {
+		logrus.Error("Error updating driver location in firestore: ", err)
 		return nil, err
 	}
 
