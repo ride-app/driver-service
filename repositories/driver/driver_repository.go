@@ -11,10 +11,11 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/auth"
-	"firebase.google.com/go/v4/errorutils"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/genproto/googleapis/type/phone_number"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/mmcloughlin/geohash"
@@ -86,7 +87,7 @@ func (r *FirebaseImpl) CreateDriver(ctx context.Context, driver *pb.Driver) (cre
 		"gender": strings.Split(pb.Driver_Gender_name[int32(driver.Gender.Number())], "_")[1],
 	})
 
-	if errorutils.IsAlreadyExists(err) {
+	if status.Code(err) == codes.AlreadyExists {
 		logrus.Info("Driver already exists in firestore")
 
 		return nil, errors.New("driver already exists in firestore")
@@ -111,7 +112,7 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, id string) (*pb.Driver, er
 	logrus.Info("Getting driver from firestore")
 	doc, err := r.firestore.Collection("drivers").Doc(id).Get(ctx)
 
-	if errorutils.IsNotFound(err) {
+	if status.Code(err) == codes.NotFound {
 		logrus.Info("Driver does not exist in firestore")
 		return nil, nil
 	} else if err != nil {
@@ -166,7 +167,7 @@ func (r *FirebaseImpl) DeleteDriver(ctx context.Context, id string) (deleteTime 
 	logrus.Info("Deleting driver from firestore")
 	writeResult, err := r.firestore.Collection("drivers").Doc(id).Delete(ctx)
 
-	if errorutils.IsNotFound(err) {
+	if status.Code(err) == codes.NotFound {
 		logrus.Info("Driver does not exist in firestore")
 		return nil, nil
 	} else if err != nil {
@@ -183,7 +184,7 @@ func (r *FirebaseImpl) GetStatus(ctx context.Context, id string) (*pb.Status, er
 	logrus.Info("Getting status from firestore")
 	doc, err := r.firestore.Collection("activeDrivers").Doc(id).Get(ctx)
 
-	if errorutils.IsNotFound(err) {
+	if status.Code(err) == codes.NotFound {
 		logrus.Info("Driver does not exist in firestore")
 		return nil, nil
 	} else if err != nil {
@@ -212,7 +213,7 @@ func (r *FirebaseImpl) GoOnline(ctx context.Context, id string, vehicle *pb.Vehi
 	err := r.firestore.RunTransaction(ctx, func(ctx context.Context, tx *firestore.Transaction) error {
 		doc, err := tx.Get(ref)
 
-		if err != nil && !errorutils.IsNotFound(err) {
+		if err != nil && !(status.Code(err) == codes.NotFound) {
 			logrus.WithError(err).Error("Error getting active driver from firestore")
 			return err
 		}
@@ -252,7 +253,7 @@ func (r *FirebaseImpl) GoOffline(ctx context.Context, id string) (*pb.Status, er
 	logrus.Info("Deleting active driver from firestore")
 	_, err := r.firestore.Collection("activeDrivers").Doc(id).Delete(ctx)
 
-	if errorutils.IsNotFound(err) {
+	if status.Code(err) == codes.NotFound {
 		logrus.Info("Driver does not exist in active drivers in firestore")
 	} else if err != nil {
 		logrus.WithError(err).Error("Error deleting active driver from firestore")
@@ -270,7 +271,7 @@ func (r *FirebaseImpl) GetLocation(ctx context.Context, id string) (*pb.Location
 	logrus.Info("Checking if driver is active in firestore")
 	doc, err := r.firestore.Collection("activeDrivers").Doc(id).Get(ctx)
 
-	if errorutils.IsNotFound(err) {
+	if status.Code(err) == codes.NotFound {
 		logrus.Info("Driver does not exist in active drivers in firestore")
 		return nil, nil
 	} else if err != nil {
