@@ -46,7 +46,7 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	doc, err := r.firestore.Collection("vehicles").Doc(id).Get(ctx)
 
 	if status.Code(err) == codes.NotFound {
-		logrus.Info("Vehicle not found")
+		logrus.Info("Vehicle not found in firestore")
 		return nil, nil
 	} else if err != nil {
 		logrus.WithError(err).Error("Error getting vehicle from firestore")
@@ -54,7 +54,7 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	}
 
 	if !doc.Exists() {
-		logrus.WithError(err).Error("Vehicle does not exist")
+		logrus.WithError(err).Error("Vehicle does not exist in firestore")
 		return nil, nil
 	}
 
