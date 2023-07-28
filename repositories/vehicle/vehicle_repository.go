@@ -9,6 +9,8 @@ import (
 
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go/v4"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/bufbuild/connect-go"
@@ -43,7 +45,10 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	logrus.Info("Getting vehicle from firestore")
 	doc, err := r.firestore.Collection("vehicles").Doc(id).Get(ctx)
 
-	if err != nil {
+	if status.Code(err) == codes.NotFound {
+		logrus.Info("Vehicle not found")
+		return nil, nil
+	} else if err != nil {
 		logrus.WithError(err).Error("Error getting vehicle from firestore")
 		return nil, err
 	}
