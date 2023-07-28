@@ -20,7 +20,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 
 	uid := strings.Split(req.Msg.Name, "/")[1]
 
-	logrus.Info("uid: ", uid)
+	logrus.Debug("uid: ", uid)
 	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
 
 	if uid != req.Header().Get("uid") {
