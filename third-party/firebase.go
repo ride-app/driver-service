@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	firebase "firebase.google.com/go"
+	firebase "firebase.google.com/go/v4"
 	"github.com/ride-app/driver-service/config"
 )
 

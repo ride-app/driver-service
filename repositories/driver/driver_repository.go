@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"cloud.google.com/go/firestore"
-	firebase "firebase.google.com/go"
-	"firebase.google.com/go/auth"
+	firebase "firebase.google.com/go/v4"
+	"firebase.google.com/go/v4/auth"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/genproto/googleapis/type/phone_number"

@@ -6,7 +6,7 @@ require (
 	buf.build/gen/go/ride/wallet/bufbuild/connect-go v1.6.0-20230330072029-6fadc6e89697.1
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.30.0-20230330072029-6fadc6e89697.1
 	cloud.google.com/go/firestore v1.9.0
-	firebase.google.com/go v3.13.0+incompatible
+	firebase.google.com/go/v4 v4.12.0
 	github.com/MicahParks/keyfunc/v2 v2.1.0
 	github.com/bufbuild/connect-go v1.6.0
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
@@ -33,8 +33,10 @@ require (
 	cloud.google.com/go/longrunning v0.4.1 // indirect
 	cloud.google.com/go/storage v1.30.1 // indirect
 	github.com/BurntSushi/toml v1.1.0 // indirect
+	github.com/MicahParks/keyfunc v1.9.0 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
@@ -56,6 +58,7 @@ require (
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/api v0.114.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
+	google.golang.org/appengine/v2 v2.0.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 )
