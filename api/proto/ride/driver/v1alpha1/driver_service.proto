@@ -38,38 +38,38 @@ service DriverService {
 
   // TODO: Check if it's possible to have a single method for both online and offline
 
-  rpc GoOnline (GoOnlineRequest) returns (GoOnlineResponse) {
-    option (google.api.http) = {
-      post: "/v1alpha1/{name=drivers/*}:goOnline"
-      body: "*"
-    };
-  }
+  // rpc GoOnline (GoOnlineRequest) returns (GoOnlineResponse) {
+  //   option (google.api.http) = {
+  //     post: "/v1alpha1/{name=drivers/*}:goOnline"
+  //     body: "*"
+  //   };
+  // }
 
-  rpc GoOffline (GoOfflineRequest) returns (GoOfflineResponse) {
-    option (google.api.http) = {
-      post: "/v1alpha1/{name=drivers/*}:goOffline"
-      body: "*"
-    };
-  }
+  // rpc GoOffline (GoOfflineRequest) returns (GoOfflineResponse) {
+  //   option (google.api.http) = {
+  //     post: "/v1alpha1/{name=drivers/*}:goOffline"
+  //     body: "*"
+  //   };
+  // }
 
-  rpc GetStatus (GetStatusRequest) returns (GetStatusResponse) {
-    option (google.api.http) = {
-      get: "/v1alpha1/{name=drivers/*}/status"
-    };
-  }
+  // rpc GetStatus (GetStatusRequest) returns (GetStatusResponse) {
+  //   option (google.api.http) = {
+  //     get: "/v1alpha1/{name=drivers/*}/status"
+  //   };
+  // }
 
-  rpc GetLocation(GetLocationRequest) returns (GetLocationResponse) {
-    option (google.api.http) = {
-      get: "/v1alpha1/{name=drivers/*/location}"
-    };
-  }
+  // rpc GetLocation(GetLocationRequest) returns (GetLocationResponse) {
+  //   option (google.api.http) = {
+  //     get: "/v1alpha1/{name=drivers/*/location}"
+  //   };
+  // }
 
-  rpc UpdateLocation(UpdateLocationRequest) returns (UpdateLocationResponse) {
-    option (google.api.http) = {
-      patch: "/v1alpha1/{location.name=drivers/*/location}"
-      body: "*"
-    };
-  }
+  // rpc UpdateLocation(UpdateLocationRequest) returns (UpdateLocationResponse) {
+  //   option (google.api.http) = {
+  //     patch: "/v1alpha1/{location.name=drivers/*/location}"
+  //     body: "*"
+  //   };
+  // }
 
   rpc GetVehicle(GetVehicleRequest) returns (GetVehicleResponse) {
     option (google.api.http) = {
