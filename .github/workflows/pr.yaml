@@ -32,7 +32,12 @@ jobs:
         run: echo ${{ secrets.BUF_TOKEN }} | buf registry login --username ${{ env.BUF_USER }} --token-stdin
 
       - name: Build protobuf
-        run: buf generate
+        uses: trunk-io/breakpoint@v1
+        with:
+          breakpoint-id: buf-generate
+          run: buf generate
+          trunk-token: ${{ secrets.TRUNK_TOKEN }}
+          org: ride
 
       - name: Lint
         uses: trunk-io/trunk-action@v1
