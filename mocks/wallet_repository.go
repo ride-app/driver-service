@@ -36,16 +36,16 @@ func (m *MockWalletRepository) EXPECT() *MockWalletRepositoryMockRecorder {
 }
 
 // GetWallet mocks base method.
-func (m *MockWalletRepository) GetWallet(arg0 context.Context, arg1 string) (*walletv1alpha1.Wallet, error) {
+func (m *MockWalletRepository) GetWallet(arg0 context.Context, arg1, arg2 string) (*walletv1alpha1.Wallet, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetWallet", arg0, arg1)
+	ret := m.ctrl.Call(m, "GetWallet", arg0, arg1, arg2)
 	ret0, _ := ret[0].(*walletv1alpha1.Wallet)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetWallet indicates an expected call of GetWallet.
-func (mr *MockWalletRepositoryMockRecorder) GetWallet(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockWalletRepositoryMockRecorder) GetWallet(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWallet", reflect.TypeOf((*MockWalletRepository)(nil).GetWallet), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWallet", reflect.TypeOf((*MockWalletRepository)(nil).GetWallet), arg0, arg1, arg2)
 }
