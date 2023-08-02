@@ -33,9 +33,11 @@ type LogrusLogger struct {
 }
 
 func New() *LogrusLogger {
-	logrus.SetReportCaller(true)
+	l := logrus.New()
 
-	logrus.SetFormatter(&logrus.JSONFormatter{
+	l.SetReportCaller(true)
+
+	l.SetFormatter(&logrus.JSONFormatter{
 		FieldMap: logrus.FieldMap{
 			logrus.FieldKeyTime:  "timestamp",
 			logrus.FieldKeyLevel: "severity",
@@ -44,15 +46,15 @@ func New() *LogrusLogger {
 		TimestampFormat: time.RFC3339Nano,
 	})
 
-	logrus.SetLevel(logrus.InfoLevel)
+	l.SetLevel(logrus.InfoLevel)
 
 	if config.Env.Debug {
-		logrus.SetLevel(logrus.DebugLevel)
+		l.SetLevel(logrus.DebugLevel)
 	}
 
-	logrus.AddHook(logrus_filename.NewHook(logrus_filename.WithSkip(2)))
+	l.AddHook(logrus_filename.NewHook(logrus_filename.WithSkip(2)))
 
-	logger := logrus.WithFields(logrus.Fields{})
+	logger := l.WithFields(logrus.Fields{})
 
 	logger.Info("Logger initialized")
 
