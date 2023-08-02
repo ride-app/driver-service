@@ -17,9 +17,9 @@ import (
 )
 
 func main() {
-	log := logger.New()
-
 	err := cleanenv.ReadEnv(&config.Env)
+
+	log := logger.New()
 
 	if err != nil {
 		log.WithError(err).Fatal("Failed to read environment variables")
