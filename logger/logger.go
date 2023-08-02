@@ -49,10 +49,14 @@ func New() *LogrusLogger {
 		logrus.SetLevel(logrus.DebugLevel)
 	}
 
+	logrus := logrus.WithFields(logrus.Fields{
+		"PROJECT_ID": config.Env.ProjectID,
+	})
+
+	logrus.Info("Logger initialized")
+
 	return &LogrusLogger{
-		logger: logrus.WithFields(logrus.Fields{
-			"PROJECT_ID": config.Env.ProjectID,
-		}),
+		logger: logrus,
 	}
 }
 
