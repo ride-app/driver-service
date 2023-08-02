@@ -145,8 +145,12 @@ func (l *LogrusLogger) WithField(key string, value interface{}) Logger {
 }
 
 func (l *LogrusLogger) WithFields(fields map[string]string) Logger {
+	logger := l.logger
+	for key, value := range fields {
+		logger = logger.With(key, value)
+	}
 	return &LogrusLogger{
-		logger: l.logger.With(fields),
+		logger: logger,
 	}
 }
 
