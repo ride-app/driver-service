@@ -8,16 +8,16 @@ import (
 	"github.com/MicahParks/keyfunc/v2"
 	"github.com/bufbuild/connect-go"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/sirupsen/logrus"
+	"github.com/ride-app/driver-service/logger"
 )
 
-func NewAuthInterceptor(ctx context.Context) (*connect.UnaryInterceptorFunc, error) {
+func NewAuthInterceptor(ctx context.Context, log logger.Logger) (*connect.UnaryInterceptorFunc, error) {
 	jwksURI := "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com"
 
 	options := keyfunc.Options{
 		Ctx: ctx,
 		RefreshErrorHandler: func(err error) {
-			logrus.Fatalf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
+			log.Fatalf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
 		},
 		RefreshInterval:   time.Hour,
 		RefreshRateLimit:  time.Minute * 5,

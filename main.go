@@ -38,7 +38,7 @@ func main() {
 
 	defer cancel()
 
-	authInterceptor, err := interceptors.NewAuthInterceptor(ctx)
+	authInterceptor, err := interceptors.NewAuthInterceptor(ctx, log)
 
 	if err != nil {
 		log.Fatalf("Failed to initialize auth interceptor: %v", err)
