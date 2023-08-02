@@ -28,7 +28,7 @@ func New(log logger.Logger) (*Impl, error) {
 		config.Env.WalletServiceHost,
 	)
 
-	log.Info("WalletRepository initialized")
+	log.Info("Wallet Repository initialized")
 	return &Impl{walletApi: client}, nil
 }
 
