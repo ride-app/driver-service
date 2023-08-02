@@ -50,7 +50,7 @@ func New() *LogrusLogger {
 		logrus.SetLevel(logrus.DebugLevel)
 	}
 
-	logrus.AddHook(logrus_filename.NewHook(logrus_filename.WithSkip(1)))
+	logrus.AddHook(logrus_filename.NewHook(logrus_filename.WithSkip(2)))
 
 	logger := logrus.WithFields(logrus.Fields{})
 
