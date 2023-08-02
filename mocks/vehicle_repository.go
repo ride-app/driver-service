@@ -9,6 +9,7 @@ import (
 	reflect "reflect"
 
 	driverv1alpha1 "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	logger "github.com/ride-app/driver-service/logger"
 	gomock "go.uber.org/mock/gomock"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -37,31 +38,31 @@ func (m *MockVehicleRepository) EXPECT() *MockVehicleRepositoryMockRecorder {
 }
 
 // GetVehicle mocks base method.
-func (m *MockVehicleRepository) GetVehicle(arg0 context.Context, arg1 string) (*driverv1alpha1.Vehicle, error) {
+func (m *MockVehicleRepository) GetVehicle(arg0 context.Context, arg1 logger.Logger, arg2 string) (*driverv1alpha1.Vehicle, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetVehicle", arg0, arg1)
+	ret := m.ctrl.Call(m, "GetVehicle", arg0, arg1, arg2)
 	ret0, _ := ret[0].(*driverv1alpha1.Vehicle)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetVehicle indicates an expected call of GetVehicle.
-func (mr *MockVehicleRepositoryMockRecorder) GetVehicle(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockVehicleRepositoryMockRecorder) GetVehicle(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVehicle", reflect.TypeOf((*MockVehicleRepository)(nil).GetVehicle), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVehicle", reflect.TypeOf((*MockVehicleRepository)(nil).GetVehicle), arg0, arg1, arg2)
 }
 
 // UpdateVehicle mocks base method.
-func (m *MockVehicleRepository) UpdateVehicle(arg0 context.Context, arg1 *driverv1alpha1.Vehicle) (*timestamppb.Timestamp, error) {
+func (m *MockVehicleRepository) UpdateVehicle(arg0 context.Context, arg1 logger.Logger, arg2 *driverv1alpha1.Vehicle) (*timestamppb.Timestamp, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateVehicle", arg0, arg1)
+	ret := m.ctrl.Call(m, "UpdateVehicle", arg0, arg1, arg2)
 	ret0, _ := ret[0].(*timestamppb.Timestamp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // UpdateVehicle indicates an expected call of UpdateVehicle.
-func (mr *MockVehicleRepositoryMockRecorder) UpdateVehicle(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockVehicleRepositoryMockRecorder) UpdateVehicle(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateVehicle", reflect.TypeOf((*MockVehicleRepository)(nil).UpdateVehicle), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateVehicle", reflect.TypeOf((*MockVehicleRepository)(nil).UpdateVehicle), arg0, arg1, arg2)
 }
