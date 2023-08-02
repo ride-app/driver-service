@@ -7,41 +7,43 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/sirupsen/logrus"
 )
 
 func (service *DriverServiceServer) GetDriver(ctx context.Context,
 	req *connect.Request[pb.GetDriverRequest]) (*connect.Response[pb.GetDriverResponse], error) {
+	log := service.logger.WithFields(map[string]string{
+		"method": "GetDriver",
+	})
 
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Info("Invalid request")
+		log.Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	if req.Msg.Name == "" {
-		logrus.Info("Name is empty")
+		log.Info("Name is empty")
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("name cannot be empty"))
 	}
 
 	uid := strings.Split(req.Msg.Name, "/")[1]
 
-	logrus.Debug("uid: ", uid)
-	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
+	log.Debug("uid: ", uid)
+	log.Debug("Request header uid: ", req.Header().Get("uid"))
 
 	if uid != req.Header().Get("uid") {
-		logrus.Info("Permission denied")
+		log.Info("Permission denied")
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	driver, err := service.driverRepository.GetDriver(ctx, uid)
+	driver, err := service.driverRepository.GetDriver(ctx, log, uid)
 
 	if err != nil {
-		logrus.WithError(err).Error("Failed to get driver")
+		log.WithError(err).Error("Failed to get driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if driver == nil {
-		logrus.Info("Driver not found")
+		log.Info("Driver not found")
 		return nil, connect.NewError(connect.CodeNotFound, errors.New("driver not found"))
 	}
 
@@ -50,10 +52,10 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 	}
 
 	if err := res.Validate(); err != nil {
-		logrus.WithError(err).Error("Invalid response")
+		log.WithError(err).Error("Invalid response")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	logrus.Info("Driver found")
+	log.Info("Driver found")
 	return connect.NewResponse(res), nil
 }

@@ -7,11 +7,14 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	log "github.com/sirupsen/logrus"
 )
 
 func (service *DriverServiceServer) GoOffline(ctx context.Context,
 	req *connect.Request[pb.GoOfflineRequest]) (*connect.Response[pb.GoOfflineResponse], error) {
+	log := service.logger.WithFields(map[string]string{
+		"method": "GoOffline",
+	})
+
 	if err := req.Msg.Validate(); err != nil {
 		log.Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
@@ -27,7 +30,7 @@ func (service *DriverServiceServer) GoOffline(ctx context.Context,
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	status, err := service.driverRepository.GoOffline(ctx, uid)
+	status, err := service.driverRepository.GoOffline(ctx, log, uid)
 
 	log.Info("Status: ", status)
 
