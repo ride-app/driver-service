@@ -1,16 +1,16 @@
 package logger
 
 import (
-	"time"
+	"os"
 
-	logrus_filename "github.com/exgalibas/logrus-filename"
 	"github.com/ride-app/driver-service/config"
-	"github.com/sirupsen/logrus"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 type Logger interface {
-	Trace(args ...interface{})
-	Tracef(format string, args ...interface{})
+	// Trace(args ...interface{})
+	// Tracef(format string, args ...interface{})
 	Debug(args ...interface{})
 	Debugf(format string, args ...interface{})
 	Info(args ...interface{})
@@ -29,47 +29,66 @@ type Logger interface {
 }
 
 type LogrusLogger struct {
-	logger *logrus.Entry
+	logger *zap.SugaredLogger
 }
 
 func New() *LogrusLogger {
-	l := logrus.New()
+	encoderConfig := zap.NewProductionEncoderConfig()
 
-	l.SetReportCaller(true)
+	if !config.Env.Production {
+		encoderConfig = zap.NewDevelopmentEncoderConfig()
+	}
+	encoderConfig.TimeKey = "timestamp"
+	encoderConfig.LevelKey = "severity"
+	encoderConfig.MessageKey = "message"
+	encoderConfig.EncodeTime = zapcore.RFC3339NanoTimeEncoder
 
-	l.SetFormatter(&logrus.JSONFormatter{
-		FieldMap: logrus.FieldMap{
-			logrus.FieldKeyTime:  "timestamp",
-			logrus.FieldKeyLevel: "severity",
-			logrus.FieldKeyMsg:   "message",
+	if !config.Env.Production {
+		encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+		encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+	}
+
+	zapConfig := zap.Config{
+		Level:             zap.NewAtomicLevelAt(zap.InfoLevel),
+		Development:       !config.Env.Production,
+		DisableCaller:     false,
+		DisableStacktrace: false,
+		Sampling:          nil,
+		Encoding:          "json",
+		EncoderConfig:     encoderConfig,
+		OutputPaths: []string{
+			"stderr",
 		},
-		TimestampFormat: time.RFC3339Nano,
-	})
+		ErrorOutputPaths: []string{
+			"stderr",
+		},
+		InitialFields: map[string]interface{}{
+			"pid": os.Getpid(),
+		},
+	}
 
-	l.SetLevel(logrus.InfoLevel)
+	if !config.Env.Production {
+		zapConfig.Encoding = "console"
+	}
 
 	if config.Env.Debug {
-		l.SetLevel(logrus.DebugLevel)
+		zapConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 	}
 
-	logger := l.WithFields(logrus.Fields{})
-
-	logger.Info("Logger initialized")
-
-	l.AddHook(logrus_filename.NewHook(logrus_filename.WithSkip(1)))
+	z := zap.Must(zapConfig.Build(zap.AddCallerSkip(1))).Sugar()
 
 	return &LogrusLogger{
-		logger: logger,
+		logger: z,
 	}
 }
 
-func (l *LogrusLogger) Trace(args ...interface{}) {
-	l.logger.Trace(args...)
-}
+// func (l *LogrusLogger) Trace(args ...interface{}) {
+// 	l.logger.Trace(args...)
+// }
 
-func (l *LogrusLogger) Tracef(format string, args ...interface{}) {
-	l.logger.Tracef(format, args...)
-}
+// func (l *LogrusLogger) Tracef(format string, args ...interface{}) {
+// 	l.logger.Tracef(format, args...)
+// }
 
 func (l *LogrusLogger) Debug(args ...interface{}) {
 	l.logger.Debug(args...)
@@ -121,22 +140,18 @@ func (l *LogrusLogger) Panicf(format string, args ...interface{}) {
 
 func (l *LogrusLogger) WithField(key string, value interface{}) Logger {
 	return &LogrusLogger{
-		logger: l.logger.WithField(key, value),
+		logger: l.logger.With(key, value),
 	}
 }
 
 func (l *LogrusLogger) WithFields(fields map[string]string) Logger {
-	logFields := make(logrus.Fields)
-	for k, v := range fields {
-		logFields[k] = v
-	}
 	return &LogrusLogger{
-		logger: l.logger.WithFields(logFields),
+		logger: l.logger.With(fields),
 	}
 }
 
 func (l *LogrusLogger) WithError(err error) Logger {
 	return &LogrusLogger{
-		logger: l.logger.WithError(err),
+		logger: l.logger.With(zap.Error(err)),
 	}
 }
