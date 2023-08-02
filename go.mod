@@ -10,6 +10,7 @@ require (
 	github.com/MicahParks/keyfunc/v2 v2.1.0
 	github.com/bufbuild/connect-go v1.6.0
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
+	github.com/exgalibas/logrus-filename v0.0.0-20230106110712-c320f793ed5a
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.4.2

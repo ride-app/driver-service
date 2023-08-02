@@ -3,6 +3,7 @@ package logger
 import (
 	"time"
 
+	logrus_filename "github.com/exgalibas/logrus-filename"
 	"github.com/ride-app/driver-service/config"
 	"github.com/sirupsen/logrus"
 )
@@ -49,12 +50,14 @@ func New() *LogrusLogger {
 		logrus.SetLevel(logrus.DebugLevel)
 	}
 
-	logrus := logrus.WithFields(logrus.Fields{})
+	logrus.AddHook(logrus_filename.NewHook(logrus_filename.WithSkip(1)))
 
-	logrus.Info("Logger initialized")
+	logger := logrus.WithFields(logrus.Fields{})
+
+	logger.Info("Logger initialized")
 
 	return &LogrusLogger{
-		logger: logrus,
+		logger: logger,
 	}
 }
 
