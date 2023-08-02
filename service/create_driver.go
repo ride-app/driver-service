@@ -7,39 +7,41 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	req *connect.Request[pb.CreateDriverRequest]) (*connect.Response[pb.CreateDriverResponse], error) {
+	log := service.logger.WithFields(map[string]string{
+		"method": "CreateDriver",
+	})
 
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Info("Invalid request")
+		log.Info("Invalid request")
 
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	uid := strings.Split(req.Msg.Driver.Name, "/")[1]
 
-	logrus.Debug("uid: ", uid)
-	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
+	log.Debug("uid: ", uid)
+	log.Debug("Request header uid: ", req.Header().Get("uid"))
 
 	if uid != req.Header().Get("uid") {
-		logrus.Info("Permission denied")
+		log.Info("Permission denied")
 
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	driver, err := service.driverRepository.GetDriver(ctx, uid)
+	driver, err := service.driverRepository.GetDriver(ctx, log, uid)
 
 	if err != nil {
-		logrus.WithError(err).Error("Failed to get driver")
+		log.WithError(err).Error("Failed to get driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if driver != nil {
-		logrus.Info("Driver already exists")
+		log.Info("Driver already exists")
 
 		return connect.NewResponse(
 			&pb.CreateDriverResponse{
@@ -48,10 +50,10 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 		), nil
 	}
 
-	createTime, err := service.driverRepository.CreateDriver(ctx, req.Msg.Driver)
+	createTime, err := service.driverRepository.CreateDriver(ctx, log, req.Msg.Driver)
 
 	if err != nil {
-		logrus.WithError(err).Error("Failed to create driver")
+		log.WithError(err).Error("Failed to create driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -59,11 +61,11 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	req.Msg.Driver.UpdateTime = timestamppb.New(*createTime)
 
 	if err := req.Msg.Validate(); err != nil {
-		logrus.WithError(err).Error("Invalid response")
+		log.WithError(err).Error("Invalid response")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	logrus.Info("Driver created")
+	log.Info("Driver created")
 	return connect.NewResponse(&pb.CreateDriverResponse{
 		Driver: req.Msg.Driver,
 	}), nil

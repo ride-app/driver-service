@@ -7,77 +7,80 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	req *connect.Request[pb.GoOnlineRequest]) (*connect.Response[pb.GoOnlineResponse], error) {
+	log := service.logger.WithFields(map[string]string{
+		"method": "GoOnline",
+	})
+
 	if err := req.Msg.Validate(); err != nil {
-		logrus.Info("Invalid request")
+		log.Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	uid := strings.Split(req.Msg.Name, "/")[1]
 
-	logrus.Debug("uid: ", uid)
-	logrus.Debug("Request header uid: ", req.Header().Get("uid"))
+	log.Debug("uid: ", uid)
+	log.Debug("Request header uid: ", req.Header().Get("uid"))
 
 	if uid != req.Header().Get("uid") {
-		logrus.Info("Permission denied")
+		log.Info("Permission denied")
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	driver, err := service.driverRepository.GetDriver(ctx, uid)
+	driver, err := service.driverRepository.GetDriver(ctx, log, uid)
 
 	if err != nil {
-		logrus.WithError(err).Error("Failed to get driver")
+		log.WithError(err).Error("Failed to get driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if driver == nil {
-		logrus.Info("Driver not found")
+		log.Info("Driver not found")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("driver not found"))
 	}
 
-	wallet, err := service.walletrepository.GetWallet(ctx, uid, req.Header().Get("Authorization"))
+	wallet, err := service.walletrepository.GetWallet(ctx, log, uid, req.Header().Get("Authorization"))
 
 	if err != nil {
-		logrus.WithError(err).Error("Failed to get wallet")
+		log.WithError(err).Error("Failed to get wallet")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if wallet.Balance <= 0 {
-		logrus.Info("Insufficient wallet balance: ", wallet.Balance)
+		log.Info("Insufficient wallet balance: ", wallet.Balance)
 
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("insufficient wallet balance"))
 	}
 
-	vehicle, err := service.vehicleRepository.GetVehicle(ctx, uid)
+	vehicle, err := service.vehicleRepository.GetVehicle(ctx, log, uid)
 
 	if err != nil {
-		logrus.WithError(err).Error("Failed to get vehicle")
+		log.WithError(err).Error("Failed to get vehicle")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if vehicle == nil {
-		logrus.Info("Vehicle not found")
+		log.Info("Vehicle not found")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("vehicle not found"))
 	}
 
-	status, err := service.driverRepository.GoOnline(ctx, uid, vehicle)
+	status, err := service.driverRepository.GoOnline(ctx, log, uid, vehicle)
 
 	if err != nil {
-		logrus.WithError(err).Error("Failed to go online")
+		log.WithError(err).Error("Failed to go online")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	logrus.Info("Status: ", status.Online)
+	log.Info("Status: ", status.Online)
 
-	updateTime, err := service.driverRepository.UpdateLocation(ctx, uid, req.Msg.Location)
+	updateTime, err := service.driverRepository.UpdateLocation(ctx, log, uid, req.Msg.Location)
 
 	if err != nil {
-		logrus.WithError(err).Error("Failed to update location")
+		log.WithError(err).Error("Failed to update location")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -88,10 +91,10 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	}
 
 	if err := res.Validate(); err != nil {
-		logrus.WithError(err).Error("Invalid response")
+		log.WithError(err).Error("Invalid response")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	logrus.Info("Driver is online")
+	log.Info("Driver is online")
 	return connect.NewResponse(res), nil
 }

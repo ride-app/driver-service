@@ -10,30 +10,30 @@ import (
 	pb "buf.build/gen/go/ride/wallet/protocolbuffers/go/ride/wallet/v1alpha1"
 	"github.com/bufbuild/connect-go"
 	"github.com/ride-app/driver-service/config"
-	"github.com/sirupsen/logrus"
+	"github.com/ride-app/driver-service/logger"
 )
 
 type WalletRepository interface {
-	GetWallet(ctx context.Context, id string, authToken string) (*pb.Wallet, error)
+	GetWallet(ctx context.Context, log logger.Logger, id string, authToken string) (*pb.Wallet, error)
 }
 
 type Impl struct {
 	walletApi walletApi.WalletServiceClient
 }
 
-func New() (*Impl, error) {
-	logrus.Debug("Wallet Service Host: ", config.Env.Wallet_Service_Host)
+func New(log logger.Logger) (*Impl, error) {
+	log.Debug("Wallet Service Host: ", config.Env.WalletServiceHost)
 	client := walletApi.NewWalletServiceClient(
 		http.DefaultClient,
-		config.Env.Wallet_Service_Host,
+		config.Env.WalletServiceHost,
 	)
 
-	logrus.Info("WalletRepository initialized")
+	log.Info("WalletRepository initialized")
 	return &Impl{walletApi: client}, nil
 }
 
-func (r *Impl) GetWallet(ctx context.Context, id string, authToken string) (*pb.Wallet, error) {
-	logrus.Info("Getting wallet from wallet service")
+func (r *Impl) GetWallet(ctx context.Context, log logger.Logger, id string, authToken string) (*pb.Wallet, error) {
+	log.Info("Getting wallet from wallet service")
 	req := connect.NewRequest(&pb.GetWalletRequest{
 		Name: "users/" + id + "/wallet",
 	})
@@ -42,7 +42,7 @@ func (r *Impl) GetWallet(ctx context.Context, id string, authToken string) (*pb.
 	res, err := r.walletApi.GetWallet(ctx, req)
 
 	if err != nil {
-		logrus.WithError(err).Error("Error getting wallet from wallet service")
+		log.WithError(err).Error("Error getting wallet from wallet service")
 		return nil, err
 	}
 

@@ -7,6 +7,7 @@
 package di
 
 import (
+	"github.com/ride-app/driver-service/logger"
 	"github.com/ride-app/driver-service/repositories/driver"
 	"github.com/ride-app/driver-service/repositories/vehicle"
 	"github.com/ride-app/driver-service/repositories/wallet"
@@ -17,22 +18,23 @@ import (
 // Injectors from wire.go:
 
 func InitializeService() (*service.DriverServiceServer, error) {
-	app, err := thirdparty.NewFirebaseApp()
+	logrusLogger := logger.New()
+	app, err := thirdparty.NewFirebaseApp(logrusLogger)
 	if err != nil {
 		return nil, err
 	}
-	firebaseImpl, err := driverrepository.NewFirebaseDriverRepository(app)
+	firebaseImpl, err := driverrepository.NewFirebaseDriverRepository(app, logrusLogger)
 	if err != nil {
 		return nil, err
 	}
-	vehiclerepositoryFirebaseImpl, err := vehiclerepository.NewFirebaseVehicleRepository(app)
+	vehiclerepositoryFirebaseImpl, err := vehiclerepository.NewFirebaseVehicleRepository(app, logrusLogger)
 	if err != nil {
 		return nil, err
 	}
-	impl, err := walletrepository.New()
+	impl, err := walletrepository.New(logrusLogger)
 	if err != nil {
 		return nil, err
 	}
-	driverServiceServer := service.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl)
+	driverServiceServer := service.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl, logrusLogger)
 	return driverServiceServer, nil
 }

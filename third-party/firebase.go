@@ -2,19 +2,19 @@ package thirdparty
 
 import (
 	"context"
-	"log"
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/ride-app/driver-service/config"
+	"github.com/ride-app/driver-service/logger"
 )
 
-func NewFirebaseApp() (*firebase.App, error) {
+func NewFirebaseApp(log logger.Logger) (*firebase.App, error) {
 	ctx := context.Background()
-	conf := &firebase.Config{ProjectID: config.Env.Firebase_Project_Id}
+	conf := &firebase.Config{ProjectID: config.Env.ProjectID}
 	app, err := firebase.NewApp(ctx, conf)
 
 	if err != nil {
-		log.Fatalln(err)
+		log.WithError(err).Fatal("Cannot initialize firebase app")
 		return nil, err
 	}
 

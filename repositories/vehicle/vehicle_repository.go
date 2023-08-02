@@ -15,46 +15,46 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/sirupsen/logrus"
+	"github.com/ride-app/driver-service/logger"
 )
 
 type VehicleRepository interface {
-	GetVehicle(ctx context.Context, id string) (*pb.Vehicle, error)
-	UpdateVehicle(ctx context.Context, vehicle *pb.Vehicle) (updateTime *timestamppb.Timestamp, err error)
+	GetVehicle(ctx context.Context, log logger.Logger, id string) (*pb.Vehicle, error)
+	UpdateVehicle(ctx context.Context, log logger.Logger, vehicle *pb.Vehicle) (updateTime *timestamppb.Timestamp, err error)
 }
 
 type FirebaseImpl struct {
 	firestore *firestore.Client
 }
 
-func NewFirebaseVehicleRepository(firebaseApp *firebase.App) (*FirebaseImpl, error) {
+func NewFirebaseVehicleRepository(firebaseApp *firebase.App, log logger.Logger) (*FirebaseImpl, error) {
 	firestore, err := firebaseApp.Firestore(context.Background())
 
 	if err != nil {
-		logrus.WithError(err).Error("Error initializing firestore client")
+		log.WithError(err).Error("Error initializing firestore client")
 		return nil, err
 	}
 
-	logrus.Info("Firebase vehicle repository initialized")
+	log.Info("Firebase vehicle repository initialized")
 	return &FirebaseImpl{
 		firestore: firestore,
 	}, nil
 }
 
-func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, error) {
-	logrus.Info("Getting vehicle from firestore")
+func (r *FirebaseImpl) GetVehicle(ctx context.Context, log logger.Logger, id string) (*pb.Vehicle, error) {
+	log.Info("Getting vehicle from firestore")
 	doc, err := r.firestore.Collection("vehicles").Doc(id).Get(ctx)
 
 	if status.Code(err) == codes.NotFound {
-		logrus.Info("Vehicle not found in firestore")
+		log.Info("Vehicle not found in firestore")
 		return nil, nil
 	} else if err != nil {
-		logrus.WithError(err).Error("Error getting vehicle from firestore")
+		log.WithError(err).Error("Error getting vehicle from firestore")
 		return nil, err
 	}
 
 	if !doc.Exists() {
-		logrus.WithError(err).Error("Vehicle does not exist in firestore")
+		log.WithError(err).Error("Vehicle does not exist in firestore")
 		return nil, nil
 	}
 
@@ -72,7 +72,7 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	}
 
 	if vehicleType == pb.Vehicle_TYPE_UNSPECIFIED {
-		logrus.WithError(err).Error("Unknown vehicle type")
+		log.WithError(err).Error("Unknown vehicle type")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("unknown vehicle type"))
 	}
 	// Hardcode e-rickshaw for now
@@ -88,8 +88,8 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, id string) (*pb.Vehicle, 
 	return &vehicle, nil
 }
 
-func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, vehicle *pb.Vehicle) (updateTime *timestamppb.Timestamp, err error) {
-	logrus.Info("Updating vehicle in firestore")
+func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, log logger.Logger, vehicle *pb.Vehicle) (updateTime *timestamppb.Timestamp, err error) {
+	log.Info("Updating vehicle in firestore")
 	x, err := r.firestore.Collection("vehicles").Doc(strings.Split(vehicle.Name, "/")[1]).Set(ctx, map[string]interface{}{
 		"license_plate": vehicle.LicensePlate,
 		"type":          strings.ToLower(strings.Split(vehicle.Type.String(), "_")[1]),
@@ -97,7 +97,7 @@ func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, vehicle *pb.Vehicle) (
 	})
 
 	if err != nil {
-		logrus.WithError(err).Error("Error updating vehicle in firestore")
+		log.WithError(err).Error("Error updating vehicle in firestore")
 		return nil, err
 	}
 
