@@ -60,10 +60,6 @@ func New() *LogrusLogger {
 	}
 }
 
-// func (l *LogrusLogger) WithError(err error) *LogrusLogger {
-// 	return l.logger.WithField("error", err.Error())
-// }
-
 func (l *LogrusLogger) Trace(args ...interface{}) {
 	l.logger.Trace(args...)
 }
