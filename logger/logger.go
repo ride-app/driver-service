@@ -75,10 +75,10 @@ func New() *LogrusLogger {
 		zapConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 	}
 
-	z := zap.Must(zapConfig.Build(zap.AddCallerSkip(1))).Sugar()
+	logger := zap.Must(zapConfig.Build(zap.AddCallerSkip(1))).Sugar()
 
 	return &LogrusLogger{
-		logger: z,
+		logger: logger,
 	}
 }
 
