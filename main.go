@@ -21,7 +21,9 @@ func main() {
 
 	err := cleanenv.ReadEnv(&config.Env)
 
-	log.WithError(err).Fatal("Failed to read environment variables")
+	if err != nil {
+		log.WithError(err).Fatal("Failed to read environment variables")
+	}
 
 	service, err := di.InitializeService()
 
