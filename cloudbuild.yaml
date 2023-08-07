@@ -10,11 +10,7 @@ steps:
 
   # Step 2: Build a Docker image
   - name: gcr.io/cloud-builders/docker
-    entrypoint: bash
     args:
-      - -c
-      - DOCKER_BUILDKIT=1
-      - docker
       - build
       - --build-arg
       - BUF_USERNAME=$_BUF_USERNAME
