@@ -12,8 +12,6 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args:
       - build
-      - --build-arg
-      - BUF_USERNAME=$_BUF_USERNAME
       - -t
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
       - -t
