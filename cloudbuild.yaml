@@ -1,6 +1,5 @@
 substitutions:
   _SERVICE_NAME: driver-service
-  _BUF_USERNAME: debkanchan
 
 steps:
   # Step 1: Generate from Protobuf
