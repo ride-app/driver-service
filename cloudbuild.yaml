@@ -1,5 +1,6 @@
 substitutions:
   _SERVICE_NAME: driver-service
+  _BUF_USERNAME: debkanchan
 
 steps:
   # Step 1: Generate from Protobuf
@@ -9,8 +10,14 @@ steps:
 
   # Step 2: Build a Docker image
   - name: gcr.io/cloud-builders/docker
+    entrypoint: bash
     args:
+      - -c
+      - DOCKER_BUILDKIT=1
+      - docker
       - build
+      - --build-arg
+      - BUF_USERNAME=$_BUF_USERNAME
       - -t
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
       - -t
