@@ -41,7 +41,7 @@ steps:
       - --allow-unauthenticated
       - --update-env-vars=PROJECT_ID=$PROJECT_ID
       - --max-instances=10
-      - --port=8080
+      - --port=50051
       - --use-http2
 
 images:
