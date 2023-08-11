@@ -36,7 +36,7 @@ steps:
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
       - --region=asia-south2
       - --allow-unauthenticated
-      - --set-env-vars=PROJECT_ID=$PROJECT_ID
+      - --set-env-vars=PROJECT_ID=$PROJECT_ID,DEBUG=$_DEBUG
       - --max-instances=10
       - --port=50051
       - --use-http2

@@ -26,6 +26,9 @@ new gcp.cloudbuild.Trigger("build-trigger", {
       branch: "^main$",
     },
   },
+  substitutions: {
+    _DEBUG: new pulumi.Config().get("debug") ?? "false",
+  },
   filename: "cloudbuild.yaml",
   includeBuildLogs: "INCLUDE_BUILD_LOGS_WITH_STATUS",
 });
