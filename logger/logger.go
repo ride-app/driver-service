@@ -71,7 +71,7 @@ func New() *LogrusLogger {
 		zapConfig.Encoding = "console"
 	}
 
-	if config.Env.Debug {
+	if config.Env.LogDebug {
 		zapConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 	}
 
