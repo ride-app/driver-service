@@ -20,13 +20,12 @@ var _ = Describe("CreateDriver", func() {
 		service        *driverService.DriverServiceServer
 	)
 
-	BeforeEach(func() {
-		ctrl = gomock.NewController(GinkgoT())
-		mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
-		service = &driverService.DriverServiceServer{
-			driverRepository: mockDriverRepo,
-		}
-	})
+ 	BeforeEach(func() {
+ 		ctrl = gomock.NewController(GinkgoT())
+ 		mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
+ 		mockLogger := mocks.NewMockLogger(ctrl)
+ 		service, _ = driverService.New(mockDriverRepo, mockLogger)
+ 	})
 
 	AfterEach(func() {
 		ctrl.Finish()
