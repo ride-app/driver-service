@@ -6,26 +6,26 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/golang/mock/gomock"
+	"go.uber.org/mock/mockgen"
 	"github.com/ride-app/driver-service/mocks"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2/ginkgo"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("GetDriver", func() {
-	var (
-		ctrl *gomock.Controller
-		mockDriverRepo *MockDriverRepository
-		service *DriverServiceServer
-	)
-
- 	BeforeEach(func() {
- 		ctrl = gomock.NewController(GinkgoT())
- 		mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
- 		service = &DriverServiceServer{
- 			driverRepository: mockDriverRepo,
- 		}
- 	})
+ var (
+ 	ctrl *gomock.Controller
+ 	mockDriverRepo *MockDriverRepository
+ 	service *DriverServiceServer
+ )
+ 
+ BeforeEach(func() {
+ 	ctrl = gomock.NewController(GinkgoT())
+ 	mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
+ 	service = &DriverServiceServer{
+ 		driverRepository: mockDriverRepo,
+ 	}
+ })
 
 	AfterEach(func() {
 		ctrl.Finish()
@@ -38,7 +38,7 @@ var _ = Describe("GetDriver", func() {
 					Name: "drivers/1",
 				},
 			}
-   			mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil)
+      mockDriverRepo.EXPECT().GetDriver(mock.Anything, mock.Anything, mock.Anything).Return(nil, nil)
 
 			_, err := service.GetDriver(context.Background(), req)
 			Expect(err).To(BeNil())
@@ -52,7 +52,7 @@ var _ = Describe("GetDriver", func() {
 					Name: "",
 				},
 			}
-   			mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, errors.New("invalid request"))
+      mockDriverRepo.EXPECT().GetDriver(mock.Anything, mock.Anything, mock.Anything).Return(nil, errors.New("invalid request"))
 
 			_, err := service.GetDriver(context.Background(), req)
 			Expect(err).To(MatchError("invalid request"))
