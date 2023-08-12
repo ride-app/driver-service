@@ -13,19 +13,19 @@ import (
 )
 
 var _ = Describe("GoOnline", func() {
-	var (
-		ctrl *gomock.Controller
-		mockDriverRepo *MockDriverRepository
-		service *DriverServiceServer
-	)
-
- 	BeforeEach(func() {
- 		ctrl = gomock.NewController(GinkgoT())
- 		mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
- 		service = &DriverServiceServer{
- 			driverRepository: mockDriverRepo,
- 		}
- 	})
+ var (
+ 	ctrl *gomock.Controller
+ 	mockDriverRepo *MockDriverRepository
+ 	service *DriverServiceServer
+ )
+ 
+ BeforeEach(func() {
+ 	ctrl = gomock.NewController(GinkgoT())
+ 	mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
+ 	service = &DriverServiceServer{
+ 		driverRepository: mockDriverRepo,
+ 	}
+ })
 
 	AfterEach(func() {
 		ctrl.Finish()
@@ -38,7 +38,7 @@ var _ = Describe("GoOnline", func() {
 					Name: "drivers/1",
 				},
 			}
-   			mockDriverRepo.EXPECT().GoOnline(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil)
+      mockDriverRepo.EXPECT().GoOnline(mock.Anything, mock.Anything, mock.Anything).Return(nil, nil)
 
 			_, err := service.GoOnline(context.Background(), req)
 			Expect(err).To(BeNil())
@@ -52,7 +52,7 @@ var _ = Describe("GoOnline", func() {
 					Name: "",
 				},
 			}
-   			mockDriverRepo.EXPECT().GoOnline(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, errors.New("invalid request"))
+      mockDriverRepo.EXPECT().GoOnline(mock.Anything, mock.Anything, mock.Anything).Return(nil, errors.New("invalid request"))
 
 			_, err := service.GoOnline(context.Background(), req)
 			Expect(err).To(MatchError("invalid request"))
