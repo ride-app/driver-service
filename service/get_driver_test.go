@@ -5,27 +5,28 @@ import (
 	"errors"
 
 	"github.com/bufbuild/connect-go"
-	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"go.uber.org/mock/mockgen"
-	"github.com/ride-app/driver-service/mocks"
-	. "github.com/onsi/ginkgo/v2/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	"github.com/ride-app/driver-service/mocks"
+	driverService "github.com/ride-app/driver-service/service"
+	"go.uber.org/mock/gomock"
 )
 
 var _ = Describe("GetDriver", func() {
- var (
- 	ctrl *gomock.Controller
- 	mockDriverRepo *MockDriverRepository
- 	service *DriverServiceServer
- )
- 
- BeforeEach(func() {
- 	ctrl = gomock.NewController(GinkgoT())
- 	mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
- 	service = &DriverServiceServer{
- 		driverRepository: mockDriverRepo,
- 	}
- })
+	var (
+		ctrl           *gomock.Controller
+		mockDriverRepo *mocks.MockDriverRepository
+		service        *driverService.DriverServiceServer
+	)
+
+	BeforeEach(func() {
+		ctrl = gomock.NewController(GinkgoT())
+		mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
+		service = &driverService.DriverServiceServer{
+			driverRepository: mockDriverRepo,
+		}
+	})
 
 	AfterEach(func() {
 		ctrl.Finish()
@@ -38,7 +39,7 @@ var _ = Describe("GetDriver", func() {
 					Name: "drivers/1",
 				},
 			}
-      mockDriverRepo.EXPECT().GetDriver(mock.Anything, mock.Anything, mock.Anything).Return(nil, nil)
+			mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil)
 
 			_, err := service.GetDriver(context.Background(), req)
 			Expect(err).To(BeNil())
@@ -52,7 +53,7 @@ var _ = Describe("GetDriver", func() {
 					Name: "",
 				},
 			}
-      mockDriverRepo.EXPECT().GetDriver(mock.Anything, mock.Anything, mock.Anything).Return(nil, errors.New("invalid request"))
+			mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, errors.New("invalid request"))
 
 			_, err := service.GetDriver(context.Background(), req)
 			Expect(err).To(MatchError("invalid request"))
