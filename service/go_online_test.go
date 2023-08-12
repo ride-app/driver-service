@@ -1,3 +1,6 @@
+//go:build unit_tests
+// +build unit_tests
+
 package service_test
 
 import (
@@ -15,17 +18,21 @@ import (
 
 var _ = Describe("GoOnline", func() {
 	var (
-		ctrl           *gomock.Controller
-		mockDriverRepo *mocks.MockDriverRepository
-		service        *driverService.DriverServiceServer
+		ctrl            *gomock.Controller
+		mockDriverRepo  *mocks.MockDriverRepository
+		mockVehicleRepo *mocks.MockVehicleRepository
+		mockWalletRepo  *mocks.MockWalletRepository
+		mockLogger      *mocks.MockLogger
+		service         *driverService.DriverServiceServer
 	)
 
 	BeforeEach(func() {
 		ctrl = gomock.NewController(GinkgoT())
 		mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
-		service = &driverService.DriverServiceServer{
-			driverRepository: mockDriverRepo,
-		}
+		mockVehicleRepo = mocks.NewMockVehicleRepository(ctrl)
+		mockWalletRepo = mocks.NewMockWalletRepository(ctrl)
+		mockLogger = mocks.NewMockLogger(ctrl)
+		service = driverService.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
 	AfterEach(func() {
