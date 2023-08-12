@@ -6,21 +6,21 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/golang/mock/gomock"
+	"go.uber.org/mock/mockgen"
 	"github.com/ride-app/driver-service/mocks"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2/ginkgo"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("CreateDriver", func() {
 	var (
-		ctrl *gomock.Controller
+		ctrl *mockgen.Controller
 		mockDriverRepo *MockDriverRepository
 		service *DriverServiceServer
 	)
 
  	BeforeEach(func() {
- 		ctrl = gomock.NewController(GinkgoT())
+ 		ctrl = mockgen.NewController(GinkgoT())
  		mockDriverRepo = mocks.NewMockDriverRepository(ctrl)
  		service = &DriverServiceServer{
  			driverRepository: mockDriverRepo,
