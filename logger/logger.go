@@ -1,3 +1,5 @@
+//go:generate go run go.uber.org/mock/mockgen -destination ../mocks/$GOFILE -package mocks . Logger
+
 package logger
 
 import (
