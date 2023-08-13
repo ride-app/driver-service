@@ -37,7 +37,7 @@ func NewFirebaseDriverRepository(client *firestore.Client) *FirebaseDriverReposi
 }
 
 func (repo *FirebaseDriverRepository) GetDriver(ctx context.Context, log *logrus.Entry, uid string) (*models.Driver, error) {
-	log.Info("getting driver")
+ 	log.Info("getting driver")
 
 	dsnap, err := repo.client.Collection("drivers").Doc(uid).Get(ctx)
 
@@ -66,7 +66,7 @@ func (repo *FirebaseDriverRepository) GetDriver(ctx context.Context, log *logrus
 }
 
 func (repo *FirebaseDriverRepository) CreateDriver(ctx context.Context, log *logrus.Entry, driver *models.Driver) (*string, error) {
-	log.Info("creating driver")
+ 	log.Info("creating driver")
 
 	_, err := repo.client.Collection("drivers").Doc(driver.UID).Set(ctx, driver)
 
@@ -83,7 +83,7 @@ func (repo *FirebaseDriverRepository) CreateDriver(ctx context.Context, log *log
 }
 
 func (repo *FirebaseDriverRepository) GoOnline(ctx context.Context, log *logrus.Entry, uid string, vehicle *models.Vehicle) (*models.Status, error) {
-	log.Info("going online")
+ 	log.Info("going online")
 
 	status := &models.Status{
 		Online: true,
@@ -104,7 +104,7 @@ func (repo *FirebaseDriverRepository) GoOnline(ctx context.Context, log *logrus.
 }
 
 func (repo *FirebaseDriverRepository) UpdateLocation(ctx context.Context, log *logrus.Entry, uid string, location *models.Location) (*string, error) {
-	log.Info("updating location")
+ 	log.Info("updating location")
 
 	_, err := repo.client.Collection("drivers").Doc(uid).Set(ctx, map[string]interface{}{
 		"location": location,
