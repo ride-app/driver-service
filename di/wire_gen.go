@@ -18,23 +18,23 @@ import (
 // Injectors from wire.go:
 
 func InitializeService() (*service.DriverServiceServer, error) {
-	logrusLogger := logger.New()
-	app, err := thirdparty.NewFirebaseApp(logrusLogger)
+	zapLogger := logger.New()
+	app, err := thirdparty.NewFirebaseApp(zapLogger)
 	if err != nil {
 		return nil, err
 	}
-	firebaseImpl, err := driverrepository.NewFirebaseDriverRepository(app, logrusLogger)
+	firebaseImpl, err := driverrepository.NewFirebaseDriverRepository(app, zapLogger)
 	if err != nil {
 		return nil, err
 	}
-	vehiclerepositoryFirebaseImpl, err := vehiclerepository.NewFirebaseVehicleRepository(app, logrusLogger)
+	vehiclerepositoryFirebaseImpl, err := vehiclerepository.NewFirebaseVehicleRepository(app, zapLogger)
 	if err != nil {
 		return nil, err
 	}
-	impl, err := walletrepository.New(logrusLogger)
+	impl, err := walletrepository.New(zapLogger)
 	if err != nil {
 		return nil, err
 	}
-	driverServiceServer := service.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl, logrusLogger)
+	driverServiceServer := service.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl, zapLogger)
 	return driverServiceServer, nil
 }

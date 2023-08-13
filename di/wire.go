@@ -22,7 +22,7 @@ func InitializeService() (*service.DriverServiceServer, error) {
 			vehiclerepository.NewFirebaseVehicleRepository,
 			wire.Bind(
 				new(logger.Logger),
-				new(*logger.LogrusLogger),
+				new(*logger.ZapLogger),
 			),
 			wire.Bind(
 				new(driverrepository.DriverRepository),
