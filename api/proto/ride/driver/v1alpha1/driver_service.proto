@@ -96,9 +96,9 @@ message Driver {
   string photo_uri = 3 [(validate.rules).string.uri = true];
 
   // The phone number of the driver. Example "+911234567890"
-  google.type.PhoneNumber phone_number = 4;
+  string phone_number = 4 [(validate.rules).string.pattern = "^\\+?[1-9]\\d{1,14}$"];
 
-  google.type.Date date_of_birth = 5;
+  google.type.Date date_of_birth = 5 [(validate.rules).message.required = true];
 
   Gender gender = 6 [(validate.rules).enum = {not_in: [0]}];
   

@@ -13,7 +13,6 @@ import (
 	"firebase.google.com/go/v4/auth"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/logger"
-	"google.golang.org/genproto/googleapis/type/phone_number"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -134,13 +133,9 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, log logger.Logger, id stri
 		Name:        "drivers/" + id,
 		DisplayName: user.DisplayName,
 		PhotoUri:    user.PhotoURL,
-		PhoneNumber: &phone_number.PhoneNumber{
-			Kind: &phone_number.PhoneNumber_E164Number{
-				E164Number: user.PhoneNumber,
-			},
-		},
-		CreateTime: timestamppb.New(doc.CreateTime),
-		UpdateTime: timestamppb.New(doc.UpdateTime),
+		PhoneNumber: user.PhoneNumber,
+		CreateTime:  timestamppb.New(doc.CreateTime),
+		UpdateTime:  timestamppb.New(doc.UpdateTime),
 	}
 
 	return &driver, nil
@@ -148,7 +143,7 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, log logger.Logger, id stri
 
 func (r *FirebaseImpl) UpdateDriver(ctx context.Context, log logger.Logger, driver *pb.Driver) (updateTime *time.Time, err error) {
 	log.Info("Updating driver in auth")
-	_, err = r.auth.UpdateUser(ctx, strings.Split(driver.Name, "/")[1], (&auth.UserToUpdate{}).DisplayName(driver.DisplayName).PhotoURL(driver.PhotoUri).PhoneNumber(driver.PhoneNumber.GetE164Number()))
+	_, err = r.auth.UpdateUser(ctx, strings.Split(driver.Name, "/")[1], (&auth.UserToUpdate{}).DisplayName(driver.DisplayName).PhotoURL(driver.PhotoUri).PhoneNumber(driver.PhoneNumber))
 
 	if auth.IsUserNotFound(err) {
 		log.Info("Driver does not exist in auth")
