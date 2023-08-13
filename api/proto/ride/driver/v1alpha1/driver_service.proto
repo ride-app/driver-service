@@ -87,10 +87,7 @@ service DriverService {
 
 message Driver {
   // Relative resource name of Driver, for example: "drivers/driver1"
-  string name = 1 [(validate.rules).string = {
-                    pattern: "^drivers/[A-Za-z0-9_-]+$",
-                    ignore_empty: true
-                  }];
+  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
   
   // The full name of the driver. Example "John Doe"
   string display_name = 2;
@@ -103,7 +100,7 @@ message Driver {
 
   google.type.Date date_of_birth = 5;
 
-  Gender gender = 6 [(validate.rules).enum = {not_in: [1]}];
+  Gender gender = 6 [(validate.rules).enum = {not_in: [0]}];
   
   // Output only. Timestamp when the Driver was created.
   google.protobuf.Timestamp create_time = 9;

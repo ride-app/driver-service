@@ -17,7 +17,7 @@ func (service *DriverServiceServer) UpdateDriver(ctx context.Context,
 	})
 
 	if err := req.Msg.Validate(); err != nil {
-		log.Info("Invalid request")
+		log.WithError(err).Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
