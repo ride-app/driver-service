@@ -1,5 +1,3 @@
-//go:generate go run go.uber.org/mock/mockgen -destination ../mocks/$GOFILE -package mocks . Logger
-
 package logger
 
 import (
@@ -30,11 +28,11 @@ type Logger interface {
 	WithError(err error) Logger
 }
 
-type LogrusLogger struct {
+type ZapLogger struct {
 	logger *zap.SugaredLogger
 }
 
-func New() *LogrusLogger {
+func New() *ZapLogger {
 	encoderConfig := zap.NewProductionEncoderConfig()
 
 	if !config.Env.Production {
@@ -79,7 +77,7 @@ func New() *LogrusLogger {
 
 	logger := zap.Must(zapConfig.Build(zap.AddCallerSkip(1))).Sugar()
 
-	return &LogrusLogger{
+	return &ZapLogger{
 		logger: logger,
 	}
 }
@@ -92,72 +90,72 @@ func New() *LogrusLogger {
 // 	l.logger.Tracef(format, args...)
 // }
 
-func (l *LogrusLogger) Debug(args ...interface{}) {
+func (l *ZapLogger) Debug(args ...interface{}) {
 	l.logger.Debug(args...)
 }
 
-func (l *LogrusLogger) Debugf(format string, args ...interface{}) {
+func (l *ZapLogger) Debugf(format string, args ...interface{}) {
 	l.logger.Debugf(format, args...)
 }
 
-func (l *LogrusLogger) Info(args ...interface{}) {
+func (l *ZapLogger) Info(args ...interface{}) {
 	l.logger.Info(args...)
 }
 
-func (l *LogrusLogger) Infof(format string, args ...interface{}) {
+func (l *ZapLogger) Infof(format string, args ...interface{}) {
 	l.logger.Infof(format, args...)
 }
 
-func (l *LogrusLogger) Warn(args ...interface{}) {
+func (l *ZapLogger) Warn(args ...interface{}) {
 	l.logger.Warn(args...)
 }
 
-func (l *LogrusLogger) Warnf(format string, args ...interface{}) {
+func (l *ZapLogger) Warnf(format string, args ...interface{}) {
 	l.logger.Warnf(format, args...)
 }
 
-func (l *LogrusLogger) Error(args ...interface{}) {
+func (l *ZapLogger) Error(args ...interface{}) {
 	l.logger.Error(args...)
 }
 
-func (l *LogrusLogger) Errorf(format string, args ...interface{}) {
+func (l *ZapLogger) Errorf(format string, args ...interface{}) {
 	l.logger.Errorf(format, args...)
 }
 
-func (l *LogrusLogger) Fatal(args ...interface{}) {
+func (l *ZapLogger) Fatal(args ...interface{}) {
 	l.logger.Fatal(args...)
 }
 
-func (l *LogrusLogger) Fatalf(format string, args ...interface{}) {
+func (l *ZapLogger) Fatalf(format string, args ...interface{}) {
 	l.logger.Fatalf(format, args...)
 }
 
-func (l *LogrusLogger) Panic(args ...interface{}) {
+func (l *ZapLogger) Panic(args ...interface{}) {
 	l.logger.Panic(args...)
 }
 
-func (l *LogrusLogger) Panicf(format string, args ...interface{}) {
+func (l *ZapLogger) Panicf(format string, args ...interface{}) {
 	l.logger.Panicf(format, args...)
 }
 
-func (l *LogrusLogger) WithField(key string, value interface{}) Logger {
-	return &LogrusLogger{
+func (l *ZapLogger) WithField(key string, value interface{}) Logger {
+	return &ZapLogger{
 		logger: l.logger.With(key, value),
 	}
 }
 
-func (l *LogrusLogger) WithFields(fields map[string]string) Logger {
+func (l *ZapLogger) WithFields(fields map[string]string) Logger {
 	logger := l.logger
 	for key, value := range fields {
 		logger = logger.With(key, value)
 	}
-	return &LogrusLogger{
+	return &ZapLogger{
 		logger: logger,
 	}
 }
 
-func (l *LogrusLogger) WithError(err error) Logger {
-	return &LogrusLogger{
+func (l *ZapLogger) WithError(err error) Logger {
+	return &ZapLogger{
 		logger: l.logger.With(zap.Error(err)),
 	}
 }
