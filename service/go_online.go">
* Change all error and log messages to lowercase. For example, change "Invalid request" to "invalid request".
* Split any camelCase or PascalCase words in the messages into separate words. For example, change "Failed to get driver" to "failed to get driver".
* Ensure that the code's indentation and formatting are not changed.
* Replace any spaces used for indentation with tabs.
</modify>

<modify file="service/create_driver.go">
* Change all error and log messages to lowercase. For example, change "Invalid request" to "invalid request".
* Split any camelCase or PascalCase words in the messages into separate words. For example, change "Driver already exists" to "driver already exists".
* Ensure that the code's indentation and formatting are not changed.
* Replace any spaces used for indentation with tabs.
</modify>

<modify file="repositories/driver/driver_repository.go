@@ -67,15 +67,15 @@ func NewFirebaseDriverRepository(firebaseApp *firebase.App, log logger.Logger) (
 }
  
 func (r *FirebaseImpl) CreateDriver(ctx context.Context, log logger.Logger, driver *pb.Driver) (createTime *time.Time, err error) {
-	log.Info("updating driver in auth")
-	_, err = r.auth.UpdateUser(ctx, strings.Split(driver.Name, "/")[1], (&auth.UserToUpdate{}).DisplayName(driver.DisplayName).PhotoURL(driver.PhotoUri))
+ 	log.info("updating driver in auth")
+ 	_, err = r.auth.updateUser(ctx, strings.split(driver.name, "/")[1], (&auth.userToUpdate{}).displayName(driver.displayName).photoURL(driver.photoUri))
  
-	if err != nil {
-		log.WithError(err).Error("error updating driver in auth")
-		return nil, err
-	}
+ 	if err != nil {
+ 		log.withError(err).error("error updating driver in auth")
+ 		return nil, err
+ 	}
  
-	log.Info("creating driver in firestore")
+ 	log.info("creating driver in firestore")
 	writeResult, err := r.firestore.Collection("drivers").Doc(strings.Split(driver.Name, "/")[1]).Create(ctx, map[string]interface{}{
 		"dateOfBirth": map[string]int32{
 			"day":   driver.DateOfBirth.Day,
