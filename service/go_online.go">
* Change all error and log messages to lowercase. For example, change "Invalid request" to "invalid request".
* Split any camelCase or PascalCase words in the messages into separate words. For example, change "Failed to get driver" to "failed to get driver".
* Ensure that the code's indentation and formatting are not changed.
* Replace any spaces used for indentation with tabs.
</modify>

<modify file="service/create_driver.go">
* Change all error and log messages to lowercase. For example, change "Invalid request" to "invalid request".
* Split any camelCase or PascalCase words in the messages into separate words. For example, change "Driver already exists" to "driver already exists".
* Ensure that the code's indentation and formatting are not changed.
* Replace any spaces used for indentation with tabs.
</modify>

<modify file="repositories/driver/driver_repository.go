@@ -48,18 +48,18 @@ func NewFirebaseDriverRepository(firebaseApp *firebase.App, log logger.Logger) (
 	firestore, err := firebaseApp.Firestore(context.Background())
  
 	if err != nil {
-		log.WithError(err).Error("error initializing firestore client")
+ 	log.witherror(err).error("error initializing firestore client")
 		return nil, err
 	}
  
 	auth, err := firebaseApp.Auth(context.Background())
  
 	if err != nil {
-		log.WithError(err).Error("error initializing auth client")
+ 	log.witherror(err).error("error initializing auth client")
 		return nil, err
 	}
  
-	log.Info("firebase driver repository initialized")
+ 	log.info("firebase driver repository initialized")
 	return &FirebaseImpl{
 		firestore: firestore,
 		auth:      auth,
@@ -71,7 +71,7 @@ func (r *FirebaseImpl) CreateDriver(ctx context.Context, log logger.Logger, driv
  	_, err = r.auth.updateUser(ctx, strings.split(driver.name, "/")[1], (&auth.userToUpdate{}).displayName(driver.displayName).photoURL(driver.photoUri))
  
  	if err != nil {
- 		log.withError(err).error("error updating driver in auth")
+ 	log.witherror(err).error("error updating driver in auth")
  		return nil, err
  	}
  
