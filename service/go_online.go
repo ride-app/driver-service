@@ -17,7 +17,7 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	})
 
 	if err := req.Msg.Validate(); err != nil {
-  		log.WithError(err).Info("invalid request")
+		log.WithError(err).Info("invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
@@ -27,31 +27,31 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	log.Debug("Request header uid: ", req.Header().Get("uid"))
 
 	if uid != req.Header().Get("uid") {
-  		log.Info("permission denied")
+		log.Info("permission denied")
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
 	driver, err := service.driverRepository.GetDriver(ctx, log, uid)
 
 	if err != nil {
-  		log.WithError(err).Error("failed to get driver")
+		log.WithError(err).Error("failed to get driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if driver == nil {
-  		log.Info("driver not found")
+		log.Info("driver not found")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("driver not found"))
 	}
 
 	wallet, err := service.walletrepository.GetWallet(ctx, log, uid, req.Header().Get("Authorization"))
 
 	if err != nil {
-  		log.WithError(err).Error("failed to get wallet")
+		log.WithError(err).Error("failed to get wallet")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if wallet.Balance <= 0 {
-  		log.Info("insufficient wallet balance: ", wallet.Balance)
+		log.Info("insufficient wallet balance: ", wallet.Balance)
 
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("insufficient wallet balance"))
 	}
@@ -59,28 +59,28 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	vehicle, err := service.vehicleRepository.GetVehicle(ctx, log, uid)
 
 	if err != nil {
-  		log.WithError(err).Error("failed to get vehicle")
+		log.WithError(err).Error("failed to get vehicle")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	if vehicle == nil {
-  		log.Info("vehicle not found")
+		log.Info("vehicle not found")
 		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("vehicle not found"))
 	}
 
 	status, err := service.driverRepository.GoOnline(ctx, log, uid, vehicle)
 
 	if err != nil {
-  		log.WithError(err).Error("failed to go online")
+		log.WithError(err).Error("failed to go online")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-  		log.Info("status: ", status.Online)
+	log.Info("status: ", status.Online)
 
 	updateTime, err := service.driverRepository.UpdateLocation(ctx, log, uid, req.Msg.Location)
 
 	if err != nil {
-  		log.WithError(err).Error("failed to update location")
+		log.WithError(err).Error("failed to update location")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -91,10 +91,10 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 	}
 
 	if err := res.Validate(); err != nil {
-  		log.WithError(err).Error("invalid response")
+		log.WithError(err).Error("invalid response")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-  		log.Info("driver is online")
+	log.Info("driver is online")
 	return connect.NewResponse(res), nil
 }
