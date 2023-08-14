@@ -8,7 +8,6 @@ import (
 	"errors"
 
 	"github.com/bufbuild/connect-go"
-	"github.com/golang/protobuf/proto"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
@@ -16,6 +15,7 @@ import (
 	driverService "github.com/ride-app/driver-service/service"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/genproto/googleapis/type/date"
+	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
