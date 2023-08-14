@@ -75,5 +75,4 @@ lint:
         - "**/wire_gen.go"
 merge:
   required_statuses:
-    - Lint
-    - Unit Tests
+    - Lint+Unit Tests
