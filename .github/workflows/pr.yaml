@@ -46,7 +46,7 @@ jobs:
         uses: trunk-io/breakpoint@v1
         with:
           breakpoint-id: unit-test
-          run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.profile --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
+          run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
           trunk-token: ${{ secrets.TRUNK_TOKEN }}
           org: ride
 
@@ -55,7 +55,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit-tests,pr # optional
-          name: codecov-umbrella
           fail_ci_if_error: true
           verbose: true
 
