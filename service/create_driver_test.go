@@ -5,6 +5,7 @@ package service_test
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/bufbuild/connect-go"
@@ -368,6 +369,40 @@ var _ = Describe("CreateDriver", func() {
 
 				Expect(err).ToNot(HaveOccurred())
 				Expect(res.Msg.Driver.CreateTime).To(Equal(res.Msg.Driver.UpdateTime))
+			})
+		})
+
+		When("driver repository GetDriver returns error", func() {
+			BeforeEach(func() {
+				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, errors.New("error"))
+			})
+
+			It("returns internal error", func() {
+				_, err := service.CreateDriver(context.Background(), req)
+				Expect(err).To(SatisfyAll(
+					HaveOccurred(),
+					BeAssignableToTypeOf(&connect.Error{}),
+					WithTransform(func(err error) connect.Code {
+						return err.(*connect.Error).Code()
+					}, Equal(connect.CodeInternal)),
+				))
+			})
+		})
+
+		When("driver repository CreateDriver returns error", func() {
+			BeforeEach(func() {
+				mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, errors.New("error"))
+			})
+
+			It("returns internal error", func() {
+				_, err := service.CreateDriver(context.Background(), req)
+				Expect(err).To(SatisfyAll(
+					HaveOccurred(),
+					BeAssignableToTypeOf(&connect.Error{}),
+					WithTransform(func(err error) connect.Code {
+						return err.(*connect.Error).Code()
+					}, Equal(connect.CodeInternal)),
+				))
 			})
 		})
 	})
