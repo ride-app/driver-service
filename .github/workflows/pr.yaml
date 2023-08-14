@@ -23,6 +23,14 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
       - uses: bufbuild/buf-setup-action@v1.25.1
         with:
@@ -46,7 +54,7 @@ jobs:
         uses: trunk-io/breakpoint@v1
         with:
           breakpoint-id: unit-test
-          run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.profile --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
+          run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
           trunk-token: ${{ secrets.TRUNK_TOKEN }}
           org: ride
 
@@ -55,7 +63,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit-tests,pr # optional
-          name: codecov-umbrella
           fail_ci_if_error: true
           verbose: true
 
