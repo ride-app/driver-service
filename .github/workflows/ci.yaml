@@ -1,0 +1,60 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint+Unit Tests
+    env:
+      GOPRIVATE: buf.build/gen/go
+      BUF_USER: debkanchan
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: go.mod
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - uses: bufbuild/buf-setup-action@v1.25.1
+        with:
+          github_token: ${{ github.token }}
+
+      - name: Authenticate buf
+        run: echo ${{ secrets.BUF_TOKEN }} | buf registry login --username ${{ env.BUF_USER }} --token-stdin
+
+      - name: Build protobuf
+        uses: trunk-io/breakpoint@v1
+        with:
+          breakpoint-id: buf-generate
+          run: buf generate
+          trunk-token: ${{ secrets.TRUNK_TOKEN }}
+          org: ride
+
+      - name: Lint
+        uses: trunk-io/trunk-action@v1
+
+      - name: Unit Tests
+        run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-fast --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit-tests
+          files: ./cover.json,./report.json
+          fail_ci_if_error: true
+          verbose: true
