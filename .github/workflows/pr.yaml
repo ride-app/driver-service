@@ -42,6 +42,23 @@ jobs:
       - name: Lint
         uses: trunk-io/trunk-action@v1
 
+      - name: Unit Tests
+        uses: trunk-io/breakpoint@v1
+        with:
+          breakpoint-id: unit-test
+          run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.profile --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
+          trunk-token: ${{ secrets.TRUNK_TOKEN }}
+          org: ride
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit-tests,pr # optional
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true
+
   # preview:
   #   name: Preview Infra
   #   runs-on: ubuntu-latest
