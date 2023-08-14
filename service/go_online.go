@@ -50,6 +50,11 @@ func (service *DriverServiceServer) GoOnline(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
+	if wallet == nil {
+		log.Info("wallet not found")
+		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("wallet not found"))
+	}
+
 	if wallet.Balance <= 0 {
 		log.Info("insufficient wallet balance: ", wallet.Balance)
 
