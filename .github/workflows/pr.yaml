@@ -11,7 +11,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: Lint
+    name: Lint+Unit Tests
     env:
       GOPRIVATE: buf.build/gen/go
       BUF_USER: debkanchan
