@@ -32,7 +32,7 @@ actions:
       run: go run github.com/onsi/ginkgo/v2/ginkgo -r --procs=4 --compilers=4 --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --race --trace --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
       triggers:
         - git_hooks:
-            - pre-commit
+            - pre-push
 
 cli:
   version: 1.13.0
