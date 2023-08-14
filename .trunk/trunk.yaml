@@ -76,3 +76,4 @@ lint:
 merge:
   required_statuses:
     - Lint
+    - Unit Tests
