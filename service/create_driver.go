@@ -57,16 +57,18 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	req.Msg.Driver.CreateTime = timestamppb.New(*createTime)
-	req.Msg.Driver.UpdateTime = timestamppb.New(*createTime)
+	res := connect.NewResponse(&pb.CreateDriverResponse{
+		Driver: req.Msg.Driver,
+	})
 
-	if err := req.Msg.Validate(); err != nil {
+	res.Msg.Driver.CreateTime = timestamppb.New(*createTime)
+	res.Msg.Driver.UpdateTime = timestamppb.New(*createTime)
+
+	if err := res.Msg.Validate(); err != nil {
 		log.WithError(err).Error("Invalid response")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	log.Info("Driver created")
-	return connect.NewResponse(&pb.CreateDriverResponse{
-		Driver: req.Msg.Driver,
-	}), nil
+	return res, nil
 }
