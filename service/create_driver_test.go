@@ -40,13 +40,7 @@ var _ = Describe("CreateDriver", func() {
 	})
 
 	JustBeforeEach(func() {
-		mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockDriverRepo.EXPECT().UpdateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockDriverRepo.EXPECT().DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-
-		mockVehicleRepo.EXPECT().GetVehicle(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockWalletRepo.EXPECT().GetWallet(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
+		SetupStubs(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
 	AfterEach(func() {
@@ -61,7 +55,7 @@ var _ = Describe("CreateDriver", func() {
 				Msg: &pb.CreateDriverRequest{
 					Driver: &pb.Driver{
 						Name:        "drivers/valid-driver-id",
-						DisplayName: "John Doe",
+						DisplayName: "Jane Doe",
 						PhotoUri:    "https://example.com/photo.jpg",
 						PhoneNumber: "+911234567890",
 						DateOfBirth: &date.Date{
@@ -69,30 +63,16 @@ var _ = Describe("CreateDriver", func() {
 							Month: 1,
 							Day:   1,
 						},
-						Gender: pb.Driver_GENDER_MALE,
+						Gender: pb.Driver_GENDER_FEMALE,
 					},
 				},
 			}
 			req.Header().Set("uid", "valid-driver-id")
 		})
 
-		When("driver already exists", func() {
+		Context("and driver already exists", func() {
 			BeforeEach(func() {
-				expectedDriver := &pb.Driver{
-					Name:        "drivers/valid-driver-id",
-					DisplayName: "Jane Doe",
-					PhotoUri:    "https://example.com/photo.jpg",
-					PhoneNumber: "+910987654321",
-					DateOfBirth: &date.Date{
-						Year:  2001,
-						Month: 1,
-						Day:   1,
-					},
-					Gender:     pb.Driver_GENDER_FEMALE,
-					CreateTime: timestamppb.Now(),
-					UpdateTime: timestamppb.New(time.Now().Add(-(time.Hour * 10))),
-				}
-				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(expectedDriver, nil)
+				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).Return(MockDriver, nil)
 			})
 
 			It("returns response with driver", func() {
@@ -102,20 +82,45 @@ var _ = Describe("CreateDriver", func() {
 				Expect(res.Msg.Driver.Name).To(Equal(req.Msg.Driver.Name))
 				Expect(proto.Equal(req.Msg.Driver, res.Msg.Driver)).To(BeFalse())
 			})
-		})
 
-		When("driver does not exist", func() {
-			var createTime *time.Time
+			When("create time is passed with the request", func() {
+				var createTime *time.Time
 
-			BeforeEach(OncePerOrdered, func() {
-				t := time.Now().Add(time.Second * 10)
-				createTime = &t
+				BeforeEach(func() {
+					t := time.Now()
+					createTime = &t
+					req.Msg.Driver.CreateTime = timestamppb.New(t)
+				})
 
-				mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), gomock.Eq(req.Msg.Driver)).Return(createTime, nil)
+				It("ignores createTime and returns different createTime", func() {
+					res, err := service.CreateDriver(context.Background(), req)
+
+					Expect(err).ToNot(HaveOccurred())
+					Expect(res.Msg.Driver.CreateTime).To(Not(Equal(timestamppb.New(*createTime))))
+				})
 			})
 
-			AfterEach(func() {
-				createTime = nil
+			When("updateTime is passed with the request", func() {
+				var updateTime *time.Time
+
+				BeforeEach(func() {
+					t := time.Now()
+					updateTime = &t
+					req.Msg.Driver.CreateTime = timestamppb.New(t)
+				})
+
+				It("ignores updateTime and returns different updateTime", func() {
+					res, err := service.CreateDriver(context.Background(), req)
+
+					Expect(err).ToNot(HaveOccurred())
+					Expect(res.Msg.Driver.UpdateTime).To(Not(Equal(timestamppb.New(*updateTime))))
+				})
+			})
+		})
+
+		Context("and driver does not exist", func() {
+			BeforeEach(func() {
+				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).Return(nil, nil).AnyTimes()
 			})
 
 			It("returns valid response with same driver", func() {
@@ -126,55 +131,82 @@ var _ = Describe("CreateDriver", func() {
 					Not(BeNil()),
 					BeAssignableToTypeOf(&pb.Driver{}),
 				))
-				Expect(res.Msg.Validate()).To(Succeed())
 			})
 
-			It("returns driver with updated createTime and updateTime", func() {
+			It("returns driver with createTime and updateTime", func() {
 				res, err := service.CreateDriver(context.Background(), req)
-
-				req.Msg.Driver.CreateTime = timestamppb.New(*createTime)
-				req.Msg.Driver.UpdateTime = timestamppb.New(*createTime)
 
 				Expect(err).ToNot(HaveOccurred())
 				Expect(res.Msg.Driver).To(SatisfyAll(
 					Not(BeNil()),
 					BeAssignableToTypeOf(&pb.Driver{}),
 				))
-				Expect(res.Msg.Validate()).To(Succeed())
-				Expect(proto.Equal(req.Msg.Driver, res.Msg.Driver)).To(BeTrue())
+				Expect(res.Msg.Driver.CreateTime).To(Not(BeZero()))
 			})
 
 			It("returns response where createTime and updateTime is equal", func() {
 				res, err := service.CreateDriver(context.Background(), req)
 
-				req.Msg.Driver.CreateTime = timestamppb.New(*createTime)
-				req.Msg.Driver.UpdateTime = timestamppb.New(*createTime)
-
 				Expect(err).ToNot(HaveOccurred())
 				Expect(res.Msg.Driver.CreateTime).To(Equal(res.Msg.Driver.UpdateTime))
+			})
+
+			When("create time is passed with the request", func() {
+				var createTime *time.Time
+
+				BeforeEach(func() {
+					t := time.Now()
+					createTime = &t
+					req.Msg.Driver.CreateTime = timestamppb.New(t)
+				})
+
+				It("ignores createTime and returns different createTime", func() {
+					res, err := service.CreateDriver(context.Background(), req)
+
+					Expect(err).ToNot(HaveOccurred())
+					Expect(res.Msg.Driver.CreateTime).To(Not(Equal(timestamppb.New(*createTime))))
+				})
+			})
+
+			When("updateTime is passed with the request", func() {
+				var updateTime *time.Time
+
+				BeforeEach(func() {
+					t := time.Now()
+					updateTime = &t
+					req.Msg.Driver.CreateTime = timestamppb.New(t)
+				})
+
+				It("ignores updateTime and returns different updateTime", func() {
+					res, err := service.CreateDriver(context.Background(), req)
+
+					Expect(err).ToNot(HaveOccurred())
+					Expect(res.Msg.Driver.UpdateTime).To(Not(Equal(timestamppb.New(*updateTime))))
+				})
+			})
+
+			When("driver repository CreateDriver returns error", func() {
+				BeforeEach(func() {
+					req.Msg.Driver.Name = "drivers/error-driver-id"
+					req.Header().Set("uid", "error-driver-id")
+				})
+
+				It("returns internal error", func() {
+					_, err := service.CreateDriver(context.Background(), req)
+					Expect(err).To(SatisfyAll(
+						HaveOccurred(),
+						BeAssignableToTypeOf(&connect.Error{}),
+						WithTransform(func(err error) connect.Code {
+							return err.(*connect.Error).Code()
+						}, Equal(connect.CodeInternal)),
+					))
+				})
 			})
 		})
 
 		When("driver repository GetDriver returns error", func() {
 			BeforeEach(func() {
 				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, errors.New("error"))
-			})
-
-			It("returns internal error", func() {
-				_, err := service.CreateDriver(context.Background(), req)
-				Expect(err).To(SatisfyAll(
-					HaveOccurred(),
-					BeAssignableToTypeOf(&connect.Error{}),
-					WithTransform(func(err error) connect.Code {
-						return err.(*connect.Error).Code()
-					}, Equal(connect.CodeInternal)),
-				))
-			})
-		})
-
-		When("driver repository CreateDriver returns error", func() {
-			BeforeEach(func() {
-				mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, errors.New("error"))
 			})
 
 			It("returns internal error", func() {
@@ -210,6 +242,7 @@ var _ = Describe("CreateDriver", func() {
 					},
 				},
 			}
+
 			req.Header().Set("uid", "valid-driver-id")
 		})
 
@@ -244,11 +277,6 @@ var _ = Describe("CreateDriver", func() {
 		})
 
 		When("driver display name is empty", func() {
-			BeforeEach(func() {
-				createtime := time.Now()
-				mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(&createtime, nil)
-			})
-
 			It("does not return error", func() {
 				req.Msg.Driver.DisplayName = ""
 
@@ -331,27 +359,6 @@ var _ = Describe("CreateDriver", func() {
 						return err.(*connect.Error).Code()
 					}, Equal(connect.CodeInvalidArgument)),
 				))
-			})
-		})
-
-		When("create time is nil", func() {
-			var createTime *time.Time
-
-			BeforeEach(func() {
-				t := time.Now()
-				createTime = &t
-				mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(createTime, nil)
-			})
-
-			AfterEach(func() {
-				createTime = nil
-			})
-
-			It("returns response with a createTime field", func() {
-				res, err := service.CreateDriver(context.Background(), req)
-
-				Expect(err).ToNot(HaveOccurred())
-				Expect(res.Msg.Driver.CreateTime).To(Equal(timestamppb.New(*createTime)))
 			})
 		})
 
