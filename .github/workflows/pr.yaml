@@ -57,7 +57,8 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          flags: unit-tests,pr # optional
+          flags: unit-tests,pr
+          files: ./cover.json,./report.json
           fail_ci_if_error: true
           verbose: true
 
