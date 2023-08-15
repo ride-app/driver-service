@@ -1,5 +1,5 @@
 coverage:
-  range: 50..100
+  range: 60..100
   round: down
   precision: 2
 
@@ -8,6 +8,6 @@ status:
   patch: yes
 
 comment:
-  layout: "reach, diff, flags, files"
+  layout: reach, diff, flags, files
   behavior: default
   require_changes: false
