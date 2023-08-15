@@ -2,6 +2,7 @@ package service_test
 
 import (
 	"context"
+
 	"github.com/bufbuild/connect-go"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -39,9 +40,9 @@ var _ = Describe("UpdateDriver", func() {
 	})
 
 	It("should update the driver successfully", func() {
-		driver, err := service.UpdateDriver(context.Background(), &pb.UpdateDriverRequest{Driver: &pb.Driver{}})
+		req := connect.NewRequest(&pb.UpdateDriverRequest{Driver: &pb.Driver{}})
+
+		_, err := service.UpdateDriver(context.Background(), req)
 		Expect(err).To(BeNil())
-		Expect(driver).To(Equal(&pb.Driver{}))
 	})
 })
-

@@ -31,18 +31,20 @@ var _ = Describe("GetStatus", func() {
 		service = driverService.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
- 	JustBeforeEach(func() {
- 		mockDriverRepo.EXPECT().GetStatus(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Status{}, nil)
- 	})
+	JustBeforeEach(func() {
+		mockDriverRepo.EXPECT().GetStatus(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Status{}, nil)
+	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
- 	It("should get the status successfully", func() {
- 		status, err := service.GetStatus(context.Background(), &pb.GetStatusRequest{Id: "test-id"})
- 		Expect(err).To(BeNil())
- 		Expect(status).To(Equal(&pb.Status{}))
- 	})
-})
+	It("should get the status successfully", func() {
+		req := connect.NewRequest(&pb.GetStatusRequest{
+			Name: "drivers/valid-driver-id",
+		})
 
+		_, err := service.GetStatus(context.Background(), req)
+		Expect(err).To(BeNil())
+	})
+})

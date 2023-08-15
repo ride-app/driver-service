@@ -31,17 +31,18 @@ var _ = Describe("DeleteDriver", func() {
 		service = driverService.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
- 	JustBeforeEach(func() {
- 		mockDriverRepo.EXPECT().DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil)
- 	})
+	JustBeforeEach(func() {
+		mockDriverRepo.EXPECT().DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil)
+	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
- 	It("should delete the driver successfully", func() {
- 		_, err := service.DeleteDriver(context.Background(), &pb.DeleteDriverRequest{Id: "test-id"})
- 		Expect(err).To(BeNil())
- 	})
-})
+	It("should delete the driver successfully", func() {
+		req := connect.NewRequest(&pb.DeleteDriverRequest{Name: "drivers/valid-driver-id"})
 
+		_, err := service.DeleteDriver(context.Background(), req)
+		Expect(err).To(BeNil())
+	})
+})

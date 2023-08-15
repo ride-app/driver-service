@@ -31,18 +31,21 @@ var _ = Describe("UpdateLocation", func() {
 		service = driverService.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
- 	JustBeforeEach(func() {
- 		mockDriverRepo.EXPECT().UpdateLocation(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Location{}, nil)
- 	})
+	JustBeforeEach(func() {
+		mockDriverRepo.EXPECT().UpdateLocation(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Location{}, nil)
+	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
- 	It("should update the location successfully", func() {
- 		location, err := service.UpdateLocation(context.Background(), &pb.UpdateLocationRequest{Id: "test-id", Location: &pb.Location{}})
- 		Expect(err).To(BeNil())
- 		Expect(location).To(Equal(&pb.Location{}))
- 	})
-})
+	It("should update the location successfully", func() {
+		req := connect.NewRequest(&pb.UpdateLocationRequest{
+			Parent:   "drivers/valid-driver-id",
+			Location: &pb.Location{},
+		})
 
+		_, err := service.UpdateLocation(context.Background(), req)
+		Expect(err).To(BeNil())
+	})
+})

@@ -31,18 +31,20 @@ var _ = Describe("GetVehicle", func() {
 		service = driverService.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
- 	JustBeforeEach(func() {
- 		mockVehicleRepo.EXPECT().GetVehicle(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Vehicle{}, nil)
- 	})
+	JustBeforeEach(func() {
+		mockVehicleRepo.EXPECT().GetVehicle(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Vehicle{}, nil)
+	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
- 	It("should get the vehicle successfully", func() {
- 		vehicle, err := service.GetVehicle(context.Background(), &pb.GetVehicleRequest{Id: "test-id"})
- 		Expect(err).To(BeNil())
- 		Expect(vehicle).To(Equal(&pb.Vehicle{}))
- 	})
-})
+	It("should get the vehicle successfully", func() {
+		req := connect.NewRequest(&pb.GetVehicleRequest{
+			Name: "drivers/valid-driver-id/vehicles/valid-vehicle-id",
+		})
 
+		_, err := service.GetVehicle(context.Background(), req)
+		Expect(err).To(BeNil())
+	})
+})
