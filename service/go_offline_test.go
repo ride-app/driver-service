@@ -31,14 +31,18 @@ var _ = Describe("GoOffline", func() {
 		service = driverService.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
-	JustBeforeEach(func() {
-		// Setup stubs
-	})
+ 	JustBeforeEach(func() {
+ 		mockDriverRepo.EXPECT().GoOffline(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Status{}, nil)
+ 	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
-	// Actual tests will go here
+ 	It("should go offline successfully", func() {
+ 		status, err := service.GoOffline(context.Background(), &pb.GoOfflineRequest{Id: "test-id"})
+ 		Expect(err).To(BeNil())
+ 		Expect(status).To(Equal(&pb.Status{}))
+ 	})
 })
 
