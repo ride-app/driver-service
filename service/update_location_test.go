@@ -31,14 +31,18 @@ var _ = Describe("UpdateLocation", func() {
 		service = driverService.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
-	JustBeforeEach(func() {
-		// Setup stubs
-	})
+ 	JustBeforeEach(func() {
+ 		mockDriverRepo.EXPECT().UpdateLocation(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Location{}, nil)
+ 	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
-	// Actual tests will go here
+ 	It("should update the location successfully", func() {
+ 		location, err := service.UpdateLocation(context.Background(), &pb.UpdateLocationRequest{Id: "test-id", Location: &pb.Location{}})
+ 		Expect(err).To(BeNil())
+ 		Expect(location).To(Equal(&pb.Location{}))
+ 	})
 })
 
