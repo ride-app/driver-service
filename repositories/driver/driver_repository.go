@@ -13,6 +13,7 @@ import (
 	"firebase.google.com/go/v4/auth"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/logger"
+	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -134,8 +135,13 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, log logger.Logger, id stri
 		DisplayName: user.DisplayName,
 		PhotoUri:    user.PhotoURL,
 		PhoneNumber: user.PhoneNumber,
-		CreateTime:  timestamppb.New(doc.CreateTime),
-		UpdateTime:  timestamppb.New(doc.UpdateTime),
+		DateOfBirth: &date.Date{
+			Day:   doc.Data()["dateOfBirth"].(map[string]interface{})["day"].(int32),
+			Month: doc.Data()["dateOfBirth"].(map[string]interface{})["month"].(int32),
+			Year:  doc.Data()["dateOfBirth"].(map[string]interface{})["year"].(int32),
+		},
+		CreateTime: timestamppb.New(doc.CreateTime),
+		UpdateTime: timestamppb.New(doc.UpdateTime),
 	}
 
 	return &driver, nil
