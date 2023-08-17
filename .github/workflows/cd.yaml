@@ -1,4 +1,4 @@
-name: ci
+name: CD
 
 on:
   push:
@@ -6,9 +6,9 @@ on:
       - main
 
 jobs:
-  lint:
+  coverage:
     runs-on: ubuntu-latest
-    name: Unit Tests
+    name: Upload Coverage
     env:
       GOPRIVATE: buf.build/gen/go
       BUF_USER: debkanchan
@@ -45,7 +45,7 @@ jobs:
           org: ride
 
       - name: Unit Tests
-        run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-fast --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
+        run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
