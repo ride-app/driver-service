@@ -136,9 +136,9 @@ func (r *FirebaseImpl) GetDriver(ctx context.Context, log logger.Logger, id stri
 		PhotoUri:    user.PhotoURL,
 		PhoneNumber: user.PhoneNumber,
 		DateOfBirth: &date.Date{
-			Day:   doc.Data()["dateOfBirth"].(map[string]int32)["day"],
-			Month: doc.Data()["dateOfBirth"].(map[string]int32)["month"],
-			Year:  doc.Data()["dateOfBirth"].(map[string]int32)["year"],
+			Day:   int32(doc.Data()["dateOfBirth"].(map[string]interface{})["day"].(int64)),
+			Month: int32(doc.Data()["dateOfBirth"].(map[string]interface{})["month"].(int64)),
+			Year:  int32(doc.Data()["dateOfBirth"].(map[string]interface{})["year"].(int64)),
 		},
 		Gender:     pb.Driver_Gender(pb.Driver_Gender_value["GENDER_"+doc.Data()["gender"].(string)]),
 		CreateTime: timestamppb.New(doc.CreateTime),
