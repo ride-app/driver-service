@@ -50,6 +50,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle(path, handler)
 
+	// trunk-ignore(semgrep/go.lang.security.audit.net.use-tls.use-tls)
 	panic(http.ListenAndServe(
 		fmt.Sprintf("0.0.0.0:%d", config.Env.Port),
 		// Use h2c so we can serve HTTP/2 without TLS.
