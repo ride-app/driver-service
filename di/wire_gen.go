@@ -7,6 +7,7 @@
 package di
 
 import (
+	"github.com/ride-app/driver-service/config"
 	"github.com/ride-app/driver-service/logger"
 	"github.com/ride-app/driver-service/repositories/driver"
 	"github.com/ride-app/driver-service/repositories/vehicle"
@@ -17,24 +18,23 @@ import (
 
 // Injectors from wire.go:
 
-func InitializeService() (*service.DriverServiceServer, error) {
-	zapLogger := logger.New()
-	app, err := thirdparty.NewFirebaseApp(zapLogger)
+func InitializeService(logger2 logger.Logger, config2 *config.ConfigStruct) (*service.DriverServiceServer, error) {
+	app, err := thirdparty.NewFirebaseApp(logger2, config2)
 	if err != nil {
 		return nil, err
 	}
-	firebaseImpl, err := driverrepository.NewFirebaseDriverRepository(app, zapLogger)
+	firebaseImpl, err := driverrepository.NewFirebaseDriverRepository(app, logger2)
 	if err != nil {
 		return nil, err
 	}
-	vehiclerepositoryFirebaseImpl, err := vehiclerepository.NewFirebaseVehicleRepository(app, zapLogger)
+	vehiclerepositoryFirebaseImpl, err := vehiclerepository.NewFirebaseVehicleRepository(app, logger2)
 	if err != nil {
 		return nil, err
 	}
-	impl, err := walletrepository.New(zapLogger)
+	impl, err := walletrepository.New(logger2, config2)
 	if err != nil {
 		return nil, err
 	}
-	driverServiceServer := service.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl, zapLogger)
+	driverServiceServer := service.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl, logger2)
 	return driverServiceServer, nil
 }

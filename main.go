@@ -19,13 +19,13 @@ import (
 func main() {
 	err := cleanenv.ReadEnv(&config.Env)
 
-	log := logger.New()
+	log := logger.New(&config.Env)
 
 	if err != nil {
 		log.WithError(err).Fatal("Failed to read environment variables")
 	}
 
-	service, err := di.InitializeService()
+	service, err := di.InitializeService(log, &config.Env)
 
 	if err != nil {
 		log.Fatalf("Failed to initialize service: %v", err)

@@ -32,10 +32,10 @@ type ZapLogger struct {
 	logger *zap.SugaredLogger
 }
 
-func New() *ZapLogger {
+func New(config *config.ConfigStruct) *ZapLogger {
 	encoderConfig := zap.NewProductionEncoderConfig()
 
-	if !config.Env.Production {
+	if !config.Production {
 		encoderConfig = zap.NewDevelopmentEncoderConfig()
 	}
 	encoderConfig.TimeKey = "timestamp"
@@ -43,14 +43,14 @@ func New() *ZapLogger {
 	encoderConfig.MessageKey = "message"
 	encoderConfig.EncodeTime = zapcore.RFC3339NanoTimeEncoder
 
-	if !config.Env.Production {
+	if !config.Production {
 		encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 		encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	}
 
 	zapConfig := zap.Config{
 		Level:             zap.NewAtomicLevelAt(zap.InfoLevel),
-		Development:       !config.Env.Production,
+		Development:       !config.Production,
 		DisableCaller:     false,
 		DisableStacktrace: false,
 		Sampling:          nil,
@@ -67,11 +67,11 @@ func New() *ZapLogger {
 		},
 	}
 
-	if !config.Env.Production {
+	if !config.Production {
 		zapConfig.Encoding = "console"
 	}
 
-	if config.Env.LogDebug {
+	if config.LogDebug {
 		zapConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 	}
 

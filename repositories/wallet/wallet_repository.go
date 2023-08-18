@@ -21,11 +21,11 @@ type Impl struct {
 	walletApi walletApi.WalletServiceClient
 }
 
-func New(log logger.Logger) (*Impl, error) {
-	log.Debug("Wallet Service Host: ", config.Env.WalletServiceHost)
+func New(log logger.Logger, config *config.ConfigStruct) (*Impl, error) {
+	log.Debug("Wallet Service Host: ", config.WalletServiceHost)
 	client := walletApi.NewWalletServiceClient(
 		http.DefaultClient,
-		config.Env.WalletServiceHost,
+		config.WalletServiceHost,
 	)
 
 	log.Info("Wallet Repository initialized")
