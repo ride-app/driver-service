@@ -11,7 +11,7 @@ import (
 	"github.com/ride-app/driver-service/config"
 	"github.com/ride-app/driver-service/di"
 	"github.com/ride-app/driver-service/interceptors"
-	"github.com/ride-app/driver-service/logger"
+	"github.com/ride-app/driver-service/utils/logger"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 )
