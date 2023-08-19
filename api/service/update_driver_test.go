@@ -7,12 +7,12 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/mocks"
-	driverService "github.com/ride-app/driver-service/service"
+	driverService "github.com/ride-app/driver-service/api/service"
+	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 )
 
-var _ = Describe("DeleteDriver", func() {
+var _ = Describe("UpdateDriver", func() {
 	var (
 		ctrl            *gomock.Controller
 		mockDriverRepo  *mocks.MockDriverRepository
@@ -32,17 +32,17 @@ var _ = Describe("DeleteDriver", func() {
 	})
 
 	JustBeforeEach(func() {
-		mockDriverRepo.EXPECT().DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil)
+		mockDriverRepo.EXPECT().UpdateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Driver{}, nil)
 	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
-	It("should delete the driver successfully", func() {
-		req := connect.NewRequest(&pb.DeleteDriverRequest{Name: "drivers/valid-driver-id"})
+	It("should update the driver successfully", func() {
+		req := connect.NewRequest(&pb.UpdateDriverRequest{Driver: &pb.Driver{}})
 
-		_, err := service.DeleteDriver(context.Background(), req)
+		_, err := service.UpdateDriver(context.Background(), req)
 		Expect(err).To(BeNil())
 	})
 })

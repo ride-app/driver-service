@@ -7,12 +7,12 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/mocks"
-	driverService "github.com/ride-app/driver-service/service"
+	driverService "github.com/ride-app/driver-service/api/service"
+	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 )
 
-var _ = Describe("GetStatus", func() {
+var _ = Describe("GetLocation", func() {
 	var (
 		ctrl            *gomock.Controller
 		mockDriverRepo  *mocks.MockDriverRepository
@@ -32,19 +32,19 @@ var _ = Describe("GetStatus", func() {
 	})
 
 	JustBeforeEach(func() {
-		mockDriverRepo.EXPECT().GetStatus(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Status{}, nil)
+		mockDriverRepo.EXPECT().GetLocation(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Location{}, nil)
 	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
-	It("should get the status successfully", func() {
-		req := connect.NewRequest(&pb.GetStatusRequest{
-			Name: "drivers/valid-driver-id",
+	It("should get the location successfully", func() {
+		req := connect.NewRequest(&pb.GetLocationRequest{
+			Name: "drivers/valid-driver-id/location",
 		})
 
-		_, err := service.GetStatus(context.Background(), req)
+		_, err := service.GetLocation(context.Background(), req)
 		Expect(err).To(BeNil())
 	})
 })

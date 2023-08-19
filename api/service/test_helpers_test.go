@@ -5,7 +5,7 @@ import (
 	"time"
 
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/mocks"
+	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/protobuf/reflect/protoreflect"
