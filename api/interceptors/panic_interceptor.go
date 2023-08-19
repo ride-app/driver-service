@@ -19,7 +19,18 @@ func NewPanicInterceptor(ctx context.Context, log logger.Logger) (*connect.Unary
 					_ context.Context,
 					__ connect.AnyRequest,
 				) (connect.AnyResponse, error) {
-					return nil, connect.NewError(connect.CodeInternal, errors.New("handler panic"))
+					var err error
+
+					switch e := r.(type) {
+					case string:
+						err = errors.New(e)
+					case error:
+						err = e
+					default:
+						err = errors.New("unknown handler panic")
+					}
+
+					return nil, connect.NewError(connect.CodeInternal, err)
 				})
 			}
 		}()
