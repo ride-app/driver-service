@@ -37,13 +37,19 @@ func main() {
 
 	defer cancel()
 
+	panicInterceptor, err := interceptors.NewPanicInterceptor(ctx, log)
+
+	if err != nil {
+		log.Fatalf("Failed to initialize panic interceptor: %v", err)
+	}
+
 	authInterceptor, err := interceptors.NewAuthInterceptor(ctx, log)
 
 	if err != nil {
 		log.Fatalf("Failed to initialize auth interceptor: %v", err)
 	}
 
-	connectInterceptors := connect.WithInterceptors(authInterceptor)
+	connectInterceptors := connect.WithInterceptors(panicInterceptor, authInterceptor)
 
 	path, handler := driverv1alpha1connect.NewDriverServiceHandler(service, connectInterceptors)
 	mux := http.NewServeMux()
