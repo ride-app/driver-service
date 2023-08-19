@@ -24,14 +24,6 @@ func main() {
 		log.WithError(err).Fatal("Failed to read environment variables")
 	}
 
-	service, err := di.InitializeService(log, config)
-
-	if err != nil {
-		log.Fatalf("Failed to initialize service: %v", err)
-	}
-
-	log.Info("Service Initialized")
-
 	// Create a context that, when cancelled, ends the JWKS background refresh goroutine.
 	ctx, cancel := context.WithCancel(context.Background())
 
@@ -50,6 +42,14 @@ func main() {
 	}
 
 	connectInterceptors := connect.WithInterceptors(panicInterceptor, authInterceptor)
+
+	service, err := di.InitializeService(log, config)
+
+	if err != nil {
+		log.Fatalf("Failed to initialize service: %v", err)
+	}
+
+	log.Info("Service Initialized")
 
 	path, handler := driverv1alpha1connect.NewDriverServiceHandler(service, connectInterceptors)
 	mux := http.NewServeMux()
