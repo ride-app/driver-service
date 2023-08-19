@@ -27,6 +27,7 @@ new gcp.cloudbuild.Trigger("build-trigger", {
     },
   },
   substitutions: {
+    _WALLET_SERVICE_HOST: new pulumi.Config().require("walletServiceHost"),
     _LOG_DEBUG: new pulumi.Config().get("logDebug") ?? "false",
   },
   filename: "cloudbuild.yaml",
