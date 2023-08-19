@@ -32,7 +32,7 @@ type ZapLogger struct {
 	logger *zap.SugaredLogger
 }
 
-func New(config *config.ConfigStruct) *ZapLogger {
+func New(config *config.Config) *ZapLogger {
 	encoderConfig := zap.NewProductionEncoderConfig()
 
 	if !config.Production {

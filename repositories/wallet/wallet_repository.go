@@ -21,7 +21,7 @@ type Impl struct {
 	walletApi walletApi.WalletServiceClient
 }
 
-func New(log logger.Logger, config *config.ConfigStruct) (*Impl, error) {
+func New(log logger.Logger, config *config.Config) (*Impl, error) {
 	log.Debug("Wallet Service Host: ", config.WalletServiceHost)
 	client := walletApi.NewWalletServiceClient(
 		http.DefaultClient,

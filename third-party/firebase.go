@@ -8,7 +8,7 @@ import (
 	"github.com/ride-app/driver-service/utils/logger"
 )
 
-func NewFirebaseApp(log logger.Logger, config *config.ConfigStruct) (*firebase.App, error) {
+func NewFirebaseApp(log logger.Logger, config *config.Config) (*firebase.App, error) {
 	ctx := context.Background()
 	conf := &firebase.Config{ProjectID: config.ProjectID}
 	app, err := firebase.NewApp(ctx, conf)

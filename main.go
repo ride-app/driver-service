@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/bufbuild/connect-go"
-	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1/driverv1alpha1connect"
 	"github.com/ride-app/driver-service/config"
 	"github.com/ride-app/driver-service/di"
@@ -17,15 +16,15 @@ import (
 )
 
 func main() {
-	err := cleanenv.ReadEnv(&config.Env)
+	config, err := config.New()
 
-	log := logger.New(&config.Env)
+	log := logger.New(config)
 
 	if err != nil {
 		log.WithError(err).Fatal("Failed to read environment variables")
 	}
 
-	service, err := di.InitializeService(log, &config.Env)
+	service, err := di.InitializeService(log, config)
 
 	if err != nil {
 		log.Fatalf("Failed to initialize service: %v", err)
@@ -52,7 +51,7 @@ func main() {
 
 	// trunk-ignore(semgrep/go.lang.security.audit.net.use-tls.use-tls)
 	panic(http.ListenAndServe(
-		fmt.Sprintf("0.0.0.0:%d", config.Env.Port),
+		fmt.Sprintf("0.0.0.0:%d", config.Port),
 		// Use h2c so we can serve HTTP/2 without TLS.
 		h2c.NewHandler(mux, &http2.Server{}),
 	))
