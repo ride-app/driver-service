@@ -1,4 +1,4 @@
-//go:generate go run go.uber.org/mock/mockgen -destination ../../mocks/$GOFILE -package mocks . WalletRepository
+//go:generate go run go.uber.org/mock/mockgen -destination ../../testing/mocks/$GOFILE -package mocks . WalletRepository
 
 package walletrepository
 

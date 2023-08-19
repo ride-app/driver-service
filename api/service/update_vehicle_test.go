@@ -7,12 +7,12 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/mocks"
-	driverService "github.com/ride-app/driver-service/service"
+	driverService "github.com/ride-app/driver-service/api/service"
+	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 )
 
-var _ = Describe("UpdateDriver", func() {
+var _ = Describe("UpdateVehicle", func() {
 	var (
 		ctrl            *gomock.Controller
 		mockDriverRepo  *mocks.MockDriverRepository
@@ -32,17 +32,24 @@ var _ = Describe("UpdateDriver", func() {
 	})
 
 	JustBeforeEach(func() {
-		mockDriverRepo.EXPECT().UpdateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Driver{}, nil)
+		mockVehicleRepo.EXPECT().UpdateVehicle(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Vehicle{}, nil)
 	})
 
 	AfterEach(func() {
 		ctrl.Finish()
 	})
 
-	It("should update the driver successfully", func() {
-		req := connect.NewRequest(&pb.UpdateDriverRequest{Driver: &pb.Driver{}})
+	It("should update the vehicle successfully", func() {
+		req := connect.NewRequest(&pb.UpdateVehicleRequest{
+			Vehicle: &pb.Vehicle{
+				Name:         "drivers/valid-driver-id/vehicles/valid-vehicle-id",
+				Type:         pb.Vehicle_TYPE_ERICKSHAW,
+				DisplayName:  "Erickshaw",
+				LicensePlate: "KA-01-1234",
+			},
+		})
 
-		_, err := service.UpdateDriver(context.Background(), req)
+		_, err := service.UpdateVehicle(context.Background(), req)
 		Expect(err).To(BeNil())
 	})
 })
