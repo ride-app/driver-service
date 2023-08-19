@@ -14,21 +14,23 @@ func NewPanicInterceptor(ctx context.Context, log logger.Logger) (*connect.Unary
 
 		defer func() {
 			if r := recover(); r != nil {
-				log.Panic()
+				var err error
+
+				switch e := r.(type) {
+				case string:
+					err = errors.New(e)
+				case error:
+					err = e
+				default:
+					err = errors.New("unknown handler panic")
+				}
+
+				log.WithError(err).Panic("panic caught by interceptor")
+
 				handler = connect.UnaryFunc(func(
 					_ context.Context,
 					__ connect.AnyRequest,
 				) (connect.AnyResponse, error) {
-					var err error
-
-					switch e := r.(type) {
-					case string:
-						err = errors.New(e)
-					case error:
-						err = e
-					default:
-						err = errors.New("unknown handler panic")
-					}
 
 					return nil, connect.NewError(connect.CodeInternal, err)
 				})
