@@ -20,11 +20,6 @@ func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	if req.Msg.Name == "" {
-		log.Info("Name is empty")
-		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("name cannot be empty"))
-	}
-
 	uid := strings.Split(req.Msg.Name, "/")[1]
 
 	log.Debug("uid: ", uid)
