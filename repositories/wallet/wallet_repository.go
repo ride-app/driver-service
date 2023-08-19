@@ -6,9 +6,9 @@ import (
 	"context"
 	"net/http"
 
-	walletApi "buf.build/gen/go/ride/wallet/bufbuild/connect-go/ride/wallet/v1alpha1/walletv1alpha1connect"
+	walletApi "buf.build/gen/go/ride/wallet/connectrpc/go/ride/wallet/v1alpha1/walletv1alpha1connect"
 	pb "buf.build/gen/go/ride/wallet/protocolbuffers/go/ride/wallet/v1alpha1"
-	"github.com/bufbuild/connect-go"
+	"connectrpc.com/connect"
 	"github.com/ride-app/driver-service/config"
 	"github.com/ride-app/driver-service/utils/logger"
 )

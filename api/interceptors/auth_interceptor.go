@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
+	"connectrpc.com/connect"
 	"github.com/MicahParks/keyfunc/v2"
-	"github.com/bufbuild/connect-go"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/ride-app/driver-service/utils/logger"
 )

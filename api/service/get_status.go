@@ -5,7 +5,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/bufbuild/connect-go"
+	"connectrpc.com/connect"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
 )
 
