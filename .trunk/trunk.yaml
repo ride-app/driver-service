@@ -63,9 +63,9 @@ lint:
     - buf-lint@1.26.1
 
   ignore:
-    - linters: [golangci-lint]
+    - linters: [ALL]
       paths:
-        - tools
+        - utils/tools
 
     - linters: [goimports]
       paths:
