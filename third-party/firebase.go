@@ -5,7 +5,7 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/ride-app/driver-service/config"
-	"github.com/ride-app/driver-service/logger"
+	"github.com/ride-app/driver-service/utils/logger"
 )
 
 func NewFirebaseApp(log logger.Logger, config *config.ConfigStruct) (*firebase.App, error) {

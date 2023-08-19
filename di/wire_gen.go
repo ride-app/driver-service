@@ -8,12 +8,12 @@ package di
 
 import (
 	"github.com/ride-app/driver-service/config"
-	"github.com/ride-app/driver-service/logger"
 	"github.com/ride-app/driver-service/repositories/driver"
 	"github.com/ride-app/driver-service/repositories/vehicle"
 	"github.com/ride-app/driver-service/repositories/wallet"
 	"github.com/ride-app/driver-service/service"
 	"github.com/ride-app/driver-service/third-party"
+	"github.com/ride-app/driver-service/utils/logger"
 )
 
 // Injectors from wire.go:

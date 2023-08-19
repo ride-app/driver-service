@@ -15,7 +15,7 @@ import (
 
 	"github.com/bufbuild/connect-go"
 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/logger"
+	"github.com/ride-app/driver-service/utils/logger"
 )
 
 type VehicleRepository interface {

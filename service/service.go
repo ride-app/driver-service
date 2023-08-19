@@ -1,10 +1,10 @@
 package service
 
 import (
-	"github.com/ride-app/driver-service/logger"
 	dr "github.com/ride-app/driver-service/repositories/driver"
 	vr "github.com/ride-app/driver-service/repositories/vehicle"
 	wr "github.com/ride-app/driver-service/repositories/wallet"
+	"github.com/ride-app/driver-service/utils/logger"
 )
 
 type DriverServiceServer struct {

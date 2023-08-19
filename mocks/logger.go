@@ -1,6 +1,6 @@
 package mocks
 
-import "github.com/ride-app/driver-service/logger"
+import "github.com/ride-app/driver-service/utils/logger"
 
 type MockLogger struct{}
 
