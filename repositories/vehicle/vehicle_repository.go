@@ -61,11 +61,11 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, log logger.Logger, id str
 	var vehicleType pb.Vehicle_Type
 
 	switch doc.Data()["type"] {
-	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_AUTORICKSHAW.String(), "_")[2]):
+	case strings.Split(pb.Vehicle_TYPE_AUTORICKSHAW.String(), "_")[1]:
 		vehicleType = pb.Vehicle_TYPE_AUTORICKSHAW
-	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_ERICKSHAW.String(), "_")[2]):
+	case strings.Split(pb.Vehicle_TYPE_ERICKSHAW.String(), "_")[1]:
 		vehicleType = pb.Vehicle_TYPE_ERICKSHAW
-	case strings.ToLower(strings.Split(pb.Vehicle_TYPE_MOTORCYCLE.String(), "_")[2]):
+	case strings.Split(pb.Vehicle_TYPE_MOTORCYCLE.String(), "_")[1]:
 		vehicleType = pb.Vehicle_TYPE_MOTORCYCLE
 	default:
 		vehicleType = pb.Vehicle_TYPE_UNSPECIFIED
@@ -92,7 +92,7 @@ func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, log logger.Logger, veh
 	log.Info("Updating vehicle in firestore")
 	x, err := r.firestore.Collection("vehicles").Doc(strings.Split(vehicle.Name, "/")[1]).Set(ctx, map[string]interface{}{
 		"license_plate": vehicle.LicensePlate,
-		"type":          strings.ToLower(strings.Split(vehicle.Type.String(), "_")[1]),
+		"type":          strings.Split(vehicle.Type.String(), "_")[1],
 		"display_name":  vehicle.DisplayName,
 	})
 
