@@ -6,6 +6,6 @@
   },
   "dependencies": {
     "@pulumi/pulumi": "^3.78.1",
-    "@pulumi/gcp": "^6.62.0"
+    "@pulumi/gcp": "^6.64.0"
   }
 }
