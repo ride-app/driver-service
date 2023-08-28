@@ -33,3 +33,20 @@ new gcp.cloudbuild.Trigger("build-trigger", {
   filename: "cloudbuild.yaml",
   includeBuildLogs: "INCLUDE_BUILD_LOGS_WITH_STATUS",
 });
+
+new gcp.cloudbuild.Trigger("demo-trigger", {
+  name: serviceName,
+  location,
+  repositoryEventConfig: {
+    repository: repository.id,
+    push: {
+      branch: "^main$",
+    },
+  },
+  substitutions: {
+    _WALLET_SERVICE_HOST: new pulumi.Config().require("walletServiceHost"),
+    _LOG_DEBUG: new pulumi.Config().get("logDebug") ?? "false",
+  },
+  filename: "cloudbuild.yaml",
+  includeBuildLogs: "INCLUDE_BUILD_LOGS_WITH_STATUS",
+});
