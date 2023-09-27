@@ -11,6 +11,6 @@ description: ride-app/driver-service is a go based microservice that manages dri
 # Default Values: https://github.com/sweepai/sweep/blob/main/sweep.yaml
 sandbox:
   install:
-    - trunk init
+    - trunk --version
   check:
     - trunk fmt {file_path}
