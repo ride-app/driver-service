@@ -1,0 +1,43 @@
+name: Read All
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  read-all:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set permissions
+        run: |
+          git config --local --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+          git fetch --unshallow
+          git fetch origin '+refs/pull/*:refs/remotes/origin/pr/*'
+          git config --local --add --name-only --get-regexp 'refs/remotes/origin/pr/[0-9]+/merge' | while read -r ref ; do git branch --track "${ref##*/}" "$ref" ; done
+          git checkout main
+          git pull
+
+      - name: Run tests
+        run: |
+          # Add your test command here
+
+      - name: Set permissions
+        run: |
+          # Add any additional commands to set permissions here
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "Your Name"
+          git config --global user.email "your-email@example.com"
+          git add .
+          git commit -m "feat/fix: Set GitHub action workflows top level permissions to read all"
+          git push
