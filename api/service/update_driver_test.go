@@ -10,6 +10,7 @@ import (
 	driverService "github.com/ride-app/driver-service/api/service"
 	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
+	"buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go/validate"
 )
 
 var _ = Describe("UpdateDriver", func() {
