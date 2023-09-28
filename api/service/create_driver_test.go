@@ -18,6 +18,7 @@ import (
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
+	"buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go/validate"
 )
 
 var _ = Describe("CreateDriver", func() {
