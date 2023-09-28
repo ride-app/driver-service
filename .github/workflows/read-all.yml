@@ -1,0 +1,28 @@
+name: Read All
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  metadata: read
+  pull-requests: read
+  issues: read
+  actions: read
+  packages: read
+  deployments: read
+  security-events: read
+  secrets: read
+  single-file: read
+  repository-projects: read
+  team-discussions: read
+  vulnerability-alerts: read
+  workflows: read
+  organization-projects: read
+  organization-packages: read
+  organization-secrets: read
+  organization-single-file: read
+  organization-webhooks: read
+  organization-vulnerability-alerts: read
