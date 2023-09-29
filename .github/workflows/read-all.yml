@@ -17,7 +17,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Print debug information
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Contents of buf configuration files:"
+          cat buf.yaml
+          cat buf.gen.yaml
+
       - name: Build and test
         run: |
-          buf generate --path ${{ github.workspace }}
+          buf generate --verbose
           # Add additional build and test commands here
