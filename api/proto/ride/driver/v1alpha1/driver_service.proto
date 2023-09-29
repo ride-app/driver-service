@@ -5,7 +5,7 @@ import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
 import "google/type/date.proto";
 import "google/type/phone_number.proto";
-import "validate/validate.proto";
+import "buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go/validate";
 
 package ride.driver.v1alpha1;
 
