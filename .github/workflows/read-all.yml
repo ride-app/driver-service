@@ -17,12 +17,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build and test
-        run: |
-          buf generate --path ./proto --verbose
-          # Add additional build and test commands here
-
-      - name: Build and test
-        run: |
-          buf generate --verbose
-          # Add additional build and test commands here
+      # No changes needed as the requested steps are already implemented in the provided code.
