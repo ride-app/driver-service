@@ -7,7 +7,7 @@ ARG BUF_USERNAME ""
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 RUN --mount=type=secret,id=BUF_TOKEN \
-  buf registry login --username=$BUF_USERNAME --token-stdin < /run/secrets/BUF_TOKEN
+  buf registry login --username=$BUF_USERNAME --token-stdin --verbose < /run/secrets/BUF_TOKEN
 
 # Build go binary
 FROM golang:1.21-alpine as build
