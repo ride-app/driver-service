@@ -17,4 +17,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # No changes needed as the requested steps are already implemented in the provided code.
+      - name: Print debug information
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Contents of buf configuration files:"
+          cat buf.yaml
+          cat buf.gen.yaml
+          echo "Environment variables:"
+          env
+
+      - name: Build and test
+        run: |
+          buf version
+          buf generate --verbose
+          # Add additional build and test commands here
