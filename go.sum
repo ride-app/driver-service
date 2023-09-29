@@ -1,9 +1,9 @@
-buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.31.0-20221025150516-6607b10f00ed.1 h1:TsyeIqC+Te5TtKrScWnd7EPCVWNeYn3U1VrvNBTedAA=
-buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.31.0-20221025150516-6607b10f00ed.1/go.mod h1:Piak8t898VnXArmyLTXHwiVis+pdk9Yxsu5TwwmFnsA=
-buf.build/gen/go/ride/wallet/connectrpc/go v1.11.0-20230713133935-94c2e35c4162.1 h1:e28pwvj0Y/ny6UdwIj3MCgxKC3j87VlPjHOGK0NlHoU=
-buf.build/gen/go/ride/wallet/connectrpc/go v1.11.0-20230713133935-94c2e35c4162.1/go.mod h1:SNp7ipCB4tlUXBEsv7xtvsnzU+TBACBFTWoUildG7E0=
-buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230713133935-94c2e35c4162.1 h1:8REQ3CmAmGWewEPvSjFkqKsfLaPv1az//6dGdouZAZk=
-buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230713133935-94c2e35c4162.1/go.mod h1:hRZQ5l/wus2SckSlNLlG3961aJpXObEhBpwSdBptVzM=
+buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.31.0-20221025150516-6607b10f00ed.1 hTsyeIqC+Te5TtKrScWnd7EPCVWNeYn3U1VrvNBTedAA=
+buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.31.0-20221025150516-6607b10f00ed.1/go.mod hPiak8t898VnXArmyLTXHwiVis+pdk9Yxsu5TwwmFnsA=
+buf.build/gen/go/ride/wallet/connectrpc/go v1.11.0-20230713133935-94c2e35c4162.1 he28pwvj0Y/ny6UdwIj3MCgxKC3j87VlPjHOGK0NlHoU=
+buf.build/gen/go/ride/wallet/connectrpc/go v1.11.0-20230713133935-94c2e35c4162.1/go.mod hSNp7ipCB4tlUXBEsv7xtvsnzU+TBACBFTWoUildG7E0=
+buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230713133935-94c2e35c4162.1 h8REQ3CmAmGWewEPvSjFkqKsfLaPv1az//6dGdouZAZk=
+buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230713133935-94c2e35c4162.1/go.mod hhRZQ5l/wus2SckSlNLlG3961aJpXObEhBpwSdBptVzM=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.110.0 h1:Zc8gqp3+a9/Eyph2KDmcGaPtbKRIoqq4YTlL4NMD0Ys=
 cloud.google.com/go v0.110.0/go.mod h1:SJnCLqQ0FCFGSZMUNUf84MV3Aia54kn7pi8st7tMzaY=
