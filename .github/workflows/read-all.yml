@@ -19,5 +19,5 @@ jobs:
 
       - name: Build and test
         run: |
-          buf generate
+          buf generate --path ${{ github.workspace }}
           # Add additional build and test commands here
