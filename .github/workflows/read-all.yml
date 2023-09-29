@@ -19,4 +19,5 @@ jobs:
 
       - name: Build and test
         run: |
-          # Add build and test commands here
+          buf generate
+          # Add additional build and test commands here
