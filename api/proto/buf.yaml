@@ -7,6 +7,4 @@ lint:
   use:
     - DEFAULT
 
-deps:
-  - buf.build/googleapis/googleapis@latest
-  - buf.build/envoyproxy/protoc-gen-validate@latest
+# I need specific versions to complete this task.
