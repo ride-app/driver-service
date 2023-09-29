@@ -8,5 +8,5 @@ lint:
     - DEFAULT
 
 deps:
-  - buf.build/googleapis/googleapis
-  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/googleapis/googleapis@latest
+  - buf.build/envoyproxy/protoc-gen-validate@latest
