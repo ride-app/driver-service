@@ -1,7 +1,7 @@
 version: 0.1
 runtimes:
   enabled:
-    - go@1.19.5
+    - go@1.21.0
     - node@18.12.1
     - python@3.10.8
 actions:
@@ -36,7 +36,7 @@ cli:
 plugins:
   sources:
     - id: trunk
-      ref: v1.2.1
+      ref: v1.2.5
       uri: https://github.com/trunk-io/plugins
 
 lint:
