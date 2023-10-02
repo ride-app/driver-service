@@ -6,42 +6,7 @@ on:
     - cron: 0 0 * * 0-6
   workflow_dispatch:
 
-env:
-  GOPRIVATE: buf.build/gen/go
-  BUF_USER: debkanchan
-
 jobs:
-  trunk_check:
-    name: Trunk Check Upload
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v4
-        with:
-          go-version-file: go.mod
-
-      - uses: bufbuild/buf-setup-action@v1.26.1
-        with:
-          github_token: ${{ github.token }}
-
-      - name: Authenticate buf
-        run: echo ${{ secrets.BUF_TOKEN }} | buf registry login --username ${{ env.BUF_USER }} --token-stdin
-
-      - name: Build protobuf
-        uses: trunk-io/breakpoint@v1
-        with:
-          breakpoint-id: buf-generate
-          run: buf generate
-          trunk-token: ${{ secrets.TRUNK_TOKEN }}
-          org: ride
-
-      - name: Trunk Check
-        uses: trunk-io/trunk-action@v1
-        with:
-          trunk-token: ${{ secrets.TRUNK_TOKEN }}
-
   trunk_upgrade:
     name: Upgrade Trunk
     runs-on: ubuntu-latest
