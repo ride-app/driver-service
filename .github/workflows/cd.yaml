@@ -10,9 +10,6 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     name: Upload Coverage
-    env:
-      GOPRIVATE: buf.build/gen/go
-      BUF_USER: debkanchan
 
     steps:
       - name: Checkout Code
