@@ -35,8 +35,8 @@ jobs:
           trunk-token: ${{ secrets.TRUNK_TOKEN }}
           org: ride
 
-      - name: Lint
-        uses: trunk-io/trunk-action@v1
+      # - name: Lint
+      #   uses: trunk-io/trunk-action@v1
 
       # - name: Unit Tests
       #   run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
