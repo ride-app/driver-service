@@ -1,4 +1,5 @@
 name: Nightly
+
 permissions: read-all
 
 on:
