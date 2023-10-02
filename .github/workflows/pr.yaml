@@ -13,10 +13,6 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: Lint+Unit Tests
-    env:
-      GOPRIVATE: buf.build/gen/go
-      BUF_USER: debkanchan
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
