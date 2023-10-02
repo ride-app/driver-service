@@ -73,3 +73,6 @@ lint:
 merge:
   required_statuses:
     - Lint+Unit Tests
+tools:
+  enabled:
+    - gt@0.20.35
