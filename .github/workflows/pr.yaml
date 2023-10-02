@@ -1,18 +1,16 @@
 name: pr
+
 permissions: read-all
 
 on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - trunk-merge/**
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: Lint+Unit Tests
+    name: Unit Tests
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
