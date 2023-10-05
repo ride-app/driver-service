@@ -8,7 +8,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	driverv1alpha1 "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+	driverv1alpha1 "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
 	logger "github.com/ride-app/driver-service/utils/logger"
 	gomock "go.uber.org/mock/gomock"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
