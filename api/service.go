@@ -1,4 +1,4 @@
-package service
+package api
 
 import (
 	dr "github.com/ride-app/driver-service/repositories/driver"

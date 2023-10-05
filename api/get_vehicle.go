@@ -1,4 +1,4 @@
-package service
+package api
 
 import (
 	"context"
@@ -9,17 +9,18 @@ import (
 	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
 )
 
-func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
-	req *connect.Request[pb.UpdateVehicleRequest]) (*connect.Response[pb.UpdateVehicleResponse], error) {
+func (service *DriverServiceServer) GetVehicle(ctx context.Context,
+	req *connect.Request[pb.GetVehicleRequest]) (*connect.Response[pb.GetVehicleResponse], error) {
 	log := service.logger.WithFields(map[string]string{
-		"method": "UpdateVehicle",
+		"method": "GetVehicle",
 	})
+
 	if err := req.Msg.Validate(); err != nil {
 		log.WithError(err).Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	uid := strings.Split(req.Msg.Vehicle.Name, "/")[1]
+	uid := strings.Split(req.Msg.Name, "/")[1]
 
 	log.Debug("uid: ", uid)
 	log.Debug("Request header uid: ", req.Header().Get("uid"))
@@ -29,15 +30,20 @@ func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	_, err := service.vehicleRepository.UpdateVehicle(ctx, log, req.Msg.Vehicle)
+	vehicle, err := service.vehicleRepository.GetVehicle(ctx, log, uid)
 
 	if err != nil {
-		log.WithError(err).Error("Failed to update vehicle")
+		log.WithError(err).Error("Failed to get vehicle")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	res := &pb.UpdateVehicleResponse{
-		Vehicle: req.Msg.Vehicle,
+	if vehicle == nil {
+		log.Info("Vehicle not found")
+		return nil, connect.NewError(connect.CodeNotFound, errors.New("vehicle not found"))
+	}
+
+	res := &pb.GetVehicleResponse{
+		Vehicle: vehicle,
 	}
 
 	if err := res.Validate(); err != nil {
@@ -45,6 +51,6 @@ func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	log.Info("Vehicle updated")
+	log.Info("Vehicle found")
 	return connect.NewResponse(res), nil
 }
