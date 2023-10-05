@@ -1,4 +1,4 @@
-package service
+package api
 
 import (
 	"context"
@@ -9,10 +9,10 @@ import (
 	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
 )
 
-func (service *DriverServiceServer) GetVehicle(ctx context.Context,
-	req *connect.Request[pb.GetVehicleRequest]) (*connect.Response[pb.GetVehicleResponse], error) {
+func (service *DriverServiceServer) GetDriver(ctx context.Context,
+	req *connect.Request[pb.GetDriverRequest]) (*connect.Response[pb.GetDriverResponse], error) {
 	log := service.logger.WithFields(map[string]string{
-		"method": "GetVehicle",
+		"method": "GetDriver",
 	})
 
 	if err := req.Msg.Validate(); err != nil {
@@ -30,20 +30,20 @@ func (service *DriverServiceServer) GetVehicle(ctx context.Context,
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	vehicle, err := service.vehicleRepository.GetVehicle(ctx, log, uid)
+	driver, err := service.driverRepository.GetDriver(ctx, log, uid)
 
 	if err != nil {
-		log.WithError(err).Error("Failed to get vehicle")
+		log.WithError(err).Error("Failed to get driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	if vehicle == nil {
-		log.Info("Vehicle not found")
-		return nil, connect.NewError(connect.CodeNotFound, errors.New("vehicle not found"))
+	if driver == nil {
+		log.Info("Driver not found")
+		return nil, connect.NewError(connect.CodeNotFound, errors.New("driver not found"))
 	}
 
-	res := &pb.GetVehicleResponse{
-		Vehicle: vehicle,
+	res := &pb.GetDriverResponse{
+		Driver: driver,
 	}
 
 	if err := res.Validate(); err != nil {
@@ -51,6 +51,6 @@ func (service *DriverServiceServer) GetVehicle(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	log.Info("Vehicle found")
+	log.Info("Driver found")
 	return connect.NewResponse(res), nil
 }

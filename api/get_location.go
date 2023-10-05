@@ -1,4 +1,4 @@
-package service
+package api
 
 // import (
 // 	"context"
@@ -9,10 +9,10 @@ package service
 // 	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
 // )
 
-// func (service *DriverServiceServer) GetStatus(ctx context.Context,
-// 	req *connect.Request[pb.GetStatusRequest]) (*connect.Response[pb.GetStatusResponse], error) {
+// func (service *DriverServiceServer) GetLocation(ctx context.Context,
+// 	req *connect.Request[pb.GetLocationRequest]) (*connect.Response[pb.GetLocationResponse], error) {
 // 	log := service.logger.WithFields(map[string]string{
-// 		"method": "GetStatus",
+// 		"method": "GetLocation",
 // 	})
 
 // 	if err := req.Msg.Validate(); err != nil {
@@ -26,23 +26,24 @@ package service
 // 	log.Debug("Request header uid: ", req.Header().Get("uid"))
 
 // 	if uid != req.Header().Get("uid") {
+// 		log.Info("Permission denied")
 // 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 // 	}
 
-// 	status, err := service.driverRepository.GetStatus(ctx, log, uid)
+// 	location, err := service.driverRepository.GetLocation(ctx, log, uid)
 
 // 	if err != nil {
-// 		log.WithError(err).Error("Failed to get status")
+// 		log.WithError(err).Error("Failed to get location")
 // 		return nil, connect.NewError(connect.CodeInternal, err)
 // 	}
 
-// 	if status == nil {
-// 		log.Info("Status not found")
-// 		return nil, connect.NewError(connect.CodeNotFound, errors.New("status not found"))
+// 	if location == nil {
+// 		log.Info("Location not found")
+// 		return nil, connect.NewError(connect.CodeNotFound, errors.New("location not found"))
 // 	}
 
-// 	res := &pb.GetStatusResponse{
-// 		Status: status,
+// 	res := &pb.GetLocationResponse{
+// 		Location: location,
 // 	}
 
 // 	if err := res.Validate(); err != nil {
@@ -50,6 +51,6 @@ package service
 // 		return nil, connect.NewError(connect.CodeInternal, err)
 // 	}
 
-// 	log.Info("Status found")
+// 	log.Info("Location found")
 // 	return connect.NewResponse(res), nil
 // }

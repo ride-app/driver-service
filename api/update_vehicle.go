@@ -1,4 +1,4 @@
-package service
+package api
 
 import (
 	"context"
@@ -9,18 +9,17 @@ import (
 	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
 )
 
-func (service *DriverServiceServer) GetDriver(ctx context.Context,
-	req *connect.Request[pb.GetDriverRequest]) (*connect.Response[pb.GetDriverResponse], error) {
+func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
+	req *connect.Request[pb.UpdateVehicleRequest]) (*connect.Response[pb.UpdateVehicleResponse], error) {
 	log := service.logger.WithFields(map[string]string{
-		"method": "GetDriver",
+		"method": "UpdateVehicle",
 	})
-
 	if err := req.Msg.Validate(); err != nil {
 		log.WithError(err).Info("Invalid request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	uid := strings.Split(req.Msg.Name, "/")[1]
+	uid := strings.Split(req.Msg.Vehicle.Name, "/")[1]
 
 	log.Debug("uid: ", uid)
 	log.Debug("Request header uid: ", req.Header().Get("uid"))
@@ -30,20 +29,15 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 	}
 
-	driver, err := service.driverRepository.GetDriver(ctx, log, uid)
+	_, err := service.vehicleRepository.UpdateVehicle(ctx, log, req.Msg.Vehicle)
 
 	if err != nil {
-		log.WithError(err).Error("Failed to get driver")
+		log.WithError(err).Error("Failed to update vehicle")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	if driver == nil {
-		log.Info("Driver not found")
-		return nil, connect.NewError(connect.CodeNotFound, errors.New("driver not found"))
-	}
-
-	res := &pb.GetDriverResponse{
-		Driver: driver,
+	res := &pb.UpdateVehicleResponse{
+		Vehicle: req.Msg.Vehicle,
 	}
 
 	if err := res.Validate(); err != nil {
@@ -51,6 +45,6 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	log.Info("Driver found")
+	log.Info("Vehicle updated")
 	return connect.NewResponse(res), nil
 }

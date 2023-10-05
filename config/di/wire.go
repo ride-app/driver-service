@@ -4,7 +4,7 @@ package di
 
 import (
 	"github.com/google/wire"
-	"github.com/ride-app/driver-service/api/service"
+	"github.com/ride-app/driver-service/api"
 	"github.com/ride-app/driver-service/config"
 	driverrepository "github.com/ride-app/driver-service/repositories/driver"
 	vehiclerepository "github.com/ride-app/driver-service/repositories/vehicle"
@@ -13,7 +13,7 @@ import (
 	"github.com/ride-app/driver-service/utils/logger"
 )
 
-func InitializeService(logger logger.Logger, config *config.Config) (*service.DriverServiceServer, error) {
+func InitializeService(logger logger.Logger, config *config.Config) (*api.DriverServiceServer, error) {
 	panic(
 		wire.Build(
 			thirdparty.NewFirebaseApp,
@@ -32,7 +32,7 @@ func InitializeService(logger logger.Logger, config *config.Config) (*service.Dr
 				new(vehiclerepository.VehicleRepository),
 				new(*vehiclerepository.FirebaseImpl),
 			),
-			service.New,
+			api.New,
 		),
 	)
 }

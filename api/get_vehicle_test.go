@@ -1,4 +1,4 @@
-package service_test
+package api_test
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"connectrpc.com/connect"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	driverService "github.com/ride-app/driver-service/api/service"
+	driverService "github.com/ride-app/driver-service/api"
 	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
