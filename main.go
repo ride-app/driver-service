@@ -6,10 +6,10 @@ import (
 	"net/http"
 
 	"connectrpc.com/connect"
-	"github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1/driverv1alpha1connect"
 	"github.com/ride-app/driver-service/api/interceptors"
 	"github.com/ride-app/driver-service/config"
 	"github.com/ride-app/driver-service/config/di"
+	"github.com/ride-app/driver-service/proto/ride/driver/v1alpha1/driverv1alpha1connect"
 	"github.com/ride-app/driver-service/utils/logger"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"

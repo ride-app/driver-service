@@ -6,8 +6,8 @@ import (
 	"connectrpc.com/connect"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
 	driverService "github.com/ride-app/driver-service/api/service"
+	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 )

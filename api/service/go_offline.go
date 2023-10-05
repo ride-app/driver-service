@@ -6,7 +6,7 @@ package service
 // 	"strings"
 
 // 	"connectrpc.com/connect"
-// 	pb "github.com/ride-app/driver-service/api/gen/ride/driver/v1alpha1"
+// 	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
 // )
 
 // func (service *DriverServiceServer) GoOffline(ctx context.Context,

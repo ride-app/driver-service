@@ -2,7 +2,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/ride-app/driver-service/api/gen
+    default: github.com/ride-app/driver-service/proto
     except:
       - buf.build/googleapis/googleapis
       - buf.build/envoyproxy/protoc-gen-validate
