@@ -75,4 +75,5 @@ merge:
     - Lint+Unit Tests
 tools:
   enabled:
+    - bazel@6.3.2
     - gt@0.20.35
