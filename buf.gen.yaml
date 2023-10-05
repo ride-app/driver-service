@@ -8,16 +8,16 @@ managed:
       - buf.build/envoyproxy/protoc-gen-validate
 plugins:
   - plugin: buf.build/protocolbuffers/go
-    out: api/gen
+    out: proto
     opt:
       - paths=source_relative
 
   - plugin: buf.build/connectrpc/go
-    out: api/gen
+    out: proto
     opt:
       - paths=source_relative
 
   - plugin: buf.build/bufbuild/validate-go
-    out: api/gen
+    out: proto
     opt:
       - paths=source_relative
