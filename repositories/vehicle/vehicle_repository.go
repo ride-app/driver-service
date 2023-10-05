@@ -14,7 +14,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"connectrpc.com/connect"
-	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
+	pb "github.com/ride-app/driver-service/protos/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/utils/logger"
 )
 

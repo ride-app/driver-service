@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	driverService "github.com/ride-app/driver-service/api"
-	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
+	pb "github.com/ride-app/driver-service/protos/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 )

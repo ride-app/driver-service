@@ -6,7 +6,7 @@ package api
 // 	"strings"
 
 // 	"connectrpc.com/connect"
-// 	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
+// 	pb "github.com/ride-app/driver-service/protos/ride/driver/v1alpha1"
 // )
 
 // func (service *DriverServiceServer) UpdateLocation(ctx context.Context,

@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 	time "time"
 
-	driverv1alpha1 "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
+	driverv1alpha1 "github.com/ride-app/driver-service/protos/ride/driver/v1alpha1"
 	logger "github.com/ride-app/driver-service/utils/logger"
 	gomock "go.uber.org/mock/gomock"
 )

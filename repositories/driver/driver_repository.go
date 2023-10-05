@@ -11,7 +11,7 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
-	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
+	pb "github.com/ride-app/driver-service/protos/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/utils/logger"
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/grpc/codes"

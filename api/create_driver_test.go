@@ -12,11 +12,10 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	driverService "github.com/ride-app/driver-service/api"
-	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
+	pb "github.com/ride-app/driver-service/protos/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/genproto/googleapis/type/date"
-	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -80,7 +79,7 @@ var _ = Describe("CreateDriver", func() {
 
 				Expect(err).ToNot(HaveOccurred())
 				Expect(res.Msg.Driver.Name).To(Equal(req.Msg.Driver.Name))
-				Expect(proto.Equal(req.Msg.Driver, res.Msg.Driver)).To(BeFalse())
+				Expect(protos.Equal(req.Msg.Driver, res.Msg.Driver)).To(BeFalse())
 			})
 
 			When("create time is passed with the request", func() {

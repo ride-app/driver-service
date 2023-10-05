@@ -2,22 +2,22 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/ride-app/driver-service/proto
+    default: github.com/ride-app/driver-service/protos
     except:
       - buf.build/googleapis/googleapis
       - buf.build/envoyproxy/protoc-gen-validate
 plugins:
   - plugin: buf.build/protocolbuffers/go
-    out: proto
+    out: protos
     opt:
       - paths=source_relative
 
   - plugin: buf.build/connectrpc/go
-    out: proto
+    out: protos
     opt:
       - paths=source_relative
 
   - plugin: buf.build/bufbuild/validate-go
-    out: proto
+    out: protos
     opt:
       - paths=source_relative

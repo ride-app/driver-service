@@ -11,11 +11,10 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	driverService "github.com/ride-app/driver-service/api"
-	pb "github.com/ride-app/driver-service/proto/ride/driver/v1alpha1"
+	pb "github.com/ride-app/driver-service/protos/ride/driver/v1alpha1"
 	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/genproto/googleapis/type/date"
-	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -111,7 +110,7 @@ var _ = Describe("GetDriver", func() {
 			It("returns the driver", func() {
 				res, err := service.GetDriver(context.Background(), req)
 				Expect(err).To(BeNil())
-				Expect(proto.Equal(driver, res.Msg.Driver)).To(BeTrue())
+				Expect(protos.Equal(driver, res.Msg.Driver)).To(BeTrue())
 			})
 
 		})

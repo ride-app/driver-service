@@ -4,7 +4,7 @@ permissions: read-all
 on:
   push:
     paths:
-      - proto/**
+      - protos/**
     branches:
       - main
 
@@ -22,4 +22,4 @@ jobs:
       - uses: bufbuild/buf-push-action@v1
         with:
           buf_token: ${{ secrets.BUF_TOKEN }}
-          input: proto
+          input: protos
