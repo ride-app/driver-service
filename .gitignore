@@ -107,5 +107,8 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/go,git,macos,dotenv,visualstudiocode
 
-api/gen
+proto
+!proto/**/**.proto
+!proto/**/buf.lock
+!proto/**/buf
 buf_token.txt
