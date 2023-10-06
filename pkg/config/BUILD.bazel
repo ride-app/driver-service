@@ -5,5 +5,5 @@ go_library(
     srcs = ["config.go"],
     importpath = "github.com/ride-app/driver-service/pkg/config",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_ilyakaznacheev_cleanenv//:cleanenv"],
+    deps = ["@com_github_ilyakaznacheev_cleanenv//:go_default_library"],
 )

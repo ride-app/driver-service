@@ -20,11 +20,19 @@ gazelle(
 )
 
 gazelle(
-    name = "gazelle-update-repos",
+    name = "gazelle-update-repos-go",
     args = [
         "-from_file=go.mod",
         "-to_macro=go_deps.bzl%go_dependencies",
-        "-prune",  #BUG: causes crash
+        "-prune",
+    ],
+    command = "update-repos",
+    gazelle = ":gazelle-buf",
+)
+
+gazelle(
+    name = "gazelle-update-repos-buf",
+    args = [
         # This can also be `buf.yaml` and `buf.lock`.
         "--from_file=buf.work.yaml",
         # This is optional but recommended, if absent gazelle
