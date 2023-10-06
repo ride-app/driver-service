@@ -18,7 +18,7 @@ require (
 	github.com/onsi/gomega v1.27.6
 	go.uber.org/mock v0.2.0
 	go.uber.org/zap v1.25.0
-	golang.org/x/net v0.10.0
+	golang.org/x/net v0.16.0
 	google.golang.org/genproto v0.0.0-20231002182017-d307bd883b97
 	google.golang.org/genproto/googleapis/api v0.0.0-20230920204549-e6e6cdab5c13
 	google.golang.org/grpc v1.57.0
