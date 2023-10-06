@@ -11,7 +11,7 @@ gazelle_binary(
 )
 
 # gazelle:prefix github.com/ride-app/driver-service
-# gazelle:build_file_name BUILD.bzl
+# gazelle:build_file_name BUILD.bazel
 # gazelle:exclude infra
 gazelle(
     name = "gazelle",
@@ -23,7 +23,7 @@ gazelle(
     args = [
         "-from_file=go.mod",
         "-to_macro=go_deps.bzl%go_dependencies",
-        "-prune",
+        "-prune",  #BUG: causes crash
         # This can also be `buf.yaml` and `buf.lock`.
         "--from_file=buf.work.yaml",
         # This is optional but recommended, if absent gazelle
