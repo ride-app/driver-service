@@ -12,7 +12,7 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/wire v0.5.0
-	github.com/ilyakaznacheev/cleanenv v1.4.2
+	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/onsi/ginkgo/v2 v2.9.2
 	github.com/onsi/gomega v1.27.6
