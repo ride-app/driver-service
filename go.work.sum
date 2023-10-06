@@ -1,4 +1,5 @@
 buf.build/gen/go/envoyproxy/protoc-gen-validate/bufbuild/connect-go v1.6.0-20221025150516-6607b10f00ed.1/go.mod h1:7Yhm2MEyqE2YQ/FyzA+zGeci3HV7KJv9zT0ToTLMUUc=
+buf.build/gen/go/envoyproxy/protoc-gen-validate/connectrpc/go v1.11.0-20221025150516-6607b10f00ed.1/go.mod h1:a3939z2Y8kFJ1Yt0C7xpsUEglvcQWAwGHGiScO1q7n8=
 cloud.google.com/go/accessapproval v1.6.0/go.mod h1:R0EiYnwV5fsRFiKZkPHr6mwyk2wxUJ30nL4j2pcFY2E=
 cloud.google.com/go/accesscontextmanager v1.7.0/go.mod h1:CEGLewx8dwa33aDAZQujl7Dx+uYhS0eay198wB/VumQ=
 cloud.google.com/go/aiplatform v1.37.0/go.mod h1:IU2Cv29Lv9oCn/9LkFiiuKfwrRTq+QQMbW+hPCxJGZw=

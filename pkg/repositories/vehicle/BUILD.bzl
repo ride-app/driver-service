@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "vehicle",
+    srcs = ["vehicle_repository.go"],
+    importpath = "github.com/ride-app/driver-service/pkg/repositories/vehicle",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/protos/ride/driver/v1alpha1",
+        "//pkg/utils/logger",
+        "@com_connectrpc_connect//:connect",
+        "@com_google_cloud_go_firestore//:firestore",
+        "@com_google_firebase_go_v4//:go",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+        "@org_golang_google_protobuf//types/known/timestamppb",
+    ],
+)
