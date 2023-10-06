@@ -7,7 +7,7 @@ require (
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230713133935-94c2e35c4162.1
 	cloud.google.com/go/firestore v1.13.0
 	connectrpc.com/connect v1.11.0
-	firebase.google.com/go/v4 v4.12.0
+	firebase.google.com/go/v4 v4.12.1
 	github.com/MicahParks/keyfunc/v2 v2.1.0
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
 	github.com/golang-jwt/jwt/v5 v5.0.0
