@@ -15,6 +15,8 @@ actions:
     - generate-di
     - buf-gen
     - unit-test
+    - gazelle-update-repos-go
+    - gazelle-update-repos-buf
 
   definitions:
     - id: generate-di
@@ -23,10 +25,22 @@ actions:
       run: go run github.com/google/wire/cmd/wire
       run_from: di
 
+    - id: gazelle-update-repos-go
+      triggers:
+        - files:
+            - go.sum
+            - go.mod
+      run: bazel run //:gazelle-update-repos-go
+
+    - id: gazelle-update-repos-buf
+      triggers:
+        - files: ["**/buf.yaml", "**/buf.lock"]
+      run: bazel run //:gazelle-update-repos-buf
+
     - id: buf-mod-update
       triggers:
         - files: [protos/**/buf.yaml]
-      run: buf mod update protos
+      run: buf mod update pkg/protos
 
     - id: unit-test
       run: go run github.com/onsi/ginkgo/v2/ginkgo -r --procs=4 --compilers=4 --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --race --trace --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
