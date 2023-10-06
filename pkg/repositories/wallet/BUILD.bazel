@@ -8,8 +8,8 @@ go_library(
     deps = [
         "//pkg/config",
         "//pkg/utils/logger",
-        "@build_buf_gen_go_ride_wallet_connectrpc_go//ride/wallet/v1alpha1/walletv1alpha1connect:go_default_library",
-        "@build_buf_gen_go_ride_wallet_protocolbuffers_go//ride/wallet/v1alpha1:go_default_library",
-        "@com_connectrpc_connect//:go_default_library",
+        "@build_buf_gen_go_ride_wallet_connectrpc_go//ride/wallet/v1alpha1/walletv1alpha1connect",
+        "@build_buf_gen_go_ride_wallet_protocolbuffers_go//ride/wallet/v1alpha1",
+        "@com_connectrpc_connect//:connect",
     ],
 )

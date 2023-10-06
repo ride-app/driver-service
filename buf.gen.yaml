@@ -9,8 +9,3 @@ plugins:
     out: pkg/protos
     opt:
       - paths=source_relative
-
-  - plugin: buf.build/bufbuild/validate-go
-    out: pkg/protos
-    opt:
-      - paths=source_relative

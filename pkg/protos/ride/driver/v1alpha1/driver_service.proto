@@ -5,7 +5,7 @@ import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
 import "google/type/date.proto";
 import "google/type/phone_number.proto";
-import "validate/validate.proto";
+import "buf/validate/validate.proto";
 
 package ride.driver.v1alpha1;
 
@@ -89,20 +89,20 @@ service DriverService {
 
 message Driver {
   // Relative resource name of Driver, for example: "drivers/driver1"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
   
   // The full name of the driver. Example "John Doe"
   string display_name = 2;
 
   // The uri of the Driver's picture
-  string photo_uri = 3 [(validate.rules).string.uri = true];
+  string photo_uri = 3 [(buf.validate.field).string.uri = true];
 
   // The phone number of the driver. Example "+911234567890"
-  string phone_number = 4 [(validate.rules).string.pattern = "^\\+?[1-9]\\d{1,14}$"];
+  string phone_number = 4 [(buf.validate.field).string.pattern = "^\\+?[1-9]\\d{1,14}$"];
 
-  google.type.Date date_of_birth = 5 [(validate.rules).message.required = true];
+  google.type.Date date_of_birth = 5 [(buf.validate.field).required = true];
 
-  Gender gender = 6 [(validate.rules).enum = {not_in: [0]}];
+  Gender gender = 6 [(buf.validate.field).enum.defined_only = true];
   
   // Output only. Timestamp when the Driver was created.
   google.protobuf.Timestamp create_time = 9;
@@ -121,7 +121,7 @@ message Driver {
 
 message GetDriverRequest {
   // Relative resource name of Driver, for example: "drivers/driver1"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
 }
 
 message GetDriverResponse {
@@ -134,7 +134,7 @@ message CreateDriverRequest {
 	string request_id = 1;
 
   // The Driver resource to create. Client **must** set the name field.
-  Driver driver = 2 [(validate.rules).message.required = true];
+  Driver driver = 2 [(buf.validate.field).required = true];
 }
 
 message CreateDriverResponse {
@@ -144,7 +144,7 @@ message CreateDriverResponse {
 
 message UpdateDriverRequest {
   // The Driver resource which replaces the resource on the server.
-  Driver driver = 1 [(validate.rules).message.required = true];
+  Driver driver = 1 [(buf.validate.field).required = true];
 
   // The update mask applies to the resource. For the `FieldMask` definition,
   // see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
@@ -158,7 +158,7 @@ message UpdateDriverResponse {
 
 message DeleteDriverRequest {
   // The resource name of the Driver to be deleted.
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
 }
 
 message DeleteDriverResponse {
@@ -166,7 +166,7 @@ message DeleteDriverResponse {
 
 message Status {
   // The relative resource name of the Status. Example: "drivers/driver1/status"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/status$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+/status$"];
 
   // The online status of the Driver.
   bool online = 2;
@@ -177,10 +177,10 @@ message Status {
 
 message GoOnlineRequest {
   // The relative resource name of the Driver to go online. Example: "drivers/driver1"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
 
   // The location of the Driver.
-  Location location = 2 [(validate.rules).message.required = true];
+  Location location = 2 [(buf.validate.field).required = true];
 }
 
 message GoOnlineResponse {
@@ -190,7 +190,7 @@ message GoOnlineResponse {
 
 message GoOfflineRequest {
   // The relative resource name of the Driver to go offline. Example: "drivers/driver1"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
 }
 
 message GoOfflineResponse {
@@ -200,7 +200,7 @@ message GoOfflineResponse {
 
 message GetStatusRequest {
   // The relative resource name of the Status. Example: "drivers/driver1/status"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/status$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+/status$"];
 }
 
 message GetStatusResponse {
@@ -210,7 +210,7 @@ message GetStatusResponse {
 
 message Location {
   // The relative resource name of the Location. Example: "drivers/driver1/location"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/location$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+/location$"];
 
   // The latitude of the Driver.
   double latitude = 2;
@@ -224,7 +224,7 @@ message Location {
 
 message GetLocationRequest {
   // The relative resource name of the Location.
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/location$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+/location$"];
 }
 
 message GetLocationResponse {
@@ -234,7 +234,7 @@ message GetLocationResponse {
 
 message UpdateLocationRequest {
   // The relative resource name of the Driver.
-  string parent = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
+  string parent = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+$"];
 
   // The location of the Driver.
   Location location = 2;
@@ -244,10 +244,10 @@ message UpdateLocationResponse {}
 
 message Vehicle {
   // Relative resource name of Vehicle, for example: "drivers/driver1/vehicle"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/vehicle$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+/vehicle$"];
 
   // The type of the Vehicle.
-  Type type = 2 [(validate.rules).enum = {not_in: [0]}];
+  Type type = 2 [(buf.validate.field).enum.defined_only = true];
 
   // The make of the Vehicle.
   string display_name = 3;
@@ -279,7 +279,7 @@ message Vehicle {
 
 message GetVehicleRequest {
   // The relative resource name of the Vehicle. Example: "drivers/driver1/vehicle"
-  string name = 1 [(validate.rules).string.pattern = "^drivers/[A-Za-z0-9_-]+/vehicle$"];
+  string name = 1 [(buf.validate.field).string.pattern = "^drivers/[A-Za-z0-9_-]+/vehicle$"];
 }
 
 message GetVehicleResponse {
@@ -289,7 +289,7 @@ message GetVehicleResponse {
 
 message UpdateVehicleRequest {
   // The Vehicle resource which replaces the resource on the server.
-  Vehicle vehicle = 1 [(validate.rules).message.required = true];
+  Vehicle vehicle = 1 [(buf.validate.field).required = true];
 
   // The update mask applies to the resource. For the `FieldMask` definition,
   // see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask

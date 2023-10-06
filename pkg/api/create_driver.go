@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"connectrpc.com/connect"
+	"github.com/bufbuild/protovalidate-go"
 	pb "github.com/ride-app/driver-service/pkg/protos/ride/driver/v1alpha1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -16,7 +17,14 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 		"method": "CreateDriver",
 	})
 
-	if err := req.Msg.Validate(); err != nil {
+	validator, err := protovalidate.New()
+	if err != nil {
+		log.WithError(err).Info("Failed to initialize validator")
+
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	if err := validator.Validate(req.Msg); err != nil {
 		log.WithError(err).Info("Invalid request")
 
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
@@ -64,7 +72,7 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	res.Msg.Driver.CreateTime = timestamppb.New(*createTime)
 	res.Msg.Driver.UpdateTime = timestamppb.New(*createTime)
 
-	if err := res.Msg.Validate(); err != nil {
+	if err := validator.Validate(res.Msg); err != nil {
 		log.WithError(err).Error("Invalid response")
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
