@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 	"github.com/ride-app/driver-service/pkg/api/interceptors"
 	"github.com/ride-app/driver-service/pkg/config"
-	"github.com/ride-app/driver-service/pkg/protos/ride/driver/v1alpha1/driverv1alpha1connect"
+	"github.com/ride-app/driver-service/pkg/protos/ride/driver/v1alpha1/v1alpha1connect"
 	"github.com/ride-app/driver-service/pkg/utils/logger"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -50,7 +50,7 @@ func main() {
 
 	log.Info("Service Initialized")
 
-	path, handler := driverv1alpha1connect.NewDriverServiceHandler(service, connectInterceptors)
+	path, handler := v1alpha1connect.NewDriverServiceHandler(service, connectInterceptors)
 	mux := http.NewServeMux()
 	mux.Handle(path, handler)
 

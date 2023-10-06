@@ -13,6 +13,7 @@ gazelle_binary(
 # gazelle:prefix github.com/ride-app/driver-service
 # gazelle:build_file_name BUILD.bazel
 # gazelle:exclude infra
+# gazelle:proto disable_global
 gazelle(
     name = "gazelle",
     gazelle = ":gazelle-buf",

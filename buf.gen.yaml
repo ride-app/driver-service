@@ -1,11 +1,4 @@
 version: v1
-managed:
-  enabled: true
-  go_package_prefix:
-    default: github.com/ride-app/driver-service/pkg/protos
-    except:
-      - buf.build/googleapis/googleapis
-      - buf.build/envoyproxy/protoc-gen-validate
 plugins:
   - plugin: buf.build/protocolbuffers/go
     out: pkg/protos
