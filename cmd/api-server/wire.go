@@ -1,6 +1,6 @@
 //go:build wireinject
 
-package service
+package main
 
 import (
 	"github.com/google/wire"
