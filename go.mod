@@ -9,7 +9,7 @@ require (
 	connectrpc.com/connect v1.11.0
 	firebase.google.com/go/v4 v4.12.0
 	github.com/MicahParks/keyfunc/v2 v2.1.0
-	github.com/envoyproxy/protoc-gen-validate v0.10.1
+	github.com/envoyproxy/protoc-gen-validate v1.0.2
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.4.2
