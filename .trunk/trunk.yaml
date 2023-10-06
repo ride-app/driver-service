@@ -19,7 +19,7 @@ actions:
   definitions:
     - id: generate-di
       triggers:
-        - files: [di/wire.go]
+        - files: ["**/wire.go"]
       run: go run github.com/google/wire/cmd/wire
       run_from: di
 
@@ -66,7 +66,7 @@ lint:
   ignore:
     - linters: [ALL]
       paths:
-        - utils/tools
+        - pkg/utils/tools
 
     - linters: [goimports]
       paths:
