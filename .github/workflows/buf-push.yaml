@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
 
-      - uses: bufbuild/buf-setup-action@v1.26.1
+      - uses: bufbuild/buf-setup-action@eb60cd0de4f14f1f57cf346916b8cd69a9e7ed0b # v1.26.1
         with:
           github_token: ${{ github.token }}
 
