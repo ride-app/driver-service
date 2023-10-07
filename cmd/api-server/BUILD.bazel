@@ -27,26 +27,24 @@ go_library(
 )
 
 go_binary(
-    name = "api-server",
+    name = "app",
     embed = [":api-server_lib"],
-    visibility = ["//visibility:public"],
 )
 
 pkg_tar(
-    name = "api-server_layer",
-    srcs = [":api-server"],
+    name = "tar_layer",
+    srcs = [":app"],
 )
 
 oci_image(
-    name = "api-server_image",
+    name = "image",
     base = "@distroless",
-    entrypoint = ["/api-server"],
-    tars = [":api-server_layer"],
-    visibility = ["//visibility:public"],
+    entrypoint = ["/app"],
+    tars = [":tar_layer"],
 )
 
 oci_tarball(
-    name = "api-server_tarball",
-    image = ":api-server_image",
+    name = "container",
+    image = ":image",
     repo_tags = ["api-server:latest"],
 )

@@ -9,27 +9,27 @@ steps:
 
   # Step 2: Build Docker image using Bazel
   - name: gcr.io/cloud-builders/bazel
-    args: [build, //cmd/api-server:api-server_tarball]
+    args: [build, //cmd/api-server:container]
 
   # Step 3: Tag image
   - name: gcr.io/cloud-builders/docker@sha256:7a85dcb4e89f393465c9db1331347253fe5623d0bffc1d8351fde2f8a1009e20
     args:
       - tag
-      - $(bazel cquery --output=files //cmd/api-server:api-server_tarball)
+      - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 3: Tag image
   - name: gcr.io/cloud-builders/docker@sha256:7a85dcb4e89f393465c9db1331347253fe5623d0bffc1d8351fde2f8a1009e20
     args:
       - tag
-      - bazel/cmd/api-server:api-server_tarball
+      - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
 
   # Step 3: Tag image
   - name: gcr.io/cloud-builders/docker@sha256:7a85dcb4e89f393465c9db1331347253fe5623d0bffc1d8351fde2f8a1009e20
     args:
       - tag
-      - bazel/cmd/api-server:api-server_tarball
+      - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
 
   # Step 4: Push a Docker image
