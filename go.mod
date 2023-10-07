@@ -8,6 +8,7 @@ require (
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230924153639-d33e5416a9c2.1
 	cloud.google.com/go/firestore v1.13.0
 	connectrpc.com/connect v1.11.1
+	connectrpc.com/connect v1.11.1
 	firebase.google.com/go/v4 v4.12.1
 	github.com/MicahParks/keyfunc/v2 v2.1.0
 	github.com/bufbuild/protovalidate-go v0.3.3
@@ -20,8 +21,13 @@ require (
 	github.com/onsi/gomega v1.28.0
 	go.uber.org/mock v0.3.0
 	go.uber.org/zap v1.26.0
+	github.com/onsi/gomega v1.28.0
+	go.uber.org/mock v0.3.0
+	go.uber.org/zap v1.26.0
 	golang.org/x/net v0.16.0
 	google.golang.org/genproto v0.0.0-20231002182017-d307bd883b97
+	google.golang.org/genproto/googleapis/api v0.0.0-20231002182017-d307bd883b97
+	google.golang.org/grpc v1.58.2
 	google.golang.org/genproto/googleapis/api v0.0.0-20231002182017-d307bd883b97
 	google.golang.org/grpc v1.58.2
 	google.golang.org/protobuf v1.31.0
@@ -39,6 +45,7 @@ require (
 	cloud.google.com/go/iam v1.1.2 // indirect
 	cloud.google.com/go/longrunning v0.5.1 // indirect
 	cloud.google.com/go/storage v1.30.1 // indirect
+	github.com/BurntSushi/toml v1.2.1 // indirect
 	github.com/BurntSushi/toml v1.2.1 // indirect
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
 	github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230512164433-5d1fd1a340c9 // indirect
