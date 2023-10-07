@@ -7,17 +7,22 @@ steps:
     args:
       - generate
 
-  # Step 2: Build a Docker image
+  # Step 2: Build Docker image using Bazel
+  - name: gcr.io/cloud-builders/bazel
+    args: [build, /cmd/api-server:api-server_image]
+
+  # Step 2: Tag image
   - name: gcr.io/cloud-builders/docker
     args:
-      - build
-      - -t
+      - tag
+      - bazel/cmd/api-server:api-server_image
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
-      - -t
+      - tag
+      - bazel/cmd/api-server:api-server_image
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
-      - -t
+      - tag
+      - bazel/cmd/api-server:api-server_image
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
-      - .
 
   # Step 3: Push a Docker image
   - name: gcr.io/cloud-builders/docker
