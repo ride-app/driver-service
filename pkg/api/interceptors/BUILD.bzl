@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "interceptors",
+    srcs = [
+        "auth_interceptor.go",
+        "panic_interceptor.go",
+    ],
+    importpath = "github.com/ride-app/driver-service/pkg/api/interceptors",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/utils/logger",
+        "@com_connectrpc_connect//:connect",
+        "@com_github_golang_jwt_jwt_v5//:jwt",
+        "@com_github_micahparks_keyfunc_v2//:keyfunc",
+    ],
+)

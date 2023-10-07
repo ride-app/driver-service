@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "config",
+    srcs = ["config.go"],
+    importpath = "github.com/ride-app/driver-service/pkg/config",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_ilyakaznacheev_cleanenv//:cleanenv"],
+)

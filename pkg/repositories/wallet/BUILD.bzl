@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "wallet",
+    srcs = ["wallet_repository.go"],
+    importpath = "github.com/ride-app/driver-service/pkg/repositories/wallet",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/config",
+        "//pkg/utils/logger",
+        "@build_buf_gen_go_ride_wallet_connectrpc_go//ride/wallet/v1alpha1/walletv1alpha1connect",
+        "@build_buf_gen_go_ride_wallet_protocolbuffers_go//ride/wallet/v1alpha1",
+        "@com_connectrpc_connect//:connect",
+    ],
+)
