@@ -3,7 +3,7 @@ module github.com/ride-app/driver-service
 go 1.20
 
 require (
-	buf.build/gen/go/ride/wallet/connectrpc/go v1.11.0-20230713133935-94c2e35c4162.1
+	buf.build/gen/go/ride/wallet/connectrpc/go v1.11.0-20230924153639-d33e5416a9c2.1
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230713133935-94c2e35c4162.1
 	cloud.google.com/go/firestore v1.13.0
 	connectrpc.com/connect v1.11.1
