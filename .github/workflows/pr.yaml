@@ -12,7 +12,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: Lint+Unit Tests
+    name: Build+Unit Tests
     steps:
       - name: Checkout Code
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
@@ -34,6 +34,9 @@ jobs:
           run: buf generate
           trunk-token: ${{ secrets.TRUNK_TOKEN }}
           org: ride
+
+      - name: Build
+        run: bazel build //...
 
       # - name: Lint
       #   uses: trunk-io/trunk-action@v1

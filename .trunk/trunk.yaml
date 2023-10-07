@@ -87,7 +87,7 @@ lint:
         - "**/wire_gen.go"
 merge:
   required_statuses:
-    - Lint+Unit Tests
+    - Build+Unit Tests
 tools:
   enabled:
     - bazel@6.3.2
