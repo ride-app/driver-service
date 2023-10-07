@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"connectrpc.com/connect"
+	"github.com/bufbuild/protovalidate-go"
 	pb "github.com/ride-app/driver-service/pkg/protos/ride/driver/v1alpha1"
 )
 
@@ -15,8 +16,16 @@ func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
 		"method": "DeleteDriver",
 	})
 
-	if err := req.Msg.Validate(); err != nil {
+	validator, err := protovalidate.New()
+	if err != nil {
+		log.WithError(err).Info("Failed to initialize validator")
+
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	if err := validator.Validate(req.Msg); err != nil {
 		log.WithError(err).Info("Invalid request")
+
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
