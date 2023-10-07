@@ -1,5 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-load("@rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 go_library(
@@ -43,4 +43,10 @@ oci_image(
     entrypoint = ["/api-server"],
     tars = [":api-server_layer"],
     visibility = ["//visibility:public"],
+)
+
+oci_tarball(
+    name = "api-server_tarball",
+    image = ":api-server_image",
+    repo_tags = ["api-server:latest"],
 )
