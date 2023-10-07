@@ -4,7 +4,7 @@
 //go:build !wireinject
 // +build !wireinject
 
-package service
+package main
 
 import (
 	"github.com/ride-app/driver-service/pkg/api"
