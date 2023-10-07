@@ -29,6 +29,7 @@ go_library(
 go_binary(
     name = "app",
     embed = [":api-server_lib"],
+    visibility = ["//visibility:public"],
 )
 
 pkg_tar(
