@@ -1,4 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 go_library(
     name = "api-server_lib",
@@ -27,5 +29,18 @@ go_library(
 go_binary(
     name = "api-server",
     embed = [":api-server_lib"],
+    visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "api-server_layer",
+    srcs = [":api-server"],
+)
+
+oci_image(
+    name = "api-server_image",
+    base = "@distroless",
+    entrypoint = ["/api-server"],
+    tars = [":api-server_layer"],
     visibility = ["//visibility:public"],
 )
