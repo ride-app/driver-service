@@ -9,6 +9,8 @@ import "validate/validate.proto";
 
 package ride.driver.v1alpha1;
 
+option go_package = "github.com/ride-app/driver-service/pkg/protos/ride/driver/v1alpha1";
+
 service DriverService {
   rpc CreateDriver(CreateDriverRequest) returns (CreateDriverResponse) {
     option (google.api.http) = {
