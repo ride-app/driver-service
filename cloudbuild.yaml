@@ -8,7 +8,7 @@ steps:
       - generate
 
   # Step 2: Build Docker image using Bazel
-  - name: gcr.io/cloud-builders/bazel@sha256:ae12f6213a9e5d30c91a1ce02747a02d122d7688a4dd7d6a17348e06071384b7
+  - name: gcr.io/cloud-builders/bazel@sha256:355e0629dea19a66b4f067474feb0e38ae86839d57d1a15d6ee6a6e2ab6bdfd6
     args: [run, //cmd/api-server:container]
 
   # Step 3: Tag image
