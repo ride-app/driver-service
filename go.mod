@@ -22,7 +22,7 @@ require (
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
-	github.com/onsi/ginkgo/v2 v2.12.1
+	github.com/onsi/ginkgo/v2 v2.13.0
 	github.com/onsi/gomega v1.28.0
 	go.uber.org/mock v0.3.0
 	go.uber.org/zap v1.26.0
@@ -30,7 +30,7 @@ require (
 	google.golang.org/genproto v0.0.0-20231002182017-d307bd883b97
 	google.golang.org/genproto/googleapis/api v0.0.0-20231002182017-d307bd883b97
 	google.golang.org/grpc v1.58.2
-	github.com/onsi/ginkgo/v2 v2.12.1
+	github.com/onsi/ginkgo/v2 v2.13.0
 	github.com/onsi/gomega v1.28.0
 	go.uber.org/mock v0.3.0
 	go.uber.org/zap v1.26.0
