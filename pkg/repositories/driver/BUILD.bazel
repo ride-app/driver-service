@@ -6,8 +6,8 @@ go_library(
     importpath = "github.com/ride-app/driver-service/pkg/repositories/driver",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/protos/ride/driver/v1alpha1",
-        "//pkg/utils/logger",
+        "//api/ride/driver/v1alpha1",
+        "//internal/utils/logger",
         "@com_github_mmcloughlin_geohash//:geohash",
         "@com_google_cloud_go_firestore//:firestore",
         "@com_google_firebase_go_v4//:go",

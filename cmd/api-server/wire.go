@@ -4,13 +4,13 @@ package main
 
 import (
 	"github.com/google/wire"
-	"github.com/ride-app/driver-service/pkg/api"
-	"github.com/ride-app/driver-service/pkg/config"
+	"github.com/ride-app/driver-service/config"
+	"github.com/ride-app/driver-service/internal/api-handlers"
+	"github.com/ride-app/driver-service/internal/utils/logger"
 	driverrepository "github.com/ride-app/driver-service/pkg/repositories/driver"
 	vehiclerepository "github.com/ride-app/driver-service/pkg/repositories/vehicle"
 	walletrepository "github.com/ride-app/driver-service/pkg/repositories/wallet"
-	thirdparty "github.com/ride-app/driver-service/pkg/third-party"
-	"github.com/ride-app/driver-service/pkg/utils/logger"
+	thirdparty "github.com/ride-app/driver-service/third-party"
 )
 
 func InitializeService(logger logger.Logger, config *config.Config) (*api.DriverServiceServer, error) {

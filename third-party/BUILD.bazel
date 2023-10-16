@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "third-party",
+    srcs = ["firebase.go"],
+    importpath = "github.com/ride-app/driver-service/third-party",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//config",
+        "//internal/utils/logger",
+        "@com_google_firebase_go_v4//:go",
+    ],
+)

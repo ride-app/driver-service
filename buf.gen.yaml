@@ -1,11 +1,11 @@
 version: v1
 plugins:
   - plugin: buf.build/protocolbuffers/go
-    out: pkg/protos
+    out: api
     opt:
       - paths=source_relative
 
   - plugin: buf.build/connectrpc/go
-    out: pkg/protos
+    out: api
     opt:
       - paths=source_relative

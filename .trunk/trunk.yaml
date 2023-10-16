@@ -23,7 +23,7 @@ actions:
       triggers:
         - files: ["**/wire.go"]
       run: go run github.com/google/wire/cmd/wire
-      run_from: di
+      run_from: cmd/api-server
 
     - id: gazelle-update-repos-go
       triggers:
@@ -39,7 +39,7 @@ actions:
 
     - id: buf-mod-update
       triggers:
-        - files: [protos/**/buf.yaml]
+        - files: [api/**/buf.yaml]
       run: buf mod update pkg/protos
 
     - id: unit-test
@@ -80,7 +80,7 @@ lint:
   ignore:
     - linters: [ALL]
       paths:
-        - pkg/utils/tools
+        - internal/utils/tools
 
     - linters: [goimports]
       paths:
