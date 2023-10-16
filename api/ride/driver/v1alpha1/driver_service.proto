@@ -4,7 +4,6 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
 import "google/type/date.proto";
-import "google/type/phone_number.proto";
 import "buf/validate/validate.proto";
 
 package ride.driver.v1alpha1;
