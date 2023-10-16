@@ -21,6 +21,8 @@ COPY go.mod go.sum /
 RUN go mod download && go mod verify
 
 COPY . .
+
+WORKDIR /go/src/app/cmd/api-server
 RUN CGO_ENABLED=0 go build -o /go/bin/app -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn"
 
 # Run
