@@ -22,7 +22,7 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - uses: bufbuild/buf-setup-action@93435dfe1238e4a6ee49f795b394aeb1e5afc1f8 # v1.27.0
+      - uses: bufbuild/buf-setup-action@6bdfab1cc71322c663d891914e69da7a6c2c5f52 # v1.27.1
         with:
           github_token: ${{ github.token }}
 
@@ -56,7 +56,7 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - uses: bufbuild/buf-setup-action@93435dfe1238e4a6ee49f795b394aeb1e5afc1f8 # v1.27.0
+      - uses: bufbuild/buf-setup-action@6bdfab1cc71322c663d891914e69da7a6c2c5f52 # v1.27.1
         with:
           github_token: ${{ github.token }}
 
