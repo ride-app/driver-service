@@ -6,7 +6,7 @@ require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20230914171853-63dfe56cc2c4.1
 	buf.build/gen/go/ride/wallet/connectrpc/go v1.11.1-20230924153639-d33e5416a9c2.1
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230924153639-d33e5416a9c2.1
-	cloud.google.com/go/firestore v1.13.0
+	cloud.google.com/go/firestore v1.14.0
 	connectrpc.com/connect v1.11.1
 	firebase.google.com/go/v4 v4.12.1
 	github.com/MicahParks/keyfunc/v2 v2.1.0
