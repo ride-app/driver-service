@@ -16,7 +16,7 @@ runs:
         github_token: ${{ github.token }}
 
     - name: Build protobuf
-      uses: trunk-io/breakpoint@960d99758d917c9a6021685f775e648e00f43f9a # v1
+      uses: trunk-io/breakpoint@d13a81dd8da4563f4696b2a860645107ad971aa0 # v1
       with:
         breakpoint-id: buf-generate
         run: buf generate
