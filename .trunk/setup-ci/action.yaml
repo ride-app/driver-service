@@ -20,5 +20,5 @@ runs:
       with:
         breakpoint-id: buf-generate
         run: buf generate
-        trunk-token: ${{ secrets.TRUNK_TOKEN }}
+        trunk-token: ${{ env.TRUNK_TOKEN }}
         org: ride
