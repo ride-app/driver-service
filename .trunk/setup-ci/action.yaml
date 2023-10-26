@@ -12,7 +12,7 @@ runs:
       uses: bufbuild/buf-setup-action@6bdfab1cc71322c663d891914e69da7a6c2c5f52 # v1.27.1
       with:
         buf_user: ${{ env.BUF_USER }}
-        buf_api_token: ${{ secrets.BUF_TOKEN }}
+        buf_api_token: ${{ env.BUF_TOKEN }}
         github_token: ${{ github.token }}
 
     - name: Build protobuf
