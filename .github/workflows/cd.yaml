@@ -30,7 +30,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-      - uses: bufbuild/buf-setup-action@6bdfab1cc71322c663d891914e69da7a6c2c5f52 # v1.27.1
+      - uses: bufbuild/buf-setup-action@1158f4fa81bc02e1ff62abcca6d516c9e24c77da # v1.27.2
         with:
           github_token: ${{ github.token }}
 
