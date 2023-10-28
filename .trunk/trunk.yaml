@@ -56,7 +56,7 @@ plugins:
 lint:
   enabled:
     - buildifier@6.3.3
-    - checkov@2.5.9
+    - checkov@3.0.12
     - gokart@0.5.1
     - osv-scanner@1.4.2
     - terrascan@1.18.3
