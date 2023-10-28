@@ -12,28 +12,28 @@ steps:
     args: [run, //cmd/api-server:container]
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:d8dd60bd707d668864e274c85bcb3102db233d9bd24248ee938a5e452193cb12
+  - name: gcr.io/cloud-builders/docker@sha256:b44c698ebbdef8dc6350456d47f5bf5f58ecf731318f6e86850e36ff127850a6
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:d8dd60bd707d668864e274c85bcb3102db233d9bd24248ee938a5e452193cb12
+  - name: gcr.io/cloud-builders/docker@sha256:b44c698ebbdef8dc6350456d47f5bf5f58ecf731318f6e86850e36ff127850a6
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:d8dd60bd707d668864e274c85bcb3102db233d9bd24248ee938a5e452193cb12
+  - name: gcr.io/cloud-builders/docker@sha256:b44c698ebbdef8dc6350456d47f5bf5f58ecf731318f6e86850e36ff127850a6
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
 
   # Step 4: Push a Docker image
-  - name: gcr.io/cloud-builders/docker@sha256:d8dd60bd707d668864e274c85bcb3102db233d9bd24248ee938a5e452193cb12
+  - name: gcr.io/cloud-builders/docker@sha256:b44c698ebbdef8dc6350456d47f5bf5f58ecf731318f6e86850e36ff127850a6
     args:
       - push
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
