@@ -55,6 +55,7 @@ plugins:
 
 lint:
   enabled:
+    - renovate@37.8.1
     - buildifier@6.3.3
     - checkov@3.0.12
     - gokart@0.5.1
