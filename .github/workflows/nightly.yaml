@@ -30,7 +30,7 @@ jobs:
         run: echo ${{ secrets.BUF_TOKEN }} | buf registry login --username ${{ env.BUF_USER }} --token-stdin
 
       - name: Build protobuf
-        uses: trunk-io/breakpoint@d13a81dd8da4563f4696b2a860645107ad971aa0 # v1
+        uses: trunk-io/breakpoint@f8a1f08369323ed46f3ef7161d3d0a2fdc3488df # v1
         with:
           breakpoint-id: buf-generate
           run: buf generate
@@ -64,7 +64,7 @@ jobs:
         run: echo ${{ secrets.BUF_TOKEN }} | buf registry login --username ${{ env.BUF_USER }} --token-stdin
 
       - name: Build protobuf
-        uses: trunk-io/breakpoint@d13a81dd8da4563f4696b2a860645107ad971aa0 # v1
+        uses: trunk-io/breakpoint@f8a1f08369323ed46f3ef7161d3d0a2fdc3488df # v1
         with:
           breakpoint-id: buf-generate
           run: buf generate
