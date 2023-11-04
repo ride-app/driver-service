@@ -57,7 +57,7 @@ lint:
   enabled:
     - renovate@37.8.1
     - buildifier@6.3.3
-    - checkov@3.0.16
+    - checkov@3.0.19
     - gokart@0.5.1
     - osv-scanner@1.4.3
     - terrascan@1.18.3
