@@ -3,7 +3,7 @@ substitutions:
 
 steps:
   # Step 1: Generate from Protobuf
-  - name: bufbuild/buf@sha256:f43181129d013f25330698f3c138c2ad186e2b4169b0039b5b5726a2a1103f24
+  - name: bufbuild/buf@sha256:3920d548823e50d9248838bab13a0bd13ebcd7e388cd68ec109ab672e80a77c2
     args:
       - generate
 
