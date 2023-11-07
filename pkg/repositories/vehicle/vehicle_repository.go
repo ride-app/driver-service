@@ -14,8 +14,8 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"connectrpc.com/connect"
-	pb "github.com/ride-app/driver-service/pkg/protos/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/pkg/utils/logger"
+	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
+	"github.com/ride-app/driver-service/internal/utils/logger"
 )
 
 type VehicleRepository interface {

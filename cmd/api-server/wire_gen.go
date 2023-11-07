@@ -7,13 +7,13 @@
 package main
 
 import (
-	"github.com/ride-app/driver-service/pkg/api"
-	"github.com/ride-app/driver-service/pkg/config"
+	"github.com/ride-app/driver-service/config"
+	"github.com/ride-app/driver-service/internal/api-handlers"
+	"github.com/ride-app/driver-service/internal/utils/logger"
 	"github.com/ride-app/driver-service/pkg/repositories/driver"
 	"github.com/ride-app/driver-service/pkg/repositories/vehicle"
 	"github.com/ride-app/driver-service/pkg/repositories/wallet"
-	"github.com/ride-app/driver-service/pkg/third-party"
-	"github.com/ride-app/driver-service/pkg/utils/logger"
+	"github.com/ride-app/driver-service/third-party"
 )
 
 // Injectors from wire.go:

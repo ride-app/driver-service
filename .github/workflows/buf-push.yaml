@@ -4,7 +4,7 @@ permissions: read-all
 on:
   push:
     paths:
-      - protos/**
+      - api/**
     branches:
       - main
 
@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - uses: bufbuild/buf-setup-action@93435dfe1238e4a6ee49f795b394aeb1e5afc1f8 # v1.27.0
+      - uses: bufbuild/buf-setup-action@1158f4fa81bc02e1ff62abcca6d516c9e24c77da # v1.27.2
         with:
           github_token: ${{ github.token }}
 
       - uses: bufbuild/buf-push-action@v1
         with:
           buf_token: ${{ secrets.BUF_TOKEN }}
-          input: protos
+          input: api

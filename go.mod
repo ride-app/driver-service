@@ -6,31 +6,23 @@ require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.31.0-20230914171853-63dfe56cc2c4.1
 	buf.build/gen/go/ride/wallet/connectrpc/go v1.11.1-20230924153639-d33e5416a9c2.1
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230924153639-d33e5416a9c2.1
-	cloud.google.com/go/firestore v1.13.0
-	connectrpc.com/connect v1.11.1
+	cloud.google.com/go/firestore v1.14.0
+	connectrpc.com/connect v1.12.0
 	firebase.google.com/go/v4 v4.12.1
 	github.com/MicahParks/keyfunc/v2 v2.1.0
-	github.com/bufbuild/protovalidate-go v0.3.3
+	github.com/bufbuild/protovalidate-go v0.4.0
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/onsi/ginkgo/v2 v2.13.0
-	github.com/onsi/gomega v1.28.0
+	github.com/onsi/gomega v1.29.0
 	go.uber.org/mock v0.3.0
 	go.uber.org/zap v1.26.0
 	golang.org/x/net v0.17.0
-	google.golang.org/genproto e917dd12ba7a
-	google.golang.org/genproto/googleapis/api e917dd12ba7a
-	google.golang.org/grpc v1.58.3
-	github.com/onsi/ginkgo/v2 v2.13.0
-	github.com/onsi/gomega v1.28.0
-	go.uber.org/mock v0.3.0
-	go.uber.org/zap v1.26.0
-	golang.org/x/net v0.17.0
-	google.golang.org/genproto e917dd12ba7a
-	google.golang.org/genproto/googleapis/api e917dd12ba7a
-	google.golang.org/grpc v1.58.3
+	google.golang.org/genproto 49dd2c1f3d0b
+	google.golang.org/genproto/googleapis/api 49dd2c1f3d0b
+	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
 )
 
