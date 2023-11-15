@@ -83,9 +83,9 @@ gazelle_buf_dependencies()
 
 http_archive(
     name = "rules_oci",
-    sha256 = "21a7d14f6ddfcb8ca7c5fc9ffa667c937ce4622c7d2b3e17aea1ffbc90c96bed",
-    strip_prefix = "rules_oci-1.4.0",
-    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v1.4.0/rules_oci-v1.4.0.tar.gz",
+    sha256 = "ad4c9e8da16a92b680772973f77c5dc8d22db6887082dc0a6665277d0897e191",
+    strip_prefix = "rules_oci-1.4.1",
+    url = "https://github.com/bazel-contrib/rules_oci/releases/download/v1.4.1/rules_oci-v1.4.1.tar.gz",
 )
 
 load("@rules_oci//oci:dependencies.bzl", "rules_oci_dependencies")
