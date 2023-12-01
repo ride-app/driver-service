@@ -58,3 +58,18 @@ jobs:
       #     files: ./cover.json,./report.json
       #     fail_ci_if_error: true
       #     verbose: true
+
+  compute_impacted_targets:
+    name: Compute Impacted Targets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Compute Impacted Targets
+        uses: trunk-io/merge-action@v1
+        with:
+          # Use your Trunk repo or org API token to authenticate impacted targets uploads.
+          # This secret should be provided as a GitHub secret.
+          # See https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions.
+          trunk-token: ${{ secrets.TRUNK_TOKEN }}
