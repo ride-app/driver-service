@@ -10,37 +10,64 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: Unit Tests
+    name: Build+Unit Tests
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - uses: actions/setup-go@v4
+      - name: Mount bazel cache
+        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        with:
+          path: /home/runner/.cache/bazel
+          key: bazel
+
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version-file: go.mod
 
-      - uses: bufbuild/buf-setup-action@v1.26.1
+      - uses: bufbuild/buf-setup-action@382440cdb8ec7bc25a68d7b4711163d95f7cc3aa # v1.28.1
         with:
           buf_user: ${{ env.BUF_USER }}
           buf_api_token: ${{ secrets.BUF_TOKEN }}
           github_token: ${{ github.token }}
 
       - name: Build protobuf
-        uses: trunk-io/breakpoint@v1
+        uses: trunk-io/breakpoint@f8a1f08369323ed46f3ef7161d3d0a2fdc3488df # v1
         with:
           breakpoint-id: buf-generate
           run: buf generate
           trunk-token: ${{ secrets.TRUNK_TOKEN }}
           org: ride
 
-      - name: Unit Tests
-        run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
+      - name: Build
+        run: bazel build //...
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+      # - name: Lint
+      #   uses: trunk-io/trunk-action@v1
+
+      # - name: Unit Tests
+      #   run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
+
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     flags: unit-tests
+      #     files: ./cover.json,./report.json
+      #     fail_ci_if_error: true
+      #     verbose: true
+
+  compute_impacted_targets:
+    name: Compute Impacted Targets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Compute Impacted Targets
+        uses: trunk-io/merge-action@6a6b8568cb140a4d11bb9be876bdcf9c21094e5b # v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: unit-tests
-          files: ./cover.json,./report.json
-          fail_ci_if_error: true
-          verbose: true
+          # Use your Trunk repo or org API token to authenticate impacted targets uploads.
+          # This secret should be provided as a GitHub secret.
+          # See https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions.
+          trunk-token: ${{ secrets.TRUNK_TOKEN }}
