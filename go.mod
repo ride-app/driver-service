@@ -15,7 +15,7 @@ require (
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
-	github.com/onsi/ginkgo/v2 v2.13.1
+	github.com/onsi/ginkgo/v2 v2.13.2
 	github.com/onsi/gomega v1.30.0
 	go.uber.org/mock v0.3.0
 	go.uber.org/zap v1.26.0
