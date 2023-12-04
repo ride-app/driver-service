@@ -1,4 +1,5 @@
 name: CD
+
 permissions: read-all
 
 on:
@@ -10,10 +11,6 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     name: Upload Coverage
-    env:
-      GOPRIVATE: buf.build/gen/go
-      BUF_USER: debkanchan
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -21,21 +18,12 @@ jobs:
       - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version-file: go.mod
-      - uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
 
       - uses: bufbuild/buf-setup-action@382440cdb8ec7bc25a68d7b4711163d95f7cc3aa # v1.28.1
         with:
+          buf_user: ${{ env.BUF_USER }}
+          buf_api_token: ${{ secrets.BUF_TOKEN }}
           github_token: ${{ github.token }}
-
-      - name: Authenticate buf
-        run: echo ${{ secrets.BUF_TOKEN }} | buf registry login --username ${{ env.BUF_USER }} --token-stdin
 
       - name: Build protobuf
         uses: trunk-io/breakpoint@f8a1f08369323ed46f3ef7161d3d0a2fdc3488df # v1
