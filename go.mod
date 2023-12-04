@@ -11,7 +11,7 @@ require (
 	firebase.google.com/go/v4 v4.12.1
 	github.com/MicahParks/keyfunc/v2 v2.1.0
 	github.com/bufbuild/protovalidate-go v0.4.2
-	github.com/golang-jwt/jwt/v5 v5.1.0
+	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
