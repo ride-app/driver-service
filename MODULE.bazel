@@ -1,13 +1,19 @@
 bazel_dep(name = "rules_go", version = "0.42.0")
-bazel_dep(name = "gazelle", version = "0.33.0")
-bazel_dep(name = "rules_buf", version = "0.1.1")
+bazel_dep(name = "gazelle", version = "0.34.0")
+bazel_dep(name = "rules_pkg", version = "0.9.1")
+bazel_dep(name = "rules_buf", version = "0.2.0")
 bazel_dep(name = "rules_proto", version = "5.3.0-21.7")
 bazel_dep(name = "rules_oci", version = "1.4.0")
 bazel_dep(name = "container_structure_test", version = "1.16.0")
 
+buf = use_extension("@rules_buf//buf:extensions.bzl", "buf")
+
+# Override the default version of buf
+buf.toolchains(version = "v1.28.1")
+
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
-go_repos = go_deps.from_file(go_mod = "//:go.mod")
-# use_repo(go_repos)
+go_deps.from_file(go_mod = "//:go.mod")
+use_repo(go_deps, "build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go", "build_buf_gen_go_ride_wallet_connectrpc_go", "build_buf_gen_go_ride_wallet_protocolbuffers_go", "com_connectrpc_connect", "com_github_bufbuild_protovalidate_go", "com_github_golang_jwt_jwt_v5", "com_github_google_wire", "com_github_ilyakaznacheev_cleanenv", "com_github_micahparks_keyfunc_v2", "com_github_mmcloughlin_geohash", "com_github_onsi_ginkgo_v2", "com_github_onsi_gomega", "com_google_cloud_go_firestore", "com_google_firebase_go_v4", "org_golang_google_genproto", "org_golang_google_genproto_googleapis_api", "org_golang_google_grpc", "org_golang_google_protobuf", "org_golang_x_net", "org_uber_go_mock", "org_uber_go_zap")
 
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 oci.pull(
@@ -20,6 +26,3 @@ oci.pull(
     ],
 )
 use_repo(oci, "distroless")
-
-non_module_dependencies = use_extension("//:extensions.bzl", "non_module_dependencies")
-use_repo(non_module_dependencies, "data_file")

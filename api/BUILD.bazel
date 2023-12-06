@@ -1,0 +1,8 @@
+# load("@rules_buf//buf:defs.bzl", "buf_push")
+
+# buf_push(
+#     name = "buf_push",
+#     config = "buf.yaml",
+#     lock = "buf.lock",
+#     targets = ["@buf_deps_api//ride/driver/v1alpha1:v1alpha1_proto"],
+# )

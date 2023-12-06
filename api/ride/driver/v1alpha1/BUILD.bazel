@@ -1,4 +1,4 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "v1alpha1",
@@ -8,7 +8,6 @@ go_library(
     deps = [
         "@build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go//buf/validate",
         "@org_golang_google_genproto//googleapis/type/date",
-        "@org_golang_google_genproto//googleapis/type/phone_number",
         "@org_golang_google_genproto_googleapis_api//annotations",
         "@org_golang_google_protobuf//reflect/protoreflect",
         "@org_golang_google_protobuf//runtime/protoimpl",

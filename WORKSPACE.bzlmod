@@ -1,9 +1,0 @@
-# This file marks the root of the Bazel workspace.
-# See MODULE.bazel for external dependencies setup.
-
-# Declares that this directory is the root of a Bazel workspace.
-# See https://docs.bazel.build/versions/main/build-ref.html#workspace
-workspace(
-    # How this workspace would be referenced with absolute labels from another workspace
-    name = "driver-service",
-)
