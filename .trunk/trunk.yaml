@@ -4,6 +4,7 @@ runtimes:
     - go@1.21.0
     - node@18.12.1
     - python@3.10.8
+
 actions:
   enabled:
     - trunk-announce
@@ -15,8 +16,6 @@ actions:
     - generate-di
     - buf-gen
     - unit-test
-    - gazelle-update-repos-go
-    - gazelle-update-repos-buf
 
   definitions:
     - id: generate-di
@@ -24,18 +23,6 @@ actions:
         - files: ["**/wire.go"]
       run: go run github.com/google/wire/cmd/wire
       run_from: cmd/api-server
-
-    - id: gazelle-update-repos-go
-      triggers:
-        - files:
-            - go.sum
-            - go.mod
-      run: bazel run //:gazelle-update-repos-go
-
-    - id: gazelle-update-repos-buf
-      triggers:
-        - files: ["**/buf.yaml", "**/buf.lock"]
-      run: bazel run //:gazelle-update-repos-buf
 
     - id: buf-mod-update
       triggers:
@@ -46,7 +33,10 @@ actions:
       run: go run github.com/onsi/ginkgo/v2/ginkgo -r --procs=4 --compilers=4 --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --race --trace --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
 
 cli:
-  version: 1.17.2
+  version: 1.18.0
+  shell_hooks:
+    enforce: true
+
 plugins:
   sources:
     - id: trunk
@@ -55,21 +45,21 @@ plugins:
 
 lint:
   enabled:
-    - renovate@37.8.1
+    - renovate@37.87.2
     - buildifier@6.4.0
     - checkov@3.1.9
     - gokart@0.5.1
-    - osv-scanner@1.4.3
+    - osv-scanner@1.5.0
     - terrascan@1.18.5
-    - trivy@0.47.0
-    - trufflehog@3.63.2-rc0
+    - trivy@0.48.0
+    - trufflehog@3.63.2
     - yamllint@1.33.0
     - git-diff-check
     - shellcheck@0.9.0
     - shfmt@3.6.0
     - goimports@0.9.1
     - actionlint@1.6.26
-    - semgrep@1.51.0
+    - semgrep@1.52.0
     - prettier@3.1.0
     - gitleaks@8.18.1
     - gofmt@1.20.4
@@ -86,10 +76,11 @@ lint:
     - linters: [goimports]
       paths:
         - "**/wire_gen.go"
+
 merge:
   required_statuses:
     - Build+Unit Tests
+
 tools:
   enabled:
     - bazel@6.4.0
-    - gt@0.20.35
