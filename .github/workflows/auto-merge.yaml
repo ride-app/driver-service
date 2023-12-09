@@ -12,6 +12,7 @@ jobs:
       - uses: actions/labeler@v4
         with:
           repo-token: ${{ github.token }}
+          sync-labels: true
 
       - uses: thollander/actions-comment-pull-request@v2
         with:
