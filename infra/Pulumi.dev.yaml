@@ -1,4 +1,4 @@
 environment:
-  - dev
+  - app-dev
 config:
   walletServiceHost: https://wallet-service-gbbsdms5pq-em.a.run.app

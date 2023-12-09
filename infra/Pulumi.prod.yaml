@@ -1,4 +1,4 @@
 environment:
-  - prod
+  - app-prod
 config:
   walletServiceHost: https://wallet-service-5iepetd3bq-em.a.run.app
