@@ -1,7 +1,10 @@
 name: Auto Merge Bots
 on:
   pull_request_target:
-    types: [opened]
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   comment_pr_if_bot:
