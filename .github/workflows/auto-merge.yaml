@@ -1,0 +1,19 @@
+name: Auto Merge Bots
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  comment_pr_if_bot:
+    name: Comment on pull request if bot
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.user.type == 'Bot' }}
+    steps:
+      - uses: actions/labeler@v4
+        with:
+          repo-token: ${{ github.token }}
+
+      - uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            /trunk merge
