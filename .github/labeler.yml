@@ -1,6 +1,2 @@
 auto-merge:
-  - go.mod
-  - go.sum
-  - package.json
-  - package-lock.json
-  - pnpm-lock.yaml
+  - "*"
