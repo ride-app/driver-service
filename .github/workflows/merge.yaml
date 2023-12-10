@@ -9,6 +9,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     name: Build+Unit Tests
     steps:
       - name: Checkout Code
