@@ -59,6 +59,7 @@ jobs:
       #     verbose: true
 
   compute_impacted_targets:
+    timeout-minutes: 10
     name: Compute Impacted Targets
     runs-on: ubuntu-latest
     timeout-minutes: 10
