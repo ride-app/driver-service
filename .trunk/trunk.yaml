@@ -79,7 +79,7 @@ lint:
 
 merge:
   required_statuses:
-    - Build+Unit Tests
+    - Build
 
 tools:
   enabled:
