@@ -10,6 +10,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     name: Build+Unit Tests
     steps:
       - name: Checkout Code
@@ -58,6 +59,7 @@ jobs:
       #     verbose: true
 
   compute_impacted_targets:
+    timeout-minutes: 10
     name: Compute Impacted Targets
     runs-on: ubuntu-latest
     steps:
