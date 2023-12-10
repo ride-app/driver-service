@@ -11,6 +11,7 @@ jobs:
   trunk_upgrade:
     name: Upgrade Trunk
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write # For trunk to create PRs
       pull-requests: write # For trunk to create PRs
