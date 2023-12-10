@@ -1,2 +1,3 @@
 auto-merge:
-  - "*"
+  - changed-files:
+    - any-glob-to-any-file: '*'
