@@ -16,12 +16,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - name: Mount bazel cache
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+      - name: Cache Bazel
+        uses: actions/cache@v3
         with:
-          path: /home/runner/.cache/bazel
-          key: bazel
-
+          path: |
+            ~/.cache/bazel
+          key: ${{ runner.os }}-bazel-${{ hashFiles('.bazelversion', '.bazelrc', 'WORKSPACE', 'WORKSPACE.bazel', 'MODULE.bazel') }}
+          restore-keys: |
+            ${{ runner.os }}-bazel-
+      - run: bazelisk test //...
       - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
         with:
           go-version-file: go.mod
