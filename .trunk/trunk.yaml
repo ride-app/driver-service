@@ -33,14 +33,14 @@ actions:
       run: go run github.com/onsi/ginkgo/v2/ginkgo -r --procs=4 --compilers=4 --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --race --trace --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
 
 cli:
-  version: 1.18.0
+  version: 1.18.1
   shell_hooks:
     enforce: true
 
 plugins:
   sources:
     - id: trunk
-      ref: v1.3.0
+      ref: v1.4.0
       uri: https://github.com/trunk-io/plugins
 
 lint:
@@ -83,4 +83,4 @@ merge:
 
 tools:
   enabled:
-    - bazel@6.4.0
+    - bazel@7.0.0
