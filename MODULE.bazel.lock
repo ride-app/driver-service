@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "2f919657898da137b62e7ae0b98e8bcfa3ec39e6609ad8e1ce20fdcba346023e",
+  "moduleFileHash": "503627ef9eedaf4371b950ee374a4bbc87c166e804253cc7642bb5f0cedcd6bd",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -30,7 +30,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 4,
+            "line": 3,
             "column": 20
           },
           "imports": {
@@ -52,7 +52,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 6,
+                "line": 5,
                 "column": 9
               }
             }
