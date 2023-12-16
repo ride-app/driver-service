@@ -44,7 +44,12 @@ jobs:
           org: ride
 
       - name: Build
-        run: bazelisk build //...
+        uses: trunk-io/breakpoint@v1
+        with:
+          breakpoint-id: bazel-build
+          run: bazelisk build //...
+          trunk-token: ${{ secrets.TRUNK_TOKEN }}
+          org: ride
 
       # - name: Lint
       #   uses: trunk-io/trunk-action@v1
