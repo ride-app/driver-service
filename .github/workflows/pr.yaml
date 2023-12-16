@@ -50,6 +50,8 @@ jobs:
           run: bazelisk build //...
           trunk-token: ${{ secrets.TRUNK_TOKEN }}
           org: ride
+        env:
+          USE_BAZEL_VERSION: 6.4.0
 
       # - name: Lint
       #   uses: trunk-io/trunk-action@v1
