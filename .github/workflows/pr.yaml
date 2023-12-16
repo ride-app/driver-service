@@ -47,7 +47,7 @@ jobs:
         uses: trunk-io/breakpoint@f8a1f08369323ed46f3ef7161d3d0a2fdc3488df # v1
         with:
           breakpoint-id: bazel-build
-          run: bazelisk build //...--enable_bzlmod
+          run: bazelisk build //... --enable_bzlmod
           trunk-token: ${{ secrets.TRUNK_TOKEN }}
           org: ride
         env:
