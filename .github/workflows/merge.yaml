@@ -21,13 +21,9 @@ jobs:
         with:
           path: |
             ~/.cache/bazel
-          key: ${{ runner.os }}-bazel-${{ hashFiles('.bazelversion', '.bazelrc', 'WORKSPACE', 'WORKSPACE.bazel', 'MODULE.bazel') }}
+          key: ${{ runner.os }}-bazel-${{ hashFiles('.bazelversion', '.bazelrc', 'WORKSPACE', 'WORKSPACE.bazel', 'MODULE.bazel', 'MODULE.bazel.lock') }}
           restore-keys: |
             ${{ runner.os }}-bazel-
-
-      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
-        with:
-          go-version-file: go.mod
 
       - uses: bufbuild/buf-setup-action@382440cdb8ec7bc25a68d7b4711163d95f7cc3aa # v1.28.1
         with:
@@ -36,12 +32,7 @@ jobs:
           github_token: ${{ github.token }}
 
       - name: Build protobuf
-        uses: trunk-io/breakpoint@f8a1f08369323ed46f3ef7161d3d0a2fdc3488df # v1
-        with:
-          breakpoint-id: buf-generate
-          run: buf generate
-          trunk-token: ${{ secrets.TRUNK_TOKEN }}
-          org: ride
+        run: buf generate
 
       - name: Build
         run: bazelisk build //...
