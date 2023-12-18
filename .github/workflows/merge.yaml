@@ -36,5 +36,5 @@ jobs:
 
       - name: Build
         run: bazelisk build //... --enable_bzlmod
-        env:
-          USE_BAZEL_VERSION: 6.4.0
+        # env:
+        #   USE_BAZEL_VERSION: 6.4.0
