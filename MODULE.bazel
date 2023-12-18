@@ -1,10 +1,11 @@
 bazel_dep(name = "rules_oci", version = "1.4.3")
+bazel_dep(name = "container_structure_test", version = "1.16.0")
 
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 
 oci.pull(
     name = "distroless",
-    digest = "sha256:6706c73aae2afaa8201d63cc3dda48753c09bcd6c300762251065c0f7e602b25",
+    digest = "sha256:112a87f19e83c83711cc81ce8ed0b4d79acd65789682a6a272df57c4a0858534",
     image = "gcr.io/distroless/static",
     platforms = [
         "linux/amd64",
