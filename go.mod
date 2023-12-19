@@ -5,7 +5,7 @@ go 1.20
 require (
 	buf.build/gen/go/ride/wallet/connectrpc/go v1.13.0-20230924153639-d33e5416a9c2.1
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.31.0-20230924153639-d33e5416a9c2.2
-	cloud.google.com/go/firestore v1.5.0
+	cloud.google.com/go/firestore v1.14.0
 	connectrpc.com/connect v1.13.0
 	firebase.google.com/go/v4 v4.7.1
 	github.com/MicahParks/keyfunc/v2 v2.1.0
