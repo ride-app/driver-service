@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/firestore v1.14.0
 	connectrpc.com/connect v1.13.0
 	firebase.google.com/go/v4 v4.13.0
-	github.com/MicahParks/keyfunc/v2 v2.1.0
+	github.com/MicahParks/keyfunc/v3 v3.1.1
 	github.com/bufbuild/protovalidate-go v0.4.3
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/google/wire v0.5.0
