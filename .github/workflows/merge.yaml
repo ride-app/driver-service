@@ -33,6 +33,4 @@ jobs:
       # - name: Build protobuf
       #   run: buf generate
       - name: Build
-        run: bazelisk build //... --enable_bzlmod
-        # env:
-        #   USE_BAZEL_VERSION: 6.4.0
+        run: bazelisk build //...

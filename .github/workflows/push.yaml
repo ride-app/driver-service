@@ -64,4 +64,4 @@ jobs:
             ${{ runner.os }}-bazel-
 
       - name: Build
-        run: bazelisk build //... --enable_bzlmod
+        run: bazelisk build //...
