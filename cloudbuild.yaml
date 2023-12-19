@@ -3,43 +3,43 @@ substitutions:
 
 steps:
   # Step 1: Generate from Protobuf
-  - name: bufbuild/buf@sha256:a4724a0f7c77954067b8e9994e2a4c6d33fd0fc6eee255cd88ef5d9294969e95
+  - name: bufbuild/buf@sha256:d104e96432a276ee21eaa2c905c22c81c6ebb3a5ffb0750332f91930a426858e
     args:
       - generate
 
   # Step 2: Build Docker image using Bazel
-  - name: gcr.io/cloud-builders/bazel@sha256:6cfce8186508f27d6ad25ae86092a9065b7a53a27e57de57ec482b45a5dcd197
+  - name: gcr.io/cloud-builders/bazel@sha256:2e663b80a946e75c0a5aa097e0beac8712ca03087756e0bd55ae7813e82507a4
     args: [run, //cmd/api-server:container]
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:a12690bdb565959101a1a72fb0dda2773507b50499317a84d6ea9eee19494329
+  - name: gcr.io/cloud-builders/docker@sha256:7c2366e81abf9b7a4abe2c54086b35f001543706b8e2ec59b185b16d83c89116
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:a12690bdb565959101a1a72fb0dda2773507b50499317a84d6ea9eee19494329
+  - name: gcr.io/cloud-builders/docker@sha256:7c2366e81abf9b7a4abe2c54086b35f001543706b8e2ec59b185b16d83c89116
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:a12690bdb565959101a1a72fb0dda2773507b50499317a84d6ea9eee19494329
+  - name: gcr.io/cloud-builders/docker@sha256:7c2366e81abf9b7a4abe2c54086b35f001543706b8e2ec59b185b16d83c89116
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
 
   # Step 4: Push a Docker image
-  - name: gcr.io/cloud-builders/docker@sha256:a12690bdb565959101a1a72fb0dda2773507b50499317a84d6ea9eee19494329
+  - name: gcr.io/cloud-builders/docker@sha256:7c2366e81abf9b7a4abe2c54086b35f001543706b8e2ec59b185b16d83c89116
     args:
       - push
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 5: Push the new Cloud Run revision
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:6fd849b81b82a653e3f463a0c8e95bac92137ac94d9c238abc9e3193001c1399
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:370c512353bd61d9727f73191a4880f657be75410d412ce1c2c0bf9957fe9b6c
     entrypoint: gcloud
     args:
       - run
