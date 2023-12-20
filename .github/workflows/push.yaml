@@ -16,26 +16,16 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
+      - uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
         with:
-          go-version-file: go.mod
-
-      - uses: bufbuild/buf-setup-action@382440cdb8ec7bc25a68d7b4711163d95f7cc3aa # v1.28.1
-        with:
-          buf_user: ${{ env.BUF_USER }}
-          buf_api_token: ${{ secrets.BUF_TOKEN }}
-          github_token: ${{ github.token }}
-
-      - name: Build protobuf
-        uses: trunk-io/breakpoint@f8a1f08369323ed46f3ef7161d3d0a2fdc3488df # v1
-        with:
-          breakpoint-id: buf-generate
-          run: buf generate
-          trunk-token: ${{ secrets.TRUNK_TOKEN }}
-          org: ride
+          path: |
+            ~/.cache/bazel
+          key: ${{ runner.os }}-bazel-${{ hashFiles('WORKSPACE','MODULE.bazel') }}
+          restore-keys: |
+            ${{ runner.os }}-bazel-
 
       - name: Unit Tests
-        run: go run github.com/onsi/ginkgo/v2/ginkgo -r --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --coverprofile=cover.json --race --trace --json-report=report.json --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
+        run: bazelisk coverage --combined_report=lcov //...
         continue-on-error: true
 
       - name: Upload coverage to Codecov
@@ -43,7 +33,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit-tests
-          files: ./cover.json,./report.json
+          # files: ./cover.json,./report.json
           fail_ci_if_error: true
           verbose: true
 
