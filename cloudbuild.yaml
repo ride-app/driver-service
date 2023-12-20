@@ -3,9 +3,9 @@ substitutions:
 
 steps:
   # Step 1: Generate from Protobuf
-  - name: bufbuild/buf@sha256:d104e96432a276ee21eaa2c905c22c81c6ebb3a5ffb0750332f91930a426858e
-    args:
-      - generate
+  # - name: bufbuild/buf@sha256:d104e96432a276ee21eaa2c905c22c81c6ebb3a5ffb0750332f91930a426858e
+  #   args:
+  #     - generate
 
   # Step 2: Build Docker image using Bazel
   - name: gcr.io/cloud-builders/bazel@sha256:3ab4e7b20bd646ec0f8dcbc62ee681649a0cfd23402382397f277d26cd6bb505
