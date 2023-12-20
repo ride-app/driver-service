@@ -1,7 +1,7 @@
 //go:build unit_tests
 // +build unit_tests
 
-package api_handlers_test
+package apihandlers_test
 
 import (
 	"context"

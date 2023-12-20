@@ -18,7 +18,7 @@ import (
 
 // Injectors from wire.go:
 
-func InitializeService(logger2 logger.Logger, config2 *config.Config) (*api_handlers.DriverServiceServer, error) {
+func InitializeService(logger2 logger.Logger, config2 *config.Config) (*apihandlers.DriverServiceServer, error) {
 	app, err := thirdparty.NewFirebaseApp(logger2, config2)
 	if err != nil {
 		return nil, err
@@ -35,6 +35,6 @@ func InitializeService(logger2 logger.Logger, config2 *config.Config) (*api_hand
 	if err != nil {
 		return nil, err
 	}
-	driverServiceServer := api_handlers.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl, logger2)
+	driverServiceServer := apihandlers.New(firebaseImpl, vehiclerepositoryFirebaseImpl, impl, logger2)
 	return driverServiceServer, nil
 }

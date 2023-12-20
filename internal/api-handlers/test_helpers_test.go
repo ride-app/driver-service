@@ -1,4 +1,4 @@
-package api_handlers_test
+package apihandlers_test
 
 import (
 	"errors"
