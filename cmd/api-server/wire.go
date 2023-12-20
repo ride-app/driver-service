@@ -5,6 +5,7 @@ package main
 import (
 	"github.com/google/wire"
 	"github.com/ride-app/driver-service/config"
+	"github.com/ride-app/driver-service/internal/api_handlers"
 	"github.com/ride-app/driver-service/internal/utils/logger"
 	driverrepository "github.com/ride-app/driver-service/pkg/repositories/driver"
 	vehiclerepository "github.com/ride-app/driver-service/pkg/repositories/vehicle"
