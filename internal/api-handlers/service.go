@@ -1,4 +1,4 @@
-package api
+package api_handlers
 
 import (
 	"github.com/ride-app/driver-service/internal/utils/logger"
