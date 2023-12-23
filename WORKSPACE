@@ -27,12 +27,7 @@ http_archive(
 )
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk", "go_register_toolchains", "go_rules_dependencies")
-
-go_download_sdk(
-    name = "go_sdk",
-    version = "1.21.5",
-)
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 ############################################################
 # Define your own dependencies here using go_repository.
@@ -47,7 +42,7 @@ go_dependencies()
 
 go_rules_dependencies()
 
-go_register_toolchains()
+go_register_toolchains(version = "host")
 
 gazelle_dependencies()
 
