@@ -48,37 +48,6 @@ gazelle_dependencies()
 
 gazelle_dependencies(go_repository_default_config = "//:WORKSPACE")
 
-# ## Buf.build
-
-http_archive(
-    name = "rules_buf",
-    sha256 = "523a4e06f0746661e092d083757263a249fedca535bd6dd819a8c50de074731a",
-    strip_prefix = "rules_buf-0.1.1",
-    urls = [
-        "https://github.com/bufbuild/rules_buf/archive/refs/tags/v0.1.1.zip",
-    ],
-)
-
-load("@rules_buf//buf:repositories.bzl", "rules_buf_dependencies", "rules_buf_toolchains")
-
-rules_buf_dependencies()
-
-rules_buf_toolchains(version = "v1.28.1")
-
-load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
-load("//:buf_deps.bzl", "buf_deps")
-
-# gazelle:repository_macro buf_deps.bzl%buf_deps
-buf_deps()
-
-rules_proto_dependencies()
-
-rules_proto_toolchains()
-
-load("@rules_buf//gazelle/buf:repositories.bzl", "gazelle_buf_dependencies")
-
-gazelle_buf_dependencies()
-
 http_archive(
     name = "com_github_bazelbuild_buildtools",
     sha256 = "ae34c344514e08c23e90da0e2d6cb700fcd28e80c02e23e4d5715dddcb42f7b3",
