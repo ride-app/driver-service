@@ -1,14 +1,5 @@
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
-load("@gazelle//:def.bzl", "DEFAULT_LANGUAGES", "gazelle", "gazelle_binary")
-
-gazelle_binary(
-    name = "gazelle-buf",
-    languages = DEFAULT_LANGUAGES + [
-        # Loads the Buf extension
-        "@rules_buf//gazelle/buf:buf",
-        # NOTE: This needs to be loaded after the proto language
-    ],
-)
+load("@gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/ride-app/driver-service
 # gazelle:build_file_name BUILD.bazel
@@ -16,7 +7,6 @@ gazelle_binary(
 # gazelle:proto disable_global
 gazelle(
     name = "gazelle",
-    gazelle = ":gazelle-buf",
 )
 
 buildifier(
