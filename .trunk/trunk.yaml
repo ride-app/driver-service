@@ -1,9 +1,12 @@
 version: 0.1
 runtimes:
   enabled:
-    - go@1.21.0
+    - go@>=1.0.0
     - node@18.12.1
     - python@3.10.8
+  definitions:
+    - type: go
+      system_version: allowed
 
 actions:
   enabled:

@@ -1,0 +1,9 @@
+{
+  "go.goroot": "${workspaceFolder}/bazel-driver-service/external/go_sdk",
+  "go.toolsEnvVars": {
+    "GOPACKAGESDRIVER": "${workspaceFolder}/.vscode/bazel-go/gopackagesdriver.sh"
+  }
+  // "gopls": {
+  //   "formatting.local": "example.com"
+  // }
+}
