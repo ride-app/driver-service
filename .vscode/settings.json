@@ -3,6 +3,8 @@
   "go.toolsEnvVars": {
     "GOPACKAGESDRIVER": "${workspaceFolder}/.vscode/tools/bazel-go.sh"
   }
+  // TODO: cannot use bazel defined buildifier rn. See https://github.com/bazelbuild/vscode-bazel/issues/185
+  // "bazel.buildifierExecutable": "cd ${workspaceFolder} && bazel run @com_github_bazelbuild_buildtools//buildifier --",
   // "gopls": {
   //   "formatting.local": "example.com"
   // }
