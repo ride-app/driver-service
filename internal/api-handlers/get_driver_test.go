@@ -11,8 +11,8 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
-	driverService "github.com/ride-app/driver-service/internal/api-handlers"
-	"github.com/ride-app/driver-service/testing/mocks"
+	apihandlers "github.com/ride-app/driver-service/internal/api-handlers"
+	"github.com/ride-app/driver-service/pkg/testing/mocks"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -25,7 +25,7 @@ var _ = Describe("GetDriver", func() {
 		mockVehicleRepo *mocks.MockVehicleRepository
 		mockWalletRepo  *mocks.MockWalletRepository
 		mockLogger      *mocks.MockLogger
-		service         *driverService.DriverServiceServer
+		service         *apihandlers.DriverServiceServer
 	)
 
 	BeforeEach(func() {
@@ -34,7 +34,7 @@ var _ = Describe("GetDriver", func() {
 		mockVehicleRepo = mocks.NewMockVehicleRepository(ctrl)
 		mockWalletRepo = mocks.NewMockWalletRepository(ctrl)
 		mockLogger = &mocks.MockLogger{}
-		service = driverService.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
+		service = apihandlers.New(mockDriverRepo, mockVehicleRepo, mockWalletRepo, mockLogger)
 	})
 
 	JustBeforeEach(func() {

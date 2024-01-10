@@ -5,10 +5,11 @@ package main
 import (
 	"github.com/google/wire"
 	"github.com/ride-app/driver-service/config"
+	apihandlers "github.com/ride-app/driver-service/internal/api-handlers"
+	driverrepository "github.com/ride-app/driver-service/internal/repositories/driver"
+	vehiclerepository "github.com/ride-app/driver-service/internal/repositories/vehicle"
+	walletrepository "github.com/ride-app/driver-service/internal/repositories/wallet"
 	"github.com/ride-app/driver-service/internal/utils/logger"
-	driverrepository "github.com/ride-app/driver-service/pkg/repositories/driver"
-	vehiclerepository "github.com/ride-app/driver-service/pkg/repositories/vehicle"
-	walletrepository "github.com/ride-app/driver-service/pkg/repositories/wallet"
 	thirdparty "github.com/ride-app/driver-service/third-party"
 )
 
