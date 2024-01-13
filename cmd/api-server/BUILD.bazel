@@ -31,6 +31,7 @@ go_binary(
     name = "api-server",
     embed = [":api-server_lib"],
     visibility = ["//visibility:public"],
+    x_defs = {"google.golang.org/protobuf/reflect/protoregistry.conflictPolicy": "warn"},
 )
 
 pkg_tar(
