@@ -1,10 +1,10 @@
 package apihandlers
 
 import (
+	dr "github.com/ride-app/driver-service/internal/repositories/driver"
+	vr "github.com/ride-app/driver-service/internal/repositories/vehicle"
+	wr "github.com/ride-app/driver-service/internal/repositories/wallet"
 	"github.com/ride-app/driver-service/internal/utils/logger"
-	dr "github.com/ride-app/driver-service/pkg/repositories/driver"
-	vr "github.com/ride-app/driver-service/pkg/repositories/vehicle"
-	wr "github.com/ride-app/driver-service/pkg/repositories/wallet"
 )
 
 type DriverServiceServer struct {

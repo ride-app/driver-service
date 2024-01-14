@@ -8,38 +8,57 @@ steps:
   #     - generate
 
   # Step 2: Build Docker image using Bazel
-  - name: gcr.io/cloud-builders/bazel@sha256:3ab4e7b20bd646ec0f8dcbc62ee681649a0cfd23402382397f277d26cd6bb505
-    args: [run, //cmd/api-server:container, --enable_bzlmod]
+  - name: gcr.io/cloud-builders/bazel:6.4.0@sha256:236a05068b2f12860d9be5048fabb1e84e738bb1ae66c77c543f76b532cf66b2
+    id: build
+    args:
+      [
+        run,
+        //cmd/api-server:container,
+        --enable_bzlmod,
+        --remote_cache=https://storage.googleapis.com/$_BAZEL_REMOTE_CACHE_BUCKET,
+        --google_default_credentials,
+      ]
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:7c2366e81abf9b7a4abe2c54086b35f001543706b8e2ec59b185b16d83c89116
+  - name: gcr.io/cloud-builders/docker@sha256:e27ea92b256a0679ca423b78a0873f8e41b1f67d70481d6f194cc1043f147c41
+    waitFor:
+      - build
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:7c2366e81abf9b7a4abe2c54086b35f001543706b8e2ec59b185b16d83c89116
+  - name: gcr.io/cloud-builders/docker@sha256:e27ea92b256a0679ca423b78a0873f8e41b1f67d70481d6f194cc1043f147c41
+    waitFor:
+      - build
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:7c2366e81abf9b7a4abe2c54086b35f001543706b8e2ec59b185b16d83c89116
+  - name: gcr.io/cloud-builders/docker@sha256:e27ea92b256a0679ca423b78a0873f8e41b1f67d70481d6f194cc1043f147c41
+    waitFor:
+      - build
     args:
       - tag
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
 
   # Step 4: Push a Docker image
-  - name: gcr.io/cloud-builders/docker@sha256:7c2366e81abf9b7a4abe2c54086b35f001543706b8e2ec59b185b16d83c89116
+  - name: gcr.io/cloud-builders/docker@sha256:e27ea92b256a0679ca423b78a0873f8e41b1f67d70481d6f194cc1043f147c41
+    id: tag-sha
+    waitFor:
+      - build
     args:
       - push
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 5: Push the new Cloud Run revision
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:370c512353bd61d9727f73191a4880f657be75410d412ce1c2c0bf9957fe9b6c
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:76cfd1a2aac69b7f025c69c81add26c056c6e30598843e7bec56645411d0cac9
+    waitFor:
+      - tag-sha
     entrypoint: gcloud
     args:
       - run

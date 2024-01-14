@@ -5,6 +5,21 @@ const serviceName =
   new pulumi.Config("service").get("name") || pulumi.getProject();
 const location = gcp.config.region || "asia-east1";
 
+const bucket = new gcp.storage.Bucket("bazel-remote-cache", {
+  location, // Replace with desired location if needed.
+  uniformBucketLevelAccess: true,
+});
+
+// IAM policy to allow the specific service account read and write access to the bucket
+const bucketIAMMemberUser = new gcp.storage.BucketIAMMember(
+  "bucketIAMMemberUser",
+  {
+    bucket: bucket.name,
+    role: "roles/storage.objectUser",
+    member: `serviceAccount:${gcp.config.project}@cloudbuild.gserviceaccount.com`,
+  },
+);
+
 const github_connection = gcp.cloudbuildv2.Connection.get(
   "github-connection",
   pulumi.interpolate`projects/${gcp.config.project}/locations/${location}/connections/GitHub`,
@@ -25,6 +40,7 @@ new gcp.cloudbuild.Trigger("build-trigger", {
     },
   },
   substitutions: {
+    _BAZEL_REMOTE_CACHE_BUCKET: bucket.name,
     _WALLET_SERVICE_HOST: new pulumi.Config().require("walletServiceHost"),
     _LOG_DEBUG: new pulumi.Config().get("logDebug") ?? "false",
   },

@@ -9,10 +9,10 @@ package main
 import (
 	"github.com/ride-app/driver-service/config"
 	"github.com/ride-app/driver-service/internal/api-handlers"
+	"github.com/ride-app/driver-service/internal/repositories/driver"
+	"github.com/ride-app/driver-service/internal/repositories/vehicle"
+	"github.com/ride-app/driver-service/internal/repositories/wallet"
 	"github.com/ride-app/driver-service/internal/utils/logger"
-	"github.com/ride-app/driver-service/pkg/repositories/driver"
-	"github.com/ride-app/driver-service/pkg/repositories/vehicle"
-	"github.com/ride-app/driver-service/pkg/repositories/wallet"
 	"github.com/ride-app/driver-service/third-party"
 )
 

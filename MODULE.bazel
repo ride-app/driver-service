@@ -6,10 +6,10 @@ bazel_dep(name = "rules_go", version = "0.42.0")
 bazel_dep(name = "gazelle", version = "0.34.0", dev_dependency = True)
 
 bazel_dep(name = "rules_pkg", version = "0.9.1")
-bazel_dep(name = "rules_oci", version = "1.5.1")
+bazel_dep(name = "rules_oci", version = "1.6.0")
 
 # TODO: remove this later. See https://github.com/bazel-contrib/rules_oci/issues/425#issuecomment-1860211483
-bazel_dep(name = "aspect_bazel_lib", version = "2.0.3")
+bazel_dep(name = "aspect_bazel_lib", version = "2.3.0")
 bazel_dep(name = "container_structure_test", version = "1.16.0")
 
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")

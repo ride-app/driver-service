@@ -4,6 +4,7 @@ go_library(
     name = "mocks",
     srcs = [
         "driver_repository.go",
+        "logger.go",
         "vehicle_repository.go",
         "wallet_repository.go",
     ],
