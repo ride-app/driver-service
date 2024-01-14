@@ -31,3 +31,8 @@ new gcp.cloudbuild.Trigger("build-trigger", {
   filename: "cloudbuild.yaml",
   includeBuildLogs: "INCLUDE_BUILD_LOGS_WITH_STATUS",
 });
+
+const bucket = new gcp.storage.Bucket("bazel-remote-cache", {
+  name: `${serviceName}-bazel-remote-cache`,
+  location, // Replace with desired location if needed.
+});
