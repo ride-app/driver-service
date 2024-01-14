@@ -9,6 +9,7 @@ steps:
 
   # Step 2: Build Docker image using Bazel
   - name: gcr.io/cloud-builders/bazel:6.4.0@sha256:236a05068b2f12860d9be5048fabb1e84e738bb1ae66c77c543f76b532cf66b2
+    id: build
     args:
       [
         run,
@@ -19,6 +20,8 @@ steps:
 
   # Step 3: Tag image
   - name: gcr.io/cloud-builders/docker@sha256:f5fbe30c11a3d9ffbc3bd171e16dc1b26ef772868a7989cede7ea4655817e629
+    waitFor:
+      - build
     args:
       - tag
       - api-server:latest
@@ -26,6 +29,8 @@ steps:
 
   # Step 3: Tag image
   - name: gcr.io/cloud-builders/docker@sha256:f5fbe30c11a3d9ffbc3bd171e16dc1b26ef772868a7989cede7ea4655817e629
+    waitFor:
+      - build
     args:
       - tag
       - api-server:latest
@@ -33,6 +38,8 @@ steps:
 
   # Step 3: Tag image
   - name: gcr.io/cloud-builders/docker@sha256:f5fbe30c11a3d9ffbc3bd171e16dc1b26ef772868a7989cede7ea4655817e629
+    waitFor:
+      - build
     args:
       - tag
       - api-server:latest
@@ -40,12 +47,17 @@ steps:
 
   # Step 4: Push a Docker image
   - name: gcr.io/cloud-builders/docker@sha256:f5fbe30c11a3d9ffbc3bd171e16dc1b26ef772868a7989cede7ea4655817e629
+    id: tag-sha
+    waitFor:
+      - build
     args:
       - push
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 5: Push the new Cloud Run revision
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:76cfd1a2aac69b7f025c69c81add26c056c6e30598843e7bec56645411d0cac9
+    waitFor:
+      - tag-sha
     entrypoint: gcloud
     args:
       - run
