@@ -11,20 +11,11 @@ const bucket = new gcp.storage.Bucket("bazel-remote-cache", {
 });
 
 // IAM policy to allow the specific service account read and write access to the bucket
-const bucketIAMMemberRead = new gcp.storage.BucketIAMMember(
-  "bucketIAMMemberRead",
+const bucketIAMMemberUser = new gcp.storage.BucketIAMMember(
+  "bucketIAMMemberUser",
   {
     bucket: bucket.name,
-    role: "roles/storage.objectViewer",
-    member: `serviceAccount:${gcp.config.project}@cloudbuild.gserviceaccount.com`,
-  },
-);
-
-const bucketIAMMemberWrite = new gcp.storage.BucketIAMMember(
-  "bucketIAMMemberWrite",
-  {
-    bucket: bucket.name,
-    role: "roles/storage.objectCreator",
+    role: "roles/storage.objectUser",
     member: `serviceAccount:${gcp.config.project}@cloudbuild.gserviceaccount.com`,
   },
 );
