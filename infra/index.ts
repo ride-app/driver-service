@@ -7,7 +7,27 @@ const location = gcp.config.region || "asia-east1";
 
 const bucket = new gcp.storage.Bucket("bazel-remote-cache", {
   location, // Replace with desired location if needed.
+  uniformBucketLevelAccess: true,
 });
+
+// IAM policy to allow the specific service account read and write access to the bucket
+const bucketIAMMemberRead = new gcp.storage.BucketIAMMember(
+  "bucketIAMMemberRead",
+  {
+    bucket: bucket.name,
+    role: "roles/storage.objectViewer",
+    member: `serviceAccount:${gcp.config.project}@cloudbuild.gserviceaccount.com`,
+  },
+);
+
+const bucketIAMMemberWrite = new gcp.storage.BucketIAMMember(
+  "bucketIAMMemberWrite",
+  {
+    bucket: bucket.name,
+    role: "roles/storage.objectCreator",
+    member: `serviceAccount:${gcp.config.project}@cloudbuild.gserviceaccount.com`,
+  },
+);
 
 const github_connection = gcp.cloudbuildv2.Connection.get(
   "github-connection",
