@@ -5,6 +5,10 @@ const serviceName =
   new pulumi.Config("service").get("name") || pulumi.getProject();
 const location = gcp.config.region || "asia-east1";
 
+const bucket = new gcp.storage.Bucket("bazel-remote-cache", {
+  location, // Replace with desired location if needed.
+});
+
 const github_connection = gcp.cloudbuildv2.Connection.get(
   "github-connection",
   pulumi.interpolate`projects/${gcp.config.project}/locations/${location}/connections/GitHub`,
@@ -25,14 +29,10 @@ new gcp.cloudbuild.Trigger("build-trigger", {
     },
   },
   substitutions: {
+    _BAZEL_REMOTE_CACHE_BUCKET: bucket.name,
     _WALLET_SERVICE_HOST: new pulumi.Config().require("walletServiceHost"),
     _LOG_DEBUG: new pulumi.Config().get("logDebug") ?? "false",
   },
   filename: "cloudbuild.yaml",
   includeBuildLogs: "INCLUDE_BUILD_LOGS_WITH_STATUS",
-});
-
-const bucket = new gcp.storage.Bucket("bazel-remote-cache", {
-  name: `${serviceName}-bazel-remote-cache`,
-  location, // Replace with desired location if needed.
 });
