@@ -10,7 +10,6 @@ require (
 	connectrpc.com/connect v1.14.0
 	firebase.google.com/go/v4 v4.13.0
 	github.com/MicahParks/keyfunc/v3 v3.2.3
-	github.com/MicahParks/keyfunc/v3 v3.2.3
 	github.com/bufbuild/protovalidate-go v0.4.3
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/google/wire v0.5.0
@@ -36,6 +35,7 @@ require (
 	cloud.google.com/go/longrunning v0.5.4 // indirect
 	cloud.google.com/go/storage v1.30.1 // indirect
 	github.com/BurntSushi/toml v1.2.1 // indirect
+	github.com/MicahParks/jwkset v0.5.6 // indirect
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
