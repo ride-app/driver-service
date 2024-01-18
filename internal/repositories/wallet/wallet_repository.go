@@ -10,7 +10,7 @@ import (
 	pb "buf.build/gen/go/ride/wallet/protocolbuffers/go/ride/wallet/v1alpha1"
 	"connectrpc.com/connect"
 	"github.com/ride-app/driver-service/config"
-	"github.com/ride-app/driver-service/internal/utils/logger"
+	"github.com/ride-app/go/pkg/logger"
 )
 
 type WalletRepository interface {

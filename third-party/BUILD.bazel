@@ -7,7 +7,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//config",
-        "//internal/utils/logger",
+        "@com_github_ride_app_go//pkg/logger",
         "@com_google_firebase_go_v4//:go",
     ],
 )

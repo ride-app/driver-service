@@ -9,8 +9,8 @@ import (
 	driverrepository "github.com/ride-app/driver-service/internal/repositories/driver"
 	vehiclerepository "github.com/ride-app/driver-service/internal/repositories/vehicle"
 	walletrepository "github.com/ride-app/driver-service/internal/repositories/wallet"
-	"github.com/ride-app/driver-service/internal/utils/logger"
 	thirdparty "github.com/ride-app/driver-service/third-party"
+	"github.com/ride-app/go/pkg/logger"
 )
 
 func InitializeService(logger logger.Logger, config *config.Config) (*apihandlers.DriverServiceServer, error) {

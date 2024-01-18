@@ -12,8 +12,8 @@ import (
 	"github.com/ride-app/driver-service/internal/repositories/driver"
 	"github.com/ride-app/driver-service/internal/repositories/vehicle"
 	"github.com/ride-app/driver-service/internal/repositories/wallet"
-	"github.com/ride-app/driver-service/internal/utils/logger"
 	"github.com/ride-app/driver-service/third-party"
+	"github.com/ride-app/go/pkg/logger"
 )
 
 // Injectors from wire.go:
