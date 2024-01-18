@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 	"github.com/ride-app/driver-service/api/ride/driver/v1alpha1/v1alpha1connect"
 	"github.com/ride-app/driver-service/config"
-	"github.com/ride-app/driver-service/internal/api-handlers/interceptors"
+	"github.com/ride-app/go/pkg/connect-interceptors"
 	"github.com/ride-app/go/pkg/logger"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -34,7 +34,7 @@ func main() {
 		log.Fatalf("Failed to initialize panic interceptor: %v", err)
 	}
 
-	authInterceptor, err := interceptors.NewAuthInterceptor(ctx, log)
+	authInterceptor, err := interceptors.NewFirebaseAuthInterceptor(ctx, log)
 
 	if err != nil {
 		log.Fatalf("Failed to initialize auth interceptor: %v", err)
