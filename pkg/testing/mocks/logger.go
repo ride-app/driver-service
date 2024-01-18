@@ -1,6 +1,6 @@
 package mocks
 
-import "github.com/ride-app/driver-service/internal/utils/logger"
+import "github.com/ride-app/go/pkg/logger"
 
 type MockLogger struct{}
 

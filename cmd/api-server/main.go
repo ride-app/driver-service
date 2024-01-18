@@ -9,7 +9,7 @@ import (
 	"github.com/ride-app/driver-service/api/ride/driver/v1alpha1/v1alpha1connect"
 	"github.com/ride-app/driver-service/config"
 	"github.com/ride-app/driver-service/internal/api-handlers/interceptors"
-	"github.com/ride-app/driver-service/internal/utils/logger"
+	"github.com/ride-app/go/pkg/logger"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 )
@@ -17,7 +17,7 @@ import (
 func main() {
 	config, err := config.New()
 
-	log := logger.New(config)
+	log := logger.New(!config.Production, config.LogDebug)
 
 	if err != nil {
 		log.WithError(err).Fatal("Failed to read environment variables")

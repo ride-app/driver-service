@@ -15,7 +15,7 @@ import (
 	time "time"
 
 	v1alpha1 "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
-	logger "github.com/ride-app/driver-service/internal/utils/logger"
+	logger "github.com/ride-app/go/pkg/logger"
 	gomock "go.uber.org/mock/gomock"
 )
 
