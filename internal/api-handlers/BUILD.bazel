@@ -43,7 +43,10 @@ go_test(
     deps = [
         ":api-handlers",
         "//api/ride/driver/v1alpha1",
-        "//pkg/testing/mocks",
+        "//internal/repositories/driver/mock",
+        "//internal/repositories/vehicle/mock",
+        "//internal/repositories/wallet/mock",
+        "//testing/mocks",
         "@com_connectrpc_connect//:connect",
         "@com_github_onsi_ginkgo_v2//:ginkgo",
         "@com_github_onsi_gomega//:gomega",
