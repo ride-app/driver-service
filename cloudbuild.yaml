@@ -8,13 +8,12 @@ steps:
   #     - generate
 
   # Step 2: Build Docker image using Bazel
-  - name: gcr.io/cloud-builders/bazel:6.4.0@sha256:6a552e0536a5bc640e683dbff5e1e43136938b4502aa053b88356fecaec61c07
+  - name: gcr.io/cloud-builders/bazel:7.0.0@sha256:1f2899fcacfdff19f411d2fa4b169745d369eacc80aa8298e7f4ae382211e64f
     id: build
     args:
       [
         run,
         //cmd/api-server:container,
-        --enable_bzlmod,
         --remote_cache=https://storage.googleapis.com/$_BAZEL_REMOTE_CACHE_BUCKET,
         --google_default_credentials,
       ]
