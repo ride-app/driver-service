@@ -14,6 +14,7 @@ steps:
       [
         run,
         //cmd/api-server:container,
+        --enable_bzlmod,
         --remote_cache=https://storage.googleapis.com/$_BAZEL_REMOTE_CACHE_BUCKET,
         --google_default_credentials,
       ]
