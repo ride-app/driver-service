@@ -10,13 +10,8 @@ steps:
   # Step 2: Build Docker image using Bazel
   - name: gcr.io/cloud-builders/bazel:7.0.0@sha256:1f2899fcacfdff19f411d2fa4b169745d369eacc80aa8298e7f4ae382211e64f
     id: build
-    entrypoint: 'bash'
     args:
       [
-        -c,
-        chmod -R 777 /workspace,
-        '&&',
-        bazel,
         run,
         //cmd/api-server:container,
         --remote_cache=https://storage.googleapis.com/$_BAZEL_REMOTE_CACHE_BUCKET,
