@@ -14,8 +14,8 @@ steps:
       [
         run,
         //cmd/api-server:container,
-        # --remote_cache=https://storage.googleapis.com/$_BAZEL_REMOTE_CACHE_BUCKET,
-        # --google_default_credentials,
+        --remote_cache=https://storage.googleapis.com/$_BAZEL_REMOTE_CACHE_BUCKET,
+        --google_default_credentials,
       ]
 
   # Step 3: Tag image
