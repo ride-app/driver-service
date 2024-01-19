@@ -2,13 +2,13 @@ schemaVersion: 2.0.0
 
 fileExistenceTests:
   - name: Api server binary
-    path: /api-server
+    path: /home/nonroot/api-server
     shouldExist: true
-    permissions: -r-xr-xr-x
+    permissions: -rwxr-xr-x
     isExecutableBy: owner
 
 metadataTest:
   exposedPorts: ["50051"]
-  entrypoint: [/api-server]
+  cmd: [/home/nonroot/api-server]
   workdir: /home/nonroot
   user: 65532
