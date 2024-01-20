@@ -324,8 +324,8 @@ def go_dependencies():
     go_repository(
         name = "com_github_onsi_gomega",
         importpath = "github.com/onsi/gomega",
-        sum = "h1:54UJxxj6cPInHS3a35wm6BK/F9nHYueZ1NVujHDrnXE=",
-        version = "v1.31.0",
+        sum = "h1:KYppCUK+bUgAZwHOu7EXVBKyQA6ILvOESHkn/tgoqvo=",
+        version = "v1.31.1",
     )
     go_repository(
         name = "com_github_pmezard_go_difflib",
@@ -342,8 +342,8 @@ def go_dependencies():
     go_repository(
         name = "com_github_ride_app_go",
         importpath = "github.com/ride-app/go",
-        sum = "h1:98xoNbGT3puI4QHNnHITat2OSEwE8HYzdyJunZZj/q4=",
-        version = "v0.0.0-20240118060024-3d68e1bf6c3d",
+        sum = "h1:gWzfLTSOzdh9Fq7fo0UceoSqcFSSwNkcT3RStIQQQjg=",
+        version = "v0.0.0-20240120170945-d4712e689141",
     )
     go_repository(
         name = "com_github_stoewer_go_strcase",
