@@ -17,7 +17,7 @@ require (
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/onsi/ginkgo/v2 v2.15.0
 	github.com/onsi/gomega v1.31.1
-	github.com/ride-app/go v0.0.0-20240119181736-1f791e3c3e3c
+	github.com/ride-app/go v0.0.0-20240120090756-978d779d559f
 	go.uber.org/mock v0.4.0
 	golang.org/x/net v0.20.0
 	google.golang.org/genproto v0.0.0-20240116215550-a9fa1716bcac
