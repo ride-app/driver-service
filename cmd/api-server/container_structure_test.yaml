@@ -10,6 +10,6 @@ fileExistenceTests:
 
 metadataTest:
   exposedPorts: ["50051"]
-  cmd: [/home/nonroot/api-server]
+  cmd: [./api-server]
   workdir: /home/nonroot
   user: 65532

@@ -44,7 +44,7 @@ pkg_tar(
 oci_image(
     name = "image",
     base = "@distroless",
-    cmd = ["/home/nonroot/api-server"],
+    cmd = ["./api-server"],
     exposed_ports = ["50051/tcp"],
     tars = [":tar_layer"],
     user = "65532",
