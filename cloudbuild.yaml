@@ -6,7 +6,7 @@ steps:
   # - name: bufbuild/buf@sha256:d104e96432a276ee21eaa2c905c22c81c6ebb3a5ffb0750332f91930a426858e
   #   args:
   #     - generate
-  - name: ubuntu
+  - name: ubuntu@sha256:e6173d4dc55e76b87c4af8db8821b1feae4146dd47341e4d431118c7dd060a74
     entrypoint: bash
     args: [-c, chmod -R 777 /builder]
 
