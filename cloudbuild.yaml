@@ -56,7 +56,7 @@ steps:
       - deploy
       - $_SERVICE_NAME
       - --image
-      - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
+      - api-server:latest
       - --region=asia-south2
       - --allow-unauthenticated
       - --set-env-vars=PROJECT_ID=$PROJECT_ID,LOG_DEBUG=$_LOG_DEBUG,WALLET_SERVICE_HOST=$_WALLET_SERVICE_HOST
