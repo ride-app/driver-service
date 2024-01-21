@@ -47,7 +47,6 @@ oci_image(
     cmd = ["./api-server"],
     exposed_ports = ["50051/tcp"],
     tars = [":tar_layer"],
-    user = "65532",
 )
 
 oci_tarball(
