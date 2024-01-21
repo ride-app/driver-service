@@ -8,7 +8,7 @@ steps:
   #     - generate
 
   # Step 2: Build Docker image using Bazel
-  - name: gcr.io/cloud-builders/bazel:7.0.0@sha256:2499bd03cdd58634a58e936fc7ef3efc77bba0690cc6ef2c0430a96347756708
+  - name: asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/bazel
     id: build
     args:
       [
