@@ -56,7 +56,7 @@ steps:
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Test the image.
-  - name: gcr.io/gcp-runtimes/container-structure-test
+  - name: gcr.io/gcp-runtimes/container-structure-test@sha256:377f9a9bc00376b9fa6dc6a3a020dbe40e84ebe9481b71969aa3ff9d1c9ea17e
     id: test
     args:
       [
