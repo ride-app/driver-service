@@ -30,6 +30,9 @@ go_library(
 go_binary(
     name = "api-server",
     embed = [":api-server_lib"],
+    goarch = "amd64",
+    goos = "linux",
+    pure = "on",
     visibility = ["//visibility:public"],
     x_defs = {"google.golang.org/protobuf/reflect/protoregistry.conflictPolicy": "warn"},
 )
