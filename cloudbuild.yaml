@@ -45,15 +45,6 @@ steps:
       - api-server:latest
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
 
-  # Step 4: Push a Docker image
-  - name: gcr.io/cloud-builders/docker@sha256:3caacd75343c6eecbb8469a18a8bbd21c68981cd665e37ddd5469a09628e5661
-    id: tag-sha
-    waitFor:
-      - build
-    args:
-      - push
-      - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
-
   # Step 5: Push the new Cloud Run revision
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:63cbd090c7ed74a1b360d96e07f1622de0724e6cba51437183d48c0f7831761a
     waitFor:
@@ -74,3 +65,5 @@ steps:
 
 images:
   - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
+  - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
+  - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
