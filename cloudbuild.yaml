@@ -55,6 +55,18 @@ steps:
       - push
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
+  # Test the image.
+  - name: gcr.io/gcp-runtimes/container-structure-test
+    id: test
+    args:
+      [
+        test,
+        --image,
+        asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA,
+        --config,
+        cmd/api-server/container_structure_test.yaml,
+      ]
+
   # Step 5: Push the new Cloud Run revision
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:e6fd4034113a02d3064efca5c4d10d7f885801aa1f7d21c9fe626a402a96cad4
     waitFor:
