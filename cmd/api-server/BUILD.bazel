@@ -37,6 +37,7 @@ go_binary(
 pkg_tar(
     name = "tar_layer",
     srcs = [":api-server"],
+    owner = "65532.65532",
     package_dir = "home/nonroot",
 )
 
@@ -46,6 +47,7 @@ oci_image(
     cmd = ["/home/nonroot/api-server"],
     exposed_ports = ["50051/tcp"],
     tars = [":tar_layer"],
+    user = "65532",
 )
 
 oci_tarball(

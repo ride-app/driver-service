@@ -4,7 +4,8 @@ fileExistenceTests:
   - name: Api server binary
     path: /home/nonroot/api-server
     shouldExist: true
-    permissions: -rwxr-xr-x
+    permissions: -r-xr-xr-x
+    uid: 65532
     isExecutableBy: owner
 
 metadataTest:
