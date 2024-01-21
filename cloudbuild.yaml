@@ -8,7 +8,7 @@ steps:
   #     - generate
   - name: ubuntu@sha256:e6173d4dc55e76b87c4af8db8821b1feae4146dd47341e4d431118c7dd060a74
     entrypoint: bash
-    args: [-c, chmod -R 777 /builder]
+    args: [-c, chmod -R 777 /builder, "&&", chmod 777 /var/run/docker.sock]
 
   # Step 2: Build Docker image using Bazel
   - name: asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/bazel
