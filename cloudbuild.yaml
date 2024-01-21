@@ -50,7 +50,7 @@ steps:
   - name: gcr.io/cloud-builders/docker@sha256:3caacd75343c6eecbb8469a18a8bbd21c68981cd665e37ddd5469a09628e5661
     id: push
     waitFor:
-      - build
+      - tag-sha
     args:
       - push
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
