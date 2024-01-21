@@ -44,7 +44,7 @@ pkg_tar(
 oci_image(
     name = "image",
     base = "@distroless",
-    cmd = ["./api-server"],
+    entrypoint = ["./api-server"],
     exposed_ports = ["50051/tcp"],
     tars = [":tar_layer"],
 )
