@@ -14,4 +14,4 @@ permissions:
 jobs:
   comment_pr_if_bot:
     name: Comment on pull request if bot
-    uses: ride-app/workflows/.github/workflows/auto-merge.yaml@main
+    uses: deb-tech-n-sol/workflows/.github/workflows/auto-merge.yaml@main

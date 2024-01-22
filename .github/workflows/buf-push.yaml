@@ -10,7 +10,7 @@ on:
 
 jobs:
   buf-push:
-    uses: ride-app/workflows/.github/workflows/buf-push.yaml@main
+    uses: deb-tech-n-sol/workflows/.github/workflows/buf-push.yaml@main
     with:
       buf-mod-dir: api
     secrets: inherit

@@ -53,5 +53,5 @@ jobs:
       #     verbose: true
 
   compute_impacted_targets:
-    uses: ride-app/workflows/.github/workflows/compute-impacted-targets.yaml@main
+    uses: deb-tech-n-sol/workflows/.github/workflows/compute-impacted-targets.yaml@main
     secrets: inherit
