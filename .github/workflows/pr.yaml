@@ -53,17 +53,5 @@ jobs:
       #     verbose: true
 
   compute_impacted_targets:
-    timeout-minutes: 10
-    name: Compute Impacted Targets
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-
-      - name: Compute Impacted Targets
-        uses: trunk-io/merge-action@6a6b8568cb140a4d11bb9be876bdcf9c21094e5b # v1
-        with:
-          # Use your Trunk repo or org API token to authenticate impacted targets uploads.
-          # This secret should be provided as a GitHub secret.
-          # See https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions.
-          trunk-token: ${{ secrets.TRUNK_TOKEN }}
+    uses: ride-app/workflows/.github/workflows/compute-impacted-targets.yaml@main
+    secrets: inherit
