@@ -28,13 +28,14 @@ jobs:
         run: bazelisk coverage --combined_report=lcov //...
         continue-on-error: true
 
+      - run: cp $(bazelisk info output_path)/_coverage/_coverage_report.dat ./
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: unit-tests
-          files: |
-            $(bazelisk info output_path)/_coverage/_coverage_report.dat
+          files: ./_coverage_report.dat
           fail_ci_if_error: true
           verbose: true
 
