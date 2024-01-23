@@ -1,6 +1,8 @@
 name: PR
 
-permissions: read-all
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
   pull_request:
@@ -55,3 +57,7 @@ jobs:
   compute_impacted_targets:
     uses: deb-tech-n-sol/workflows/.github/workflows/compute-impacted-targets.yaml@main
     secrets: inherit
+
+  auto_merge:
+    name: Auto Merge PR if bot
+    uses: deb-tech-n-sol/workflows/.github/workflows/auto-merge.yaml@main
