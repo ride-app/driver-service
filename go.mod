@@ -10,7 +10,7 @@ require (
 	connectrpc.com/connect v1.14.0
 	firebase.google.com/go/v4 v4.13.0
 	github.com/bufbuild/protovalidate-go v0.5.0
-	github.com/deb-tech-n-sol/go v0.0.0-20240126115842-2d89e09b72df
+	github.com/deb-tech-n-sol/go v0.0.0-20240126121636-2f75f694c547
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
@@ -33,7 +33,7 @@ require (
 	cloud.google.com/go/longrunning v0.5.4 // indirect
 	cloud.google.com/go/storage v1.36.0 // indirect
 	github.com/BurntSushi/toml v1.3.2 // indirect
-	github.com/MicahParks/jwkset v0.5.7 // indirect
+	github.com/MicahParks/jwkset v0.5.10 // indirect
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
 	github.com/MicahParks/keyfunc/v3 v3.2.4 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.0 // indirect
