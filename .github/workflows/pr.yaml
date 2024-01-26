@@ -26,7 +26,10 @@ jobs:
             ${{ runner.os }}-bazel-
 
       - name: Build
-        run: bazelisk build //...
+        run: |
+          bazelisk run //:gazelle-update-repos-go
+          bazelisk run //:gazelle
+          bazelisk build //...
 
   compute_impacted_targets:
     uses: deb-tech-n-sol/workflows/.github/workflows/compute-impacted-targets.yaml@main
