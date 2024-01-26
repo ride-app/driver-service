@@ -3,6 +3,7 @@
 package main
 
 import (
+	"github.com/deb-tech-n-sol/go/pkg/logger"
 	"github.com/google/wire"
 	"github.com/ride-app/driver-service/config"
 	apihandlers "github.com/ride-app/driver-service/internal/api-handlers"
@@ -10,7 +11,6 @@ import (
 	vehiclerepository "github.com/ride-app/driver-service/internal/repositories/vehicle"
 	walletrepository "github.com/ride-app/driver-service/internal/repositories/wallet"
 	thirdparty "github.com/ride-app/driver-service/third-party"
-	"github.com/ride-app/go/pkg/logger"
 )
 
 func InitializeService(logger logger.Logger, config *config.Config) (*apihandlers.DriverServiceServer, error) {

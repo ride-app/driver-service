@@ -5,5 +5,5 @@ go_library(
     srcs = ["logger.go"],
     importpath = "github.com/ride-app/driver-service/testing/mocks",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_ride_app_go//pkg/logger"],
+    deps = ["@com_github_deb_tech_n_sol_go//pkg/logger"],
 )

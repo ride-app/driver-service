@@ -14,7 +14,7 @@ import (
 	reflect "reflect"
 
 	walletv1alpha1 "buf.build/gen/go/ride/wallet/protocolbuffers/go/ride/wallet/v1alpha1"
-	logger "github.com/ride-app/go/pkg/logger"
+	logger "github.com/deb-tech-n-sol/go/pkg/logger"
 	gomock "go.uber.org/mock/gomock"
 )
 

@@ -10,12 +10,12 @@ require (
 	connectrpc.com/connect v1.14.0
 	firebase.google.com/go/v4 v4.13.0
 	github.com/bufbuild/protovalidate-go v0.5.0
+	github.com/deb-tech-n-sol/go v0.0.0-20240126115842-2d89e09b72df
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/onsi/ginkgo/v2 v2.15.0
 	github.com/onsi/gomega v1.31.1
-	github.com/ride-app/go v0.0.0-20240125234728-9e3d9aaf8146
 	go.uber.org/mock v0.4.0
 	golang.org/x/net v0.20.0
 	google.golang.org/genproto v0.0.0-20240125205218-1f4bbc51befe

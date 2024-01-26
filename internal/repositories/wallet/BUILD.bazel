@@ -10,6 +10,6 @@ go_library(
         "@build_buf_gen_go_ride_wallet_connectrpc_go//ride/wallet/v1alpha1/walletv1alpha1connect",
         "@build_buf_gen_go_ride_wallet_protocolbuffers_go//ride/wallet/v1alpha1",
         "@com_connectrpc_connect//:connect",
-        "@com_github_ride_app_go//pkg/logger",
+        "@com_github_deb_tech_n_sol_go//pkg/logger",
     ],
 )

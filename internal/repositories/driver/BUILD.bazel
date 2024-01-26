@@ -7,8 +7,8 @@ go_library(
     visibility = ["//:__subpackages__"],
     deps = [
         "//api/ride/driver/v1alpha1",
+        "@com_github_deb_tech_n_sol_go//pkg/logger",
         "@com_github_mmcloughlin_geohash//:geohash",
-        "@com_github_ride_app_go//pkg/logger",
         "@com_google_cloud_go_firestore//:firestore",
         "@com_google_firebase_go_v4//:go",
         "@com_google_firebase_go_v4//auth",

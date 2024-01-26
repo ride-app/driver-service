@@ -1,10 +1,10 @@
 package apihandlers
 
 import (
+	"github.com/deb-tech-n-sol/go/pkg/logger"
 	dr "github.com/ride-app/driver-service/internal/repositories/driver"
 	vr "github.com/ride-app/driver-service/internal/repositories/vehicle"
 	wr "github.com/ride-app/driver-service/internal/repositories/wallet"
-	"github.com/ride-app/go/pkg/logger"
 )
 
 type DriverServiceServer struct {
