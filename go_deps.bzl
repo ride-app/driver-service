@@ -118,8 +118,8 @@ def go_dependencies():
     go_repository(
         name = "com_github_deb_tech_n_sol_go",
         importpath = "github.com/deb-tech-n-sol/go",
-        sum = "h1:hbgTRTazMSPgQYSTJ6Pw1SNgI51RZmANZGgwFtx1lCM=",
-        version = "v0.0.0-20240126115842-2d89e09b72df",
+        sum = "h1:/w/Qebp3301LHvVAmGkQzG9LkJQUlbq5wWMrA36JbFg=",
+        version = "v0.1.0",
     )
     go_repository(
         name = "com_github_envoyproxy_go_control_plane",
@@ -300,8 +300,8 @@ def go_dependencies():
     go_repository(
         name = "com_github_micahparks_jwkset",
         importpath = "github.com/MicahParks/jwkset",
-        sum = "h1:eHUGJrSO8EetbNnSb7xhlYQ9mX0vQ7Ga9wN1HhGL3i4=",
-        version = "v0.5.7",
+        sum = "h1:TkMEDKFYAcOgLdl2o6z4mI0EDKK8YN1ip1yRi0bVdbw=",
+        version = "v0.5.10",
     )
     go_repository(
         name = "com_github_micahparks_keyfunc",

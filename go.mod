@@ -10,7 +10,7 @@ require (
 	connectrpc.com/connect v1.14.0
 	firebase.google.com/go/v4 v4.13.0
 	github.com/bufbuild/protovalidate-go v0.5.0
-	github.com/deb-tech-n-sol/go v0.0.0-20240126121636-2f75f694c547
+	github.com/deb-tech-n-sol/go v0.1.0
 	github.com/google/wire v0.5.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
