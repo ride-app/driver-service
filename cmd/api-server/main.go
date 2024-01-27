@@ -46,12 +46,11 @@ func main() {
 
 	log.Info("Service Initialized")
 
-	path, handler := v1alpha1connect.NewDriverServiceHandler(service, connectInterceptors)
 	mux := http.NewServeMux()
-	mux.Handle(path, handler)
+	mux.Handle(v1alpha1connect.NewDriverServiceHandler(service, connectInterceptors))
 
 	firebaseAuthMiddleware := authn.NewMiddleware(middlewares.FirebaseAuth)
-	handler = firebaseAuthMiddleware.Wrap(mux)
+	handler := firebaseAuthMiddleware.Wrap(mux)
 
 	// trunk-ignore(semgrep/go.lang.security.audit.net.use-tls.use-tls)
 	panic(http.ListenAndServe(
