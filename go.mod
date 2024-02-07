@@ -12,7 +12,7 @@ require (
 	firebase.google.com/go/v4 v4.13.0
 	github.com/bufbuild/protovalidate-go v0.5.0
 	github.com/deb-tech-n-sol/go v0.2.3
-	github.com/google/wire v0.5.0
+	github.com/google/wire v0.6.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/onsi/ginkgo/v2 v2.15.0
