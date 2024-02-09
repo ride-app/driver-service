@@ -1,6 +1,6 @@
 package mocks
 
-import "github.com/deb-tech-n-sol/go/pkg/logger"
+import "github.com/dragonfish-tech/go/pkg/logger"
 
 type MockLogger struct{}
 

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	firebase "firebase.google.com/go/v4"
-	"github.com/deb-tech-n-sol/go/pkg/logger"
+	"github.com/dragonfish-tech/go/pkg/logger"
 	"github.com/ride-app/driver-service/config"
 )
 
