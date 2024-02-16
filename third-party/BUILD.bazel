@@ -7,7 +7,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//config",
-        "@com_github_dragonfish_tech_go//pkg/logger",
+        "@com_github_dragonfish_go//pkg/logger",
         "@com_google_firebase_go_v4//:go",
     ],
 )
