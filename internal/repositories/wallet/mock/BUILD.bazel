@@ -7,7 +7,7 @@ go_library(
     visibility = ["//:__subpackages__"],
     deps = [
         "@build_buf_gen_go_ride_wallet_protocolbuffers_go//ride/wallet/v1alpha1",
-        "@com_github_dragonfish_tech_go//pkg/logger",
+        "@com_github_dragonfish_go//pkg/logger",
         "@org_uber_go_mock//gomock",
     ],
 )

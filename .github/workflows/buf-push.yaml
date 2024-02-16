@@ -10,7 +10,7 @@ on:
 
 jobs:
   buf-push:
-    uses: dragonfish-tech/workflows/.github/workflows/buf-push.yaml@main
+    uses: dragonfish/workflows/.github/workflows/buf-push.yaml@main
     with:
       buf-mod-dir: api
     secrets: inherit
