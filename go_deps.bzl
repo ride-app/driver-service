@@ -123,7 +123,7 @@ def go_dependencies():
     )
     go_repository(
         name = "com_github_dragonfish_tech_go",
-        importpath = "github.com/dragonfish-tech/go",
+        importpath = "github.com/dragonfish/go",
         sum = "h1:99dc0iMbG0u+VwqINCLEjWrHAVNPyFtLQqLlBNZnMww=",
         version = "v1.0.0",
     )
