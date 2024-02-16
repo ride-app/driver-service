@@ -19,6 +19,7 @@ actions:
     - generate-di
     - buf-gen
     - unit-test
+    - bazel-build
 
   definitions:
     - id: generate-di
