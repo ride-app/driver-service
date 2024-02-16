@@ -7,9 +7,9 @@ import (
 
 	"connectrpc.com/authn"
 	"connectrpc.com/connect"
-	interceptors "github.com/dragonfish-tech/go/pkg/connect/interceptors"
-	middlewares "github.com/dragonfish-tech/go/pkg/connect/middlewares"
-	"github.com/dragonfish-tech/go/pkg/logger"
+	interceptors "github.com/dragonfish/go/pkg/connect/interceptors"
+	middlewares "github.com/dragonfish/go/pkg/connect/middlewares"
+	"github.com/dragonfish/go/pkg/logger"
 	"github.com/ride-app/driver-service/api/ride/driver/v1alpha1/v1alpha1connect"
 	"github.com/ride-app/driver-service/config"
 	"golang.org/x/net/http2"
