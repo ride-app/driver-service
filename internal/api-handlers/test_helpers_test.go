@@ -4,8 +4,11 @@ import (
 	"errors"
 	"time"
 
+	mock_logger "github.com/dragonfish/go/pkg/logger/mock"
 	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/pkg/testing/mocks"
+	mock_driver "github.com/ride-app/driver-service/internal/repositories/driver/mock"
+	mock_vehicle "github.com/ride-app/driver-service/internal/repositories/vehicle/mock"
+	mock_wallet "github.com/ride-app/driver-service/internal/repositories/wallet/mock"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -41,10 +44,10 @@ var MockStatus = &pb.Status{
 }
 
 func SetupStubs(
-	mockDriverRepo *mocks.MockDriverRepository,
-	mockVehicleRepo *mocks.MockVehicleRepository,
-	mockWalletRepo *mocks.MockWalletRepository,
-	mockLogger *mocks.MockLogger,
+	mockDriverRepo *mock_driver.MockDriverRepository,
+	mockVehicleRepo *mock_vehicle.MockVehicleRepository,
+	mockWalletRepo *mock_wallet.MockWalletRepository,
+	mockLogger *mock_logger.MockLogger,
 ) {
 	t := time.Now().UTC()
 	mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), ProtoFieldMatcher[*pb.Driver]("name", "drivers/error-driver-id")).Return(nil, errors.New("error")).AnyTimes()

@@ -1,4 +1,4 @@
-//go:generate go run go.uber.org/mock/mockgen -destination ../../../pkg/testing/mocks/$GOFILE -package mocks . DriverRepository
+//go:generate go run go.uber.org/mock/mockgen -destination ./mock/$GOFILE . DriverRepository
 
 package driverrepository
 
@@ -11,8 +11,8 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
+	"github.com/dragonfish/go/pkg/logger"
 	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/internal/utils/logger"
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

@@ -7,7 +7,7 @@ go_library(
     visibility = ["//:__subpackages__"],
     deps = [
         "//api/ride/driver/v1alpha1",
-        "//internal/utils/logger",
+        "@com_github_dragonfish_go//pkg/logger",
         "@com_github_mmcloughlin_geohash//:geohash",
         "@com_google_cloud_go_firestore//:firestore",
         "@com_google_firebase_go_v4//:go",

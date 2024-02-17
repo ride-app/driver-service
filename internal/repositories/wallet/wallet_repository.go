@@ -1,4 +1,4 @@
-//go:generate go run go.uber.org/mock/mockgen -destination ../../../pkg/testing/mocks/$GOFILE -package mocks . WalletRepository
+//go:generate go run go.uber.org/mock/mockgen -destination ./mock/$GOFILE . WalletRepository
 
 package walletrepository
 
@@ -9,8 +9,8 @@ import (
 	walletApi "buf.build/gen/go/ride/wallet/connectrpc/go/ride/wallet/v1alpha1/walletv1alpha1connect"
 	pb "buf.build/gen/go/ride/wallet/protocolbuffers/go/ride/wallet/v1alpha1"
 	"connectrpc.com/connect"
+	"github.com/dragonfish/go/pkg/logger"
 	"github.com/ride-app/driver-service/config"
-	"github.com/ride-app/driver-service/internal/utils/logger"
 )
 
 type WalletRepository interface {

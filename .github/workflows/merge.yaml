@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Cache Bazel
-        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
+        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4
         with:
           path: |
             ~/.cache/bazel
@@ -25,12 +25,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-bazel-
 
-      # - uses: bufbuild/buf-setup-action@382440cdb8ec7bc25a68d7b4711163d95f7cc3aa # v1.28.1
-      #   with:
-      #     buf_user: ${{ env.BUF_USER }}
-      #     buf_api_token: ${{ secrets.BUF_TOKEN }}
-      #     github_token: ${{ github.token }}
-      # - name: Build protobuf
-      #   run: buf generate
       - name: Build
         run: bazelisk build //...

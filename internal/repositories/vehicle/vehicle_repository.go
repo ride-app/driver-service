@@ -1,4 +1,4 @@
-//go:generate go run go.uber.org/mock/mockgen -destination ../../../pkg/testing/mocks/$GOFILE -package mocks . VehicleRepository
+//go:generate go run go.uber.org/mock/mockgen -destination ./mock/$GOFILE . VehicleRepository
 
 package vehiclerepository
 
@@ -14,8 +14,8 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"connectrpc.com/connect"
+	"github.com/dragonfish/go/pkg/logger"
 	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
-	"github.com/ride-app/driver-service/internal/utils/logger"
 )
 
 type VehicleRepository interface {
