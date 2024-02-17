@@ -26,10 +26,7 @@ jobs:
             ${{ runner.os }}-bazel-
 
       - name: Build
-        run: |
-          bazelisk run //:gazelle-update-repos-go
-          bazelisk run //:gazelle
-          bazelisk build //...
+        run: bazelisk build //...
 
   compute_impacted_targets:
     uses: dragonfish/workflows/.github/workflows/compute-impacted-targets.yaml@main
