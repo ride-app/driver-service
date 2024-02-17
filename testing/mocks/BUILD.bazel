@@ -1,9 +1,0 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "mocks",
-    srcs = ["logger.go"],
-    importpath = "github.com/ride-app/driver-service/testing/mocks",
-    visibility = ["//visibility:public"],
-    deps = ["@com_github_dragonfish_go//pkg/logger"],
-)

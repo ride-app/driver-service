@@ -10,8 +10,8 @@ def go_dependencies():
     go_repository(
         name = "build_buf_gen_go_envoyproxy_protoc_gen_validate_connectrpc_go",
         importpath = "buf.build/gen/go/envoyproxy/protoc-gen-validate/connectrpc/go",
-        sum = "h1:nGmuO2Sv5LsR3X4Mxu/8O4v4IMqlTsbCwxFDkRvefiw=",
-        version = "v1.14.0-20221025150516-6607b10f00ed.1",
+        sum = "h1:/CV8UUfcGEyec3S6yArDxXzCy2W5L4SR4zAOlZVOXaY=",
+        version = "v1.15.0-20221025150516-6607b10f00ed.1",
     )
     go_repository(
         name = "build_buf_gen_go_envoyproxy_protoc_gen_validate_protocolbuffers_go",
@@ -22,8 +22,8 @@ def go_dependencies():
     go_repository(
         name = "build_buf_gen_go_ride_wallet_connectrpc_go",
         importpath = "buf.build/gen/go/ride/wallet/connectrpc/go",
-        sum = "h1:JlDkt0Rx89wWh4uAgM/JJXeiwqr9sFbUIouBWAUn9NU=",
-        version = "v1.14.0-20230924153639-d33e5416a9c2.1",
+        sum = "h1:lpnQBbsUzTQ2IS47lcot3PXrsmg9aKMohnyIgP49+3Q=",
+        version = "v1.15.0-20230924153639-d33e5416a9c2.1",
     )
     go_repository(
         name = "build_buf_gen_go_ride_wallet_protocolbuffers_go",
@@ -46,8 +46,8 @@ def go_dependencies():
     go_repository(
         name = "com_connectrpc_connect",
         importpath = "connectrpc.com/connect",
-        sum = "h1:PDS+J7uoz5Oui2VEOMcfz6Qft7opQM9hPiKvtGC01pA=",
-        version = "v1.14.0",
+        sum = "h1:lFdeCbZrVVDydAqwr4xGV2y+ULn+0Z73s5JBj2LikWo=",
+        version = "v1.15.0",
     )
     go_repository(
         name = "com_github_antlr4_go_antlr_v4",
@@ -124,8 +124,8 @@ def go_dependencies():
     go_repository(
         name = "com_github_dragonfish_go",
         importpath = "github.com/dragonfish/go",
-        sum = "h1:D5qIA3HvtwShLG4mbit6Afax7akQvTOFz4FT6+DFuEI=",
-        version = "v1.0.1",
+        sum = "h1:1Fpf23HGHH9uH2JUNebzvHN9yOBv+6nIxUxE9Ou2Xec=",
+        version = "v1.1.0",
     )
     go_repository(
         name = "com_github_envoyproxy_go_control_plane",

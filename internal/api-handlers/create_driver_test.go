@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
+	mock_logger "github.com/dragonfish/go/pkg/logger/mock"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
@@ -16,7 +17,6 @@ import (
 	mock_driver "github.com/ride-app/driver-service/internal/repositories/driver/mock"
 	mock_vehicle "github.com/ride-app/driver-service/internal/repositories/vehicle/mock"
 	mock_wallet "github.com/ride-app/driver-service/internal/repositories/wallet/mock"
-	"github.com/ride-app/driver-service/testing/mocks"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -28,7 +28,7 @@ var _ = Describe("CreateDriver", func() {
 		mockDriverRepo  *mock_driver.MockDriverRepository
 		mockVehicleRepo *mock_vehicle.MockVehicleRepository
 		mockWalletRepo  *mock_wallet.MockWalletRepository
-		mockLogger      *mocks.MockLogger
+		mockLogger      *mock_logger.MockLogger
 		service         *apihandlers.DriverServiceServer
 	)
 
