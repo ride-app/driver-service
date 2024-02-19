@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	mock_logger "github.com/dragonfish/go/pkg/logger/mock"
+	mock_logger "github.com/dragonfish/go/v2/pkg/logger/mock"
 	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
 	mock_driver "github.com/ride-app/driver-service/internal/repositories/driver/mock"
 	mock_vehicle "github.com/ride-app/driver-service/internal/repositories/vehicle/mock"

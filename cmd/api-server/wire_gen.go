@@ -7,7 +7,7 @@
 package main
 
 import (
-	"github.com/dragonfish/go/pkg/logger"
+	"github.com/dragonfish/go/v2/pkg/logger"
 	"github.com/ride-app/driver-service/config"
 	"github.com/ride-app/driver-service/internal/api-handlers"
 	"github.com/ride-app/driver-service/internal/repositories/driver"
