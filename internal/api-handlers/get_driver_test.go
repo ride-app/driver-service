@@ -8,7 +8,7 @@ import (
 	"errors"
 
 	"connectrpc.com/connect"
-	mock_logger "github.com/dragonfish/go/pkg/logger/mock"
+	mock_logger "github.com/dragonfish/go/v2/pkg/logger/mock"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
