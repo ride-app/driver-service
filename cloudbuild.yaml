@@ -8,7 +8,7 @@ steps:
   #     - generate
 
   # Step 2: Build Docker image using Bazel
-  - name: gcr.io/cloud-builders/bazel:7.0.1@sha256:7e1cb34cb4ea12ad3f926d38298fe67e1414d7602c660b52bcce5d2b1d177a1c
+  - name: gcr.io/cloud-builders/bazel:7.0.1@sha256:f3a79eb6b053be903d2a56d2b99e14c4850cfa54cf6d72de94b348470484199c
     id: build
     args:
       [
@@ -19,7 +19,7 @@ steps:
       ]
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:b3feb587636a3fcc7331f4f359f13ff62eff17ba12973d6aba93cacf5cb4f77c
+  - name: gcr.io/cloud-builders/docker@sha256:7bebfdeec7c6e1e018ab8d6d1cb0c07b6cb43c56d73a541884dd8b2020ae94cb
     id: tag-sha
     waitFor:
       - build
@@ -29,7 +29,7 @@ steps:
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:b3feb587636a3fcc7331f4f359f13ff62eff17ba12973d6aba93cacf5cb4f77c
+  - name: gcr.io/cloud-builders/docker@sha256:7bebfdeec7c6e1e018ab8d6d1cb0c07b6cb43c56d73a541884dd8b2020ae94cb
     waitFor:
       - build
     args:
@@ -38,7 +38,7 @@ steps:
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:b3feb587636a3fcc7331f4f359f13ff62eff17ba12973d6aba93cacf5cb4f77c
+  - name: gcr.io/cloud-builders/docker@sha256:7bebfdeec7c6e1e018ab8d6d1cb0c07b6cb43c56d73a541884dd8b2020ae94cb
     waitFor:
       - build
     args:
@@ -47,7 +47,7 @@ steps:
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
 
   # Step 4: Push a Docker image
-  - name: gcr.io/cloud-builders/docker@sha256:b3feb587636a3fcc7331f4f359f13ff62eff17ba12973d6aba93cacf5cb4f77c
+  - name: gcr.io/cloud-builders/docker@sha256:7bebfdeec7c6e1e018ab8d6d1cb0c07b6cb43c56d73a541884dd8b2020ae94cb
     id: push
     waitFor:
       - tag-sha
@@ -68,7 +68,7 @@ steps:
       ]
 
   # Step 5: Push the new Cloud Run revision
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:85c6ed99fcf6e665bb84f915c9fd188b8cf8e086d4272d9296df4d662e4fd29a
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:653a75a5b2b1f8299ab6e1e4f700f75e39b21ffa983ef682d1daf2fe010dfe53
     waitFor:
       - push
     entrypoint: gcloud

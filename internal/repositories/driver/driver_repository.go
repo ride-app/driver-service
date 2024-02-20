@@ -11,7 +11,7 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
-	"github.com/dragonfish/go/pkg/logger"
+	"github.com/dragonfish/go/v2/pkg/logger"
 	pb "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
 	"google.golang.org/genproto/googleapis/type/date"
 	"google.golang.org/grpc/codes"

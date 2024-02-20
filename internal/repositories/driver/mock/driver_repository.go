@@ -14,7 +14,7 @@ import (
 	reflect "reflect"
 	time "time"
 
-	logger "github.com/dragonfish/go/pkg/logger"
+	logger "github.com/dragonfish/go/v2/pkg/logger"
 	v1alpha1 "github.com/ride-app/driver-service/api/ride/driver/v1alpha1"
 	gomock "go.uber.org/mock/gomock"
 )
