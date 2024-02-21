@@ -7,6 +7,7 @@ runtimes:
 
 actions:
   enabled:
+    - bazel-build-pre-push
     - trunk-announce
     - trunk-upgrade-available
     - buf-mod-update
@@ -16,7 +17,7 @@ actions:
     - generate-di
     - buf-gen
     - unit-test
-    - bazel-build
+    # - bazel-build
 
   definitions:
     - id: generate-di
@@ -33,40 +34,34 @@ actions:
     - id: unit-test
       run: go run github.com/onsi/ginkgo/v2/ginkgo -r --procs=4 --compilers=4 --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --race --trace --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
 
-    - id: bazel-build
-      display_name: Bazel Build
-      run: bazel build //...
-      triggers:
-        - git_hooks: [pre-push]
-
 cli:
-  version: 1.20.0
+  version: 1.20.1
   shell_hooks:
     enforce: true
 
 plugins:
   sources:
     - id: trunk
-      ref: v1.4.3
-      uri: https://github.com/trunk-io/plugins
+      ref: main
+      uri: https://github.com/dragonfish/trunk-plugins
 
 lint:
   enabled:
-    - renovate@37.192.2
+    - renovate@37.203.2
     - buildifier@6.4.0
-    - checkov@3.2.21
+    - checkov@3.2.22
     - gokart@0.5.1
     - osv-scanner@1.6.2
     - terrascan@1.18.11
     - trivy@0.49.1
-    - trufflehog@3.67.6
-    - yamllint@1.35.0
+    - trufflehog@3.67.7
+    - yamllint@1.35.1
     - git-diff-check
     - shellcheck@0.9.0
     - shfmt@3.6.0
     - goimports@0.9.1
     - actionlint@1.6.26
-    - semgrep@1.61.0
+    - semgrep@1.61.1
     - prettier@3.2.5
     - gitleaks@8.18.2
     - gofmt@1.20.4
