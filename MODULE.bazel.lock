@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "64c8a8b523ea9bd2245a49c14997c78a28e84390400264a1f0b29d384e180aa3",
+  "moduleFileHash": "7c0815285c5552a42681a8e1973baf31ab2c5b8c5a1507c3e9b2677c130667fd",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -68,7 +68,7 @@
             "com_connectrpc_authn": "com_connectrpc_authn",
             "com_connectrpc_connect": "com_connectrpc_connect",
             "com_github_bufbuild_protovalidate_go": "com_github_bufbuild_protovalidate_go",
-            "com_github_dragonfish_go": "com_github_dragonfish_go",
+            "com_github_dragonfish_go_v2": "com_github_dragonfish_go_v2",
             "com_github_google_wire": "com_github_google_wire",
             "com_github_ilyakaznacheev_cleanenv": "com_github_ilyakaznacheev_cleanenv",
             "com_github_mmcloughlin_geohash": "com_github_mmcloughlin_geohash",
@@ -2031,9 +2031,9 @@
       "general": {
         "bzlTransitiveDigest": "zP01muRk4s4xWGK3gNPXOyDMQkOPsIhu99akeKWFFQ0=",
         "accumulatedFileDigests": {
-          "@@//:go.mod": "fba8914287e1166674ede8147196275960e2adfe5831ea48c14260a9f5e90bd3",
+          "@@//:go.mod": "5870d286d4e91a49308577564b0ae07ccb6b52ffa1606623e6f86e2b1d1f32ed",
           "@@rules_go~0.46.0//:go.sum": "d56fdb19b21a5f12bcf625c49432371ac39c2def0f564098fbda107f7c080f40",
-          "@@//:go.sum": "aebdf15faeea13ee205779ccd0c87935d6ef959606f6d9ed0cd6e00f91feffaf",
+          "@@//:go.sum": "c1f6b8ea7df4f62cf331134f3410c25b4f5124878ac2aa93844ecb4b02b00b79",
           "@@gazelle~0.35.0//:go.mod": "48dc6e771c3028ee1c18b9ffc81e596fd5f6d7e0016c5ef280e30f2821f60473",
           "@@rules_go~0.46.0//:go.mod": "de22304b720f7f61350ec1c9739de6c0a1b1103fd22bfeb6e92c6c843ddc6d6e",
           "@@gazelle~0.35.0//:go.sum": "7c4460e8ecb5dd8691a51d4fa2e9e4751108b933636497ce46db499fc2e7a88d"
@@ -3070,22 +3070,6 @@
               "version": "v0.14.0"
             }
           },
-          "com_github_dragonfish_go": {
-            "bzlFile": "@@gazelle~0.35.0//internal:go_repository.bzl",
-            "ruleClassName": "go_repository",
-            "attributes": {
-              "name": "gazelle~0.35.0~go_deps~com_github_dragonfish_go",
-              "importpath": "github.com/dragonfish/go",
-              "build_directives": [],
-              "build_file_generation": "auto",
-              "build_extra_args": [],
-              "patches": [],
-              "patch_args": [],
-              "sum": "h1:1Fpf23HGHH9uH2JUNebzvHN9yOBv+6nIxUxE9Ou2Xec=",
-              "replace": "",
-              "version": "v1.1.0"
-            }
-          },
           "com_github_google_uuid": {
             "bzlFile": "@@gazelle~0.35.0//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
@@ -3166,6 +3150,22 @@
               "version": "v0.162.0"
             }
           },
+          "com_github_dragonfish_go_v2": {
+            "bzlFile": "@@gazelle~0.35.0//internal:go_repository.bzl",
+            "ruleClassName": "go_repository",
+            "attributes": {
+              "name": "gazelle~0.35.0~go_deps~com_github_dragonfish_go_v2",
+              "importpath": "github.com/dragonfish/go/v2",
+              "build_directives": [],
+              "build_file_generation": "auto",
+              "build_extra_args": [],
+              "patches": [],
+              "patch_args": [],
+              "sum": "h1:uAebil+IwIxqa4keuFdpReeQuGLdI3aOpAEOUjQU/r4=",
+              "replace": "",
+              "version": "v2.1.0"
+            }
+          },
           "io_opentelemetry_go_contrib_instrumentation_google_golang_org_grpc_otelgrpc": {
             "bzlFile": "@@gazelle~0.35.0//internal:go_repository.bzl",
             "ruleClassName": "go_repository",
@@ -3244,7 +3244,7 @@
                 "com_connectrpc_connect": "connectrpc.com/connect",
                 "com_google_firebase_go_v4": "firebase.google.com/go/v4",
                 "com_github_bufbuild_protovalidate_go": "github.com/bufbuild/protovalidate-go",
-                "com_github_dragonfish_go": "github.com/dragonfish/go",
+                "com_github_dragonfish_go_v2": "github.com/dragonfish/go/v2",
                 "com_github_google_wire": "github.com/google/wire",
                 "com_github_ilyakaznacheev_cleanenv": "github.com/ilyakaznacheev/cleanenv",
                 "com_github_mmcloughlin_geohash": "github.com/mmcloughlin/geohash",
@@ -3433,7 +3433,7 @@
             "com_connectrpc_connect",
             "com_google_firebase_go_v4",
             "com_github_bufbuild_protovalidate_go",
-            "com_github_dragonfish_go",
+            "com_github_dragonfish_go_v2",
             "com_github_google_wire",
             "com_github_ilyakaznacheev_cleanenv",
             "com_github_mmcloughlin_geohash",
