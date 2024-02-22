@@ -1,5 +1,7 @@
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20240212200630-3014d81c3a48.1 h1:rOe/itdO7+9cWOnKqvpn1K7VmTDwp3vI4juPz6aNQbc=
 buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20240212200630-3014d81c3a48.1/go.mod h1:tiTMKD8j6Pd/D2WzREoweufjzaJKHZg35f/VGcZ2v3I=
+buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20240221180331-f05a6f4403ce.1 h1:AmmAwHbvaeOIxDKG2+aTn5C36HjmFIMkrdTp49rp80Q=
+buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.32.0-20240221180331-f05a6f4403ce.1/go.mod h1:tiTMKD8j6Pd/D2WzREoweufjzaJKHZg35f/VGcZ2v3I=
 buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.32.0-20221025150516-6607b10f00ed.1/go.mod h1:9oGzPLZBPImpyjetSwzogW1C8HChxC25EC3WD//L/1w=
 buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.32.0-20231130202533-71881f09a0c5.1 h1:Rvp/xwrTWaNDo78ejrOKket7mKWrNMJvs+5CK5NAHuc=
 buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.32.0-20231130202533-71881f09a0c5.1/go.mod h1:9oGzPLZBPImpyjetSwzogW1C8HChxC25EC3WD//L/1w=
