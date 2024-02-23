@@ -17,7 +17,7 @@ actions:
     - generate-di
     - buf-gen
     - unit-test
-    # - bazel-build
+    - bazel-build
 
   definitions:
     - id: generate-di
@@ -42,7 +42,7 @@ cli:
 plugins:
   sources:
     - id: trunk
-      ref: feat/bazel-actions
+      ref: main
       uri: https://github.com/dragonfish/trunk-plugins
 
 lint:
