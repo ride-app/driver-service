@@ -19,7 +19,7 @@ steps:
       ]
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:0bce8b29ce48643cb200bf4e63a12a9ae10ffc5aad4b784f56dc96316e5399ef
+  - name: gcr.io/cloud-builders/docker@sha256:9ea38536e9a3f577adfea2a6b93e88e987109320e613fec6c4834ff345e550db
     id: tag-sha
     waitFor:
       - build
@@ -29,7 +29,7 @@ steps:
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:0bce8b29ce48643cb200bf4e63a12a9ae10ffc5aad4b784f56dc96316e5399ef
+  - name: gcr.io/cloud-builders/docker@sha256:9ea38536e9a3f577adfea2a6b93e88e987109320e613fec6c4834ff345e550db
     waitFor:
       - build
     args:
@@ -38,7 +38,7 @@ steps:
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
 
   # Step 3: Tag image
-  - name: gcr.io/cloud-builders/docker@sha256:0bce8b29ce48643cb200bf4e63a12a9ae10ffc5aad4b784f56dc96316e5399ef
+  - name: gcr.io/cloud-builders/docker@sha256:9ea38536e9a3f577adfea2a6b93e88e987109320e613fec6c4834ff345e550db
     waitFor:
       - build
     args:
@@ -47,7 +47,7 @@ steps:
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:latest
 
   # Step 4: Push a Docker image
-  - name: gcr.io/cloud-builders/docker@sha256:0bce8b29ce48643cb200bf4e63a12a9ae10ffc5aad4b784f56dc96316e5399ef
+  - name: gcr.io/cloud-builders/docker@sha256:9ea38536e9a3f577adfea2a6b93e88e987109320e613fec6c4834ff345e550db
     id: push
     waitFor:
       - tag-sha
