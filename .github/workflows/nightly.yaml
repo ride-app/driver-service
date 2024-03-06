@@ -22,4 +22,4 @@ jobs:
       - name: Trunk Upgrade
         uses: trunk-io/trunk-action/upgrade@65228585e2c6128315f0f2d5190e2eae7f5c32c6 # v1
         with:
-          prefix: chore
+          prefix: "chore: "
