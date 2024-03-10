@@ -35,7 +35,9 @@ var _ = Describe("DeleteDriver", func() {
 	})
 
 	JustBeforeEach(func() {
-		mockDriverRepo.EXPECT().DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil)
+		mockDriverRepo.EXPECT().
+			DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).
+			Return(nil, nil)
 	})
 
 	AfterEach(func() {

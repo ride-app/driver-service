@@ -12,7 +12,8 @@ import (
 )
 
 func (service *DriverServiceServer) CreateDriver(ctx context.Context,
-	req *connect.Request[pb.CreateDriverRequest]) (*connect.Response[pb.CreateDriverResponse], error) {
+	req *connect.Request[pb.CreateDriverRequest],
+) (*connect.Response[pb.CreateDriverResponse], error) {
 	log := service.logger.WithFields(map[string]string{
 		"method": "CreateDriver",
 	})
@@ -42,7 +43,6 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	}
 
 	driver, err := service.driverRepository.GetDriver(ctx, log, uid)
-
 	if err != nil {
 		log.WithError(err).Error("Failed to get driver")
 		return nil, connect.NewError(connect.CodeInternal, err)
@@ -59,7 +59,6 @@ func (service *DriverServiceServer) CreateDriver(ctx context.Context,
 	}
 
 	createTime, err := service.driverRepository.CreateDriver(ctx, log, req.Msg.Driver)
-
 	if err != nil {
 		log.WithError(err).Error("Failed to create driver")
 		return nil, connect.NewError(connect.CodeInternal, err)

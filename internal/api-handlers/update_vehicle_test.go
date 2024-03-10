@@ -35,7 +35,9 @@ var _ = Describe("UpdateVehicle", func() {
 	})
 
 	JustBeforeEach(func() {
-		mockVehicleRepo.EXPECT().UpdateVehicle(gomock.Any(), gomock.Any(), gomock.Any()).Return(&pb.Vehicle{}, nil)
+		mockVehicleRepo.EXPECT().
+			UpdateVehicle(gomock.Any(), gomock.Any(), gomock.Any()).
+			Return(&pb.Vehicle{}, nil)
 	})
 
 	AfterEach(func() {

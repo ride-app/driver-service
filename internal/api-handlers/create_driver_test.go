@@ -74,7 +74,9 @@ var _ = Describe("CreateDriver", func() {
 
 		Context("and driver already exists", func() {
 			BeforeEach(func() {
-				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).Return(MockDriver, nil)
+				mockDriverRepo.EXPECT().
+					GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).
+					Return(MockDriver, nil)
 			})
 
 			It("returns response with driver", func() {
@@ -122,7 +124,10 @@ var _ = Describe("CreateDriver", func() {
 
 		Context("and driver does not exist", func() {
 			BeforeEach(func() {
-				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).Return(nil, nil).AnyTimes()
+				mockDriverRepo.EXPECT().
+					GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).
+					Return(nil, nil).
+					AnyTimes()
 			})
 
 			It("returns valid response with same driver", func() {
@@ -208,7 +213,9 @@ var _ = Describe("CreateDriver", func() {
 
 		When("driver repository GetDriver returns error", func() {
 			BeforeEach(func() {
-				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, errors.New("error"))
+				mockDriverRepo.EXPECT().
+					GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).
+					Return(nil, errors.New("error"))
 			})
 
 			It("returns internal error", func() {

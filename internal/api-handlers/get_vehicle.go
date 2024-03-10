@@ -11,7 +11,8 @@ import (
 )
 
 func (service *DriverServiceServer) GetVehicle(ctx context.Context,
-	req *connect.Request[pb.GetVehicleRequest]) (*connect.Response[pb.GetVehicleResponse], error) {
+	req *connect.Request[pb.GetVehicleRequest],
+) (*connect.Response[pb.GetVehicleResponse], error) {
 	log := service.logger.WithFields(map[string]string{
 		"method": "GetVehicle",
 	})
@@ -40,7 +41,6 @@ func (service *DriverServiceServer) GetVehicle(ctx context.Context,
 	}
 
 	vehicle, err := service.vehicleRepository.GetVehicle(ctx, log, uid)
-
 	if err != nil {
 		log.WithError(err).Error("Failed to get vehicle")
 		return nil, connect.NewError(connect.CodeInternal, err)

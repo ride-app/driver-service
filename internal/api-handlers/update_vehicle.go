@@ -11,7 +11,8 @@ import (
 )
 
 func (service *DriverServiceServer) UpdateVehicle(ctx context.Context,
-	req *connect.Request[pb.UpdateVehicleRequest]) (*connect.Response[pb.UpdateVehicleResponse], error) {
+	req *connect.Request[pb.UpdateVehicleRequest],
+) (*connect.Response[pb.UpdateVehicleResponse], error) {
 	log := service.logger.WithFields(map[string]string{
 		"method": "UpdateVehicle",
 	})

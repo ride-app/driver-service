@@ -12,7 +12,6 @@ func NewFirebaseApp(log logger.Logger, config *config.Config) (*firebase.App, er
 	ctx := context.Background()
 	conf := &firebase.Config{ProjectID: config.ProjectID}
 	app, err := firebase.NewApp(ctx, conf)
-
 	if err != nil {
 		log.WithError(err).Fatal("Cannot initialize firebase app")
 		return nil, err

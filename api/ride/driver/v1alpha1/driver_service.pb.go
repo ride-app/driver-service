@@ -1858,41 +1858,44 @@ func file_ride_driver_v1alpha1_driver_service_proto_rawDescGZIP() []byte {
 	return file_ride_driver_v1alpha1_driver_service_proto_rawDescData
 }
 
-var file_ride_driver_v1alpha1_driver_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_ride_driver_v1alpha1_driver_service_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
-var file_ride_driver_v1alpha1_driver_service_proto_goTypes = []interface{}{
-	(Driver_Gender)(0),             // 0: ride.driver.v1alpha1.Driver.Gender
-	(Vehicle_Type)(0),              // 1: ride.driver.v1alpha1.Vehicle.Type
-	(*Driver)(nil),                 // 2: ride.driver.v1alpha1.Driver
-	(*GetDriverRequest)(nil),       // 3: ride.driver.v1alpha1.GetDriverRequest
-	(*GetDriverResponse)(nil),      // 4: ride.driver.v1alpha1.GetDriverResponse
-	(*CreateDriverRequest)(nil),    // 5: ride.driver.v1alpha1.CreateDriverRequest
-	(*CreateDriverResponse)(nil),   // 6: ride.driver.v1alpha1.CreateDriverResponse
-	(*UpdateDriverRequest)(nil),    // 7: ride.driver.v1alpha1.UpdateDriverRequest
-	(*UpdateDriverResponse)(nil),   // 8: ride.driver.v1alpha1.UpdateDriverResponse
-	(*DeleteDriverRequest)(nil),    // 9: ride.driver.v1alpha1.DeleteDriverRequest
-	(*DeleteDriverResponse)(nil),   // 10: ride.driver.v1alpha1.DeleteDriverResponse
-	(*Status)(nil),                 // 11: ride.driver.v1alpha1.Status
-	(*GoOnlineRequest)(nil),        // 12: ride.driver.v1alpha1.GoOnlineRequest
-	(*GoOnlineResponse)(nil),       // 13: ride.driver.v1alpha1.GoOnlineResponse
-	(*GoOfflineRequest)(nil),       // 14: ride.driver.v1alpha1.GoOfflineRequest
-	(*GoOfflineResponse)(nil),      // 15: ride.driver.v1alpha1.GoOfflineResponse
-	(*GetStatusRequest)(nil),       // 16: ride.driver.v1alpha1.GetStatusRequest
-	(*GetStatusResponse)(nil),      // 17: ride.driver.v1alpha1.GetStatusResponse
-	(*Location)(nil),               // 18: ride.driver.v1alpha1.Location
-	(*GetLocationRequest)(nil),     // 19: ride.driver.v1alpha1.GetLocationRequest
-	(*GetLocationResponse)(nil),    // 20: ride.driver.v1alpha1.GetLocationResponse
-	(*UpdateLocationRequest)(nil),  // 21: ride.driver.v1alpha1.UpdateLocationRequest
-	(*UpdateLocationResponse)(nil), // 22: ride.driver.v1alpha1.UpdateLocationResponse
-	(*Vehicle)(nil),                // 23: ride.driver.v1alpha1.Vehicle
-	(*GetVehicleRequest)(nil),      // 24: ride.driver.v1alpha1.GetVehicleRequest
-	(*GetVehicleResponse)(nil),     // 25: ride.driver.v1alpha1.GetVehicleResponse
-	(*UpdateVehicleRequest)(nil),   // 26: ride.driver.v1alpha1.UpdateVehicleRequest
-	(*UpdateVehicleResponse)(nil),  // 27: ride.driver.v1alpha1.UpdateVehicleResponse
-	(*date.Date)(nil),              // 28: google.type.Date
-	(*timestamppb.Timestamp)(nil),  // 29: google.protobuf.Timestamp
-	(*fieldmaskpb.FieldMask)(nil),  // 30: google.protobuf.FieldMask
-}
+var (
+	file_ride_driver_v1alpha1_driver_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+	file_ride_driver_v1alpha1_driver_service_proto_msgTypes  = make([]protoimpl.MessageInfo, 26)
+	file_ride_driver_v1alpha1_driver_service_proto_goTypes   = []interface{}{
+		(Driver_Gender)(0),             // 0: ride.driver.v1alpha1.Driver.Gender
+		(Vehicle_Type)(0),              // 1: ride.driver.v1alpha1.Vehicle.Type
+		(*Driver)(nil),                 // 2: ride.driver.v1alpha1.Driver
+		(*GetDriverRequest)(nil),       // 3: ride.driver.v1alpha1.GetDriverRequest
+		(*GetDriverResponse)(nil),      // 4: ride.driver.v1alpha1.GetDriverResponse
+		(*CreateDriverRequest)(nil),    // 5: ride.driver.v1alpha1.CreateDriverRequest
+		(*CreateDriverResponse)(nil),   // 6: ride.driver.v1alpha1.CreateDriverResponse
+		(*UpdateDriverRequest)(nil),    // 7: ride.driver.v1alpha1.UpdateDriverRequest
+		(*UpdateDriverResponse)(nil),   // 8: ride.driver.v1alpha1.UpdateDriverResponse
+		(*DeleteDriverRequest)(nil),    // 9: ride.driver.v1alpha1.DeleteDriverRequest
+		(*DeleteDriverResponse)(nil),   // 10: ride.driver.v1alpha1.DeleteDriverResponse
+		(*Status)(nil),                 // 11: ride.driver.v1alpha1.Status
+		(*GoOnlineRequest)(nil),        // 12: ride.driver.v1alpha1.GoOnlineRequest
+		(*GoOnlineResponse)(nil),       // 13: ride.driver.v1alpha1.GoOnlineResponse
+		(*GoOfflineRequest)(nil),       // 14: ride.driver.v1alpha1.GoOfflineRequest
+		(*GoOfflineResponse)(nil),      // 15: ride.driver.v1alpha1.GoOfflineResponse
+		(*GetStatusRequest)(nil),       // 16: ride.driver.v1alpha1.GetStatusRequest
+		(*GetStatusResponse)(nil),      // 17: ride.driver.v1alpha1.GetStatusResponse
+		(*Location)(nil),               // 18: ride.driver.v1alpha1.Location
+		(*GetLocationRequest)(nil),     // 19: ride.driver.v1alpha1.GetLocationRequest
+		(*GetLocationResponse)(nil),    // 20: ride.driver.v1alpha1.GetLocationResponse
+		(*UpdateLocationRequest)(nil),  // 21: ride.driver.v1alpha1.UpdateLocationRequest
+		(*UpdateLocationResponse)(nil), // 22: ride.driver.v1alpha1.UpdateLocationResponse
+		(*Vehicle)(nil),                // 23: ride.driver.v1alpha1.Vehicle
+		(*GetVehicleRequest)(nil),      // 24: ride.driver.v1alpha1.GetVehicleRequest
+		(*GetVehicleResponse)(nil),     // 25: ride.driver.v1alpha1.GetVehicleResponse
+		(*UpdateVehicleRequest)(nil),   // 26: ride.driver.v1alpha1.UpdateVehicleRequest
+		(*UpdateVehicleResponse)(nil),  // 27: ride.driver.v1alpha1.UpdateVehicleResponse
+		(*date.Date)(nil),              // 28: google.type.Date
+		(*timestamppb.Timestamp)(nil),  // 29: google.protobuf.Timestamp
+		(*fieldmaskpb.FieldMask)(nil),  // 30: google.protobuf.FieldMask
+	}
+)
+
 var file_ride_driver_v1alpha1_driver_service_proto_depIdxs = []int32{
 	28, // 0: ride.driver.v1alpha1.Driver.date_of_birth:type_name -> google.type.Date
 	0,  // 1: ride.driver.v1alpha1.Driver.gender:type_name -> ride.driver.v1alpha1.Driver.Gender

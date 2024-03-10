@@ -50,24 +50,63 @@ func SetupStubs(
 	mockLogger *mock_logger.MockLogger,
 ) {
 	t := time.Now().UTC()
-	mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), ProtoFieldMatcher[*pb.Driver]("name", "drivers/error-driver-id")).Return(nil, errors.New("error")).AnyTimes()
-	mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), gomock.Not(ProtoFieldMatcher[*pb.Driver]("name", "drivers/valid-driver-id"))).Return(nil, nil).AnyTimes()
-	mockDriverRepo.EXPECT().CreateDriver(gomock.Any(), gomock.Any(), ProtoFieldMatcher[*pb.Driver]("name", "drivers/valid-driver-id")).Return(&t, nil).AnyTimes()
+	mockDriverRepo.EXPECT().
+		CreateDriver(gomock.Any(), gomock.Any(), ProtoFieldMatcher[*pb.Driver]("name", "drivers/error-driver-id")).
+		Return(nil, errors.New("error")).
+		AnyTimes()
+	mockDriverRepo.EXPECT().
+		CreateDriver(gomock.Any(), gomock.Any(), gomock.Not(ProtoFieldMatcher[*pb.Driver]("name", "drivers/valid-driver-id"))).
+		Return(nil, nil).
+		AnyTimes()
+	mockDriverRepo.EXPECT().
+		CreateDriver(gomock.Any(), gomock.Any(), ProtoFieldMatcher[*pb.Driver]("name", "drivers/valid-driver-id")).
+		Return(&t, nil).
+		AnyTimes()
 
-	mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("error-driver-id")).Return(nil, errors.New("error")).AnyTimes()
-	mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Not(gomock.Eq("valid-driver-id"))).Return(nil, nil).AnyTimes()
-	mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).Return(MockDriver, nil).AnyTimes()
+	mockDriverRepo.EXPECT().
+		GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("error-driver-id")).
+		Return(nil, errors.New("error")).
+		AnyTimes()
+	mockDriverRepo.EXPECT().
+		GetDriver(gomock.Any(), gomock.Any(), gomock.Not(gomock.Eq("valid-driver-id"))).
+		Return(nil, nil).
+		AnyTimes()
+	mockDriverRepo.EXPECT().
+		GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).
+		Return(MockDriver, nil).
+		AnyTimes()
 
-	mockDriverRepo.EXPECT().GoOnline(gomock.Any(), gomock.Any(), gomock.Eq("error-driver-id"), gomock.Any()).Return(nil, errors.New("error")).AnyTimes()
-	mockDriverRepo.EXPECT().GoOnline(gomock.Any(), gomock.Any(), gomock.Not(gomock.Eq("valid-driver-id")), gomock.Any()).Return(nil, nil).AnyTimes()
-	mockDriverRepo.EXPECT().GoOnline(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id"), gomock.Any()).Return(MockStatus, nil).AnyTimes()
+	mockDriverRepo.EXPECT().
+		GoOnline(gomock.Any(), gomock.Any(), gomock.Eq("error-driver-id"), gomock.Any()).
+		Return(nil, errors.New("error")).
+		AnyTimes()
+	mockDriverRepo.EXPECT().
+		GoOnline(gomock.Any(), gomock.Any(), gomock.Not(gomock.Eq("valid-driver-id")), gomock.Any()).
+		Return(nil, nil).
+		AnyTimes()
+	mockDriverRepo.EXPECT().
+		GoOnline(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id"), gomock.Any()).
+		Return(MockStatus, nil).
+		AnyTimes()
 
-	mockDriverRepo.EXPECT().UpdateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-	mockDriverRepo.EXPECT().DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
+	mockDriverRepo.EXPECT().
+		UpdateDriver(gomock.Any(), gomock.Any(), gomock.Any()).
+		Return(nil, nil).
+		AnyTimes()
+	mockDriverRepo.EXPECT().
+		DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).
+		Return(nil, nil).
+		AnyTimes()
 
-	mockVehicleRepo.EXPECT().GetVehicle(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
+	mockVehicleRepo.EXPECT().
+		GetVehicle(gomock.Any(), gomock.Any(), gomock.Any()).
+		Return(nil, nil).
+		AnyTimes()
 
-	mockWalletRepo.EXPECT().GetWallet(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
+	mockWalletRepo.EXPECT().
+		GetWallet(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return(nil, nil).
+		AnyTimes()
 }
 
 type protoFieldMatcher[T protoreflect.ProtoMessage] struct {
@@ -76,7 +115,9 @@ type protoFieldMatcher[T protoreflect.ProtoMessage] struct {
 }
 
 func (p protoFieldMatcher[T]) Matches(x interface{}) bool {
-	return p.value == x.(T).ProtoReflect().Get(x.(T).ProtoReflect().Descriptor().Fields().ByTextName("name")).String()
+	return p.value == x.(T).ProtoReflect().
+		Get(x.(T).ProtoReflect().Descriptor().Fields().ByTextName("name")).
+		String()
 }
 
 func (p protoFieldMatcher[T]) String() string {

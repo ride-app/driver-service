@@ -11,7 +11,8 @@ import (
 )
 
 func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
-	req *connect.Request[pb.DeleteDriverRequest]) (*connect.Response[pb.DeleteDriverResponse], error) {
+	req *connect.Request[pb.DeleteDriverRequest],
+) (*connect.Response[pb.DeleteDriverResponse], error) {
 	log := service.logger.WithFields(map[string]string{
 		"method": "DeleteDriver",
 	})
@@ -40,7 +41,6 @@ func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
 	}
 
 	status, err := service.driverRepository.GetStatus(ctx, log, uid)
-
 	if err != nil {
 		log.WithError(err).Error("Failed to get driver status")
 		return nil, connect.NewError(connect.CodeInternal, err)
@@ -48,7 +48,10 @@ func (service *DriverServiceServer) DeleteDriver(ctx context.Context,
 
 	if status == nil {
 		log.Info("Status not found")
-		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("driver status unkown"))
+		return nil, connect.NewError(
+			connect.CodeFailedPrecondition,
+			errors.New("driver status unkown"),
+		)
 	}
 
 	if status.Online {

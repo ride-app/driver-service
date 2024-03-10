@@ -11,7 +11,8 @@ import (
 )
 
 func (service *DriverServiceServer) GetDriver(ctx context.Context,
-	req *connect.Request[pb.GetDriverRequest]) (*connect.Response[pb.GetDriverResponse], error) {
+	req *connect.Request[pb.GetDriverRequest],
+) (*connect.Response[pb.GetDriverResponse], error) {
 	log := service.logger.WithFields(map[string]string{
 		"method": "GetDriver",
 	})
@@ -40,7 +41,6 @@ func (service *DriverServiceServer) GetDriver(ctx context.Context,
 	}
 
 	driver, err := service.driverRepository.GetDriver(ctx, log, uid)
-
 	if err != nil {
 		log.WithError(err).Error("Failed to get driver")
 		return nil, connect.NewError(connect.CodeInternal, err)

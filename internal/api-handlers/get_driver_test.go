@@ -41,12 +41,30 @@ var _ = Describe("GetDriver", func() {
 	})
 
 	JustBeforeEach(func() {
-		mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockDriverRepo.EXPECT().UpdateDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockDriverRepo.EXPECT().DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockVehicleRepo.EXPECT().GetVehicle(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
-		mockWalletRepo.EXPECT().GetWallet(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, nil).AnyTimes()
+		mockDriverRepo.EXPECT().
+			GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).
+			Return(nil, nil).
+			AnyTimes()
+		mockDriverRepo.EXPECT().
+			GetDriver(gomock.Any(), gomock.Any(), gomock.Any()).
+			Return(nil, nil).
+			AnyTimes()
+		mockDriverRepo.EXPECT().
+			UpdateDriver(gomock.Any(), gomock.Any(), gomock.Any()).
+			Return(nil, nil).
+			AnyTimes()
+		mockDriverRepo.EXPECT().
+			DeleteDriver(gomock.Any(), gomock.Any(), gomock.Any()).
+			Return(nil, nil).
+			AnyTimes()
+		mockVehicleRepo.EXPECT().
+			GetVehicle(gomock.Any(), gomock.Any(), gomock.Any()).
+			Return(nil, nil).
+			AnyTimes()
+		mockWalletRepo.EXPECT().
+			GetWallet(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+			Return(nil, nil).
+			AnyTimes()
 	})
 
 	AfterEach(func() {
@@ -54,9 +72,7 @@ var _ = Describe("GetDriver", func() {
 	})
 
 	Context("given the request is valid", func() {
-		var (
-			req *connect.Request[pb.GetDriverRequest]
-		)
+		var req *connect.Request[pb.GetDriverRequest]
 
 		BeforeEach(func() {
 			req = &connect.Request[pb.GetDriverRequest]{
@@ -70,7 +86,9 @@ var _ = Describe("GetDriver", func() {
 
 		When("the driver does not exist", func() {
 			BeforeEach(func() {
-				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).Return(nil, nil)
+				mockDriverRepo.EXPECT().
+					GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).
+					Return(nil, nil)
 			})
 			It("returns not found error", func() {
 				_, err := service.GetDriver(context.Background(), req)
@@ -103,7 +121,9 @@ var _ = Describe("GetDriver", func() {
 					UpdateTime: timestamppb.Now(),
 				}
 
-				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).Return(driver, nil)
+				mockDriverRepo.EXPECT().
+					GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).
+					Return(driver, nil)
 			})
 
 			AfterEach(func() {
@@ -115,12 +135,13 @@ var _ = Describe("GetDriver", func() {
 				Expect(err).To(BeNil())
 				Expect(protos.Equal(driver, res.Msg.Driver)).To(BeTrue())
 			})
-
 		})
 
 		When("driver repository GetDriver returns error", func() {
 			BeforeEach(func() {
-				mockDriverRepo.EXPECT().GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).Return(nil, errors.New("error"))
+				mockDriverRepo.EXPECT().
+					GetDriver(gomock.Any(), gomock.Any(), gomock.Eq("valid-driver-id")).
+					Return(nil, errors.New("error"))
 			})
 
 			It("returns internal error", func() {

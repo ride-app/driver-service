@@ -12,7 +12,8 @@ import (
 )
 
 func (service *DriverServiceServer) UpdateDriver(ctx context.Context,
-	req *connect.Request[pb.UpdateDriverRequest]) (*connect.Response[pb.UpdateDriverResponse], error) {
+	req *connect.Request[pb.UpdateDriverRequest],
+) (*connect.Response[pb.UpdateDriverResponse], error) {
 	log := service.logger.WithFields(map[string]string{
 		"method": "UpdateDriver",
 	})
@@ -32,7 +33,10 @@ func (service *DriverServiceServer) UpdateDriver(ctx context.Context,
 
 	if req.Msg.Driver.Name == "" {
 		log.Info("Driver name is empty")
-		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("name cannot be empty"))
+		return nil, connect.NewError(
+			connect.CodeInvalidArgument,
+			errors.New("name cannot be empty"),
+		)
 	}
 
 	uid := strings.Split(req.Msg.Driver.Name, "/")[1]
@@ -46,7 +50,6 @@ func (service *DriverServiceServer) UpdateDriver(ctx context.Context,
 	}
 
 	updateTime, err := service.driverRepository.UpdateDriver(ctx, log, req.Msg.Driver)
-
 	if err != nil {
 		log.WithError(err).Error("Failed to update driver")
 		return nil, connect.NewError(connect.CodeInternal, err)

@@ -20,16 +20,22 @@ import (
 
 type VehicleRepository interface {
 	GetVehicle(ctx context.Context, log logger.Logger, id string) (*pb.Vehicle, error)
-	UpdateVehicle(ctx context.Context, log logger.Logger, vehicle *pb.Vehicle) (updateTime *timestamppb.Timestamp, err error)
+	UpdateVehicle(
+		ctx context.Context,
+		log logger.Logger,
+		vehicle *pb.Vehicle,
+	) (updateTime *timestamppb.Timestamp, err error)
 }
 
 type FirebaseImpl struct {
 	firestore *firestore.Client
 }
 
-func NewFirebaseVehicleRepository(firebaseApp *firebase.App, log logger.Logger) (*FirebaseImpl, error) {
+func NewFirebaseVehicleRepository(
+	firebaseApp *firebase.App,
+	log logger.Logger,
+) (*FirebaseImpl, error) {
 	firestore, err := firebaseApp.Firestore(context.Background())
-
 	if err != nil {
 		log.WithError(err).Error("Error initializing firestore client")
 		return nil, err
@@ -41,7 +47,11 @@ func NewFirebaseVehicleRepository(firebaseApp *firebase.App, log logger.Logger) 
 	}, nil
 }
 
-func (r *FirebaseImpl) GetVehicle(ctx context.Context, log logger.Logger, id string) (*pb.Vehicle, error) {
+func (r *FirebaseImpl) GetVehicle(
+	ctx context.Context,
+	log logger.Logger,
+	id string,
+) (*pb.Vehicle, error) {
 	log.Info("Getting vehicle from firestore")
 	doc, err := r.firestore.Collection("vehicles").Doc(id).Get(ctx)
 
@@ -73,7 +83,10 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, log logger.Logger, id str
 
 	if vehicleType == pb.Vehicle_TYPE_UNSPECIFIED {
 		log.WithError(err).Error("Unknown vehicle type")
-		return nil, connect.NewError(connect.CodeFailedPrecondition, errors.New("unknown vehicle type"))
+		return nil, connect.NewError(
+			connect.CodeFailedPrecondition,
+			errors.New("unknown vehicle type"),
+		)
 	}
 	// Hardcode e-rickshaw for now
 	vehicle := pb.Vehicle{
@@ -88,14 +101,19 @@ func (r *FirebaseImpl) GetVehicle(ctx context.Context, log logger.Logger, id str
 	return &vehicle, nil
 }
 
-func (r *FirebaseImpl) UpdateVehicle(ctx context.Context, log logger.Logger, vehicle *pb.Vehicle) (updateTime *timestamppb.Timestamp, err error) {
+func (r *FirebaseImpl) UpdateVehicle(
+	ctx context.Context,
+	log logger.Logger,
+	vehicle *pb.Vehicle,
+) (updateTime *timestamppb.Timestamp, err error) {
 	log.Info("Updating vehicle in firestore")
-	x, err := r.firestore.Collection("vehicles").Doc(strings.Split(vehicle.Name, "/")[1]).Set(ctx, map[string]interface{}{
-		"license_plate": vehicle.LicensePlate,
-		"type":          strings.Split(vehicle.Type.String(), "_")[1],
-		"display_name":  vehicle.DisplayName,
-	})
-
+	x, err := r.firestore.Collection("vehicles").
+		Doc(strings.Split(vehicle.Name, "/")[1]).
+		Set(ctx, map[string]interface{}{
+			"license_plate": vehicle.LicensePlate,
+			"type":          strings.Split(vehicle.Type.String(), "_")[1],
+			"display_name":  vehicle.DisplayName,
+		})
 	if err != nil {
 		log.WithError(err).Error("Error updating vehicle in firestore")
 		return nil, err

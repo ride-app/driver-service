@@ -14,7 +14,12 @@ import (
 )
 
 type WalletRepository interface {
-	GetWallet(ctx context.Context, log logger.Logger, id string, authToken string) (*pb.Wallet, error)
+	GetWallet(
+		ctx context.Context,
+		log logger.Logger,
+		id string,
+		authToken string,
+	) (*pb.Wallet, error)
 }
 
 type Impl struct {
@@ -32,7 +37,12 @@ func New(log logger.Logger, config *config.Config) (*Impl, error) {
 	return &Impl{walletApi: client}, nil
 }
 
-func (r *Impl) GetWallet(ctx context.Context, log logger.Logger, id string, authToken string) (*pb.Wallet, error) {
+func (r *Impl) GetWallet(
+	ctx context.Context,
+	log logger.Logger,
+	id string,
+	authToken string,
+) (*pb.Wallet, error) {
 	log.Info("Getting wallet from wallet service")
 	req := connect.NewRequest(&pb.GetWalletRequest{
 		Name: "users/" + id + "/wallet",
@@ -40,7 +50,6 @@ func (r *Impl) GetWallet(ctx context.Context, log logger.Logger, id string, auth
 	req.Header().Add("Authorization", authToken)
 
 	res, err := r.walletApi.GetWallet(ctx, req)
-
 	if err != nil {
 		log.WithError(err).Error("Error getting wallet from wallet service")
 		return nil, err
