@@ -53,11 +53,11 @@ lint:
     - golines@0.12.2
     - renovate@37.231.2
     - buildifier@6.4.0
-    - checkov@3.2.32
+    - checkov@3.2.34
     - osv-scanner@1.6.2
     - terrascan@1.19.1
     - trivy@0.49.1
-    - trufflehog@3.68.5
+    - trufflehog@3.69.0
     - yamllint@1.35.1
     - git-diff-check
     - shellcheck@0.10.0
@@ -90,4 +90,4 @@ merge:
 tools:
   enabled:
     - direnv@2.34.0
-    - bazel@7.0.2
+    - bazel@7.1.0
