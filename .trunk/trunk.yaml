@@ -1,23 +1,16 @@
 version: 0.1
-runtimes:
-  enabled:
-    - go@1.22.0
-    - node@18.12.1
-    - python@3.10.8
+
+cli:
+  version: 1.20.1
+  shell_hooks:
+    enforce: true
 
 actions:
   enabled:
     - bazel-build-pre-push
-    - trunk-announce
-    - trunk-upgrade-available
     - buf-mod-update
-    - trunk-fmt-pre-commit
-    - trunk-check-pre-push
-    - trunk-cache-prune
     - generate-di
-    - buf-gen
     - unit-test
-    # - bazel-build
 
   definitions:
     - id: generate-di
@@ -32,62 +25,39 @@ actions:
       run: buf mod update pkg/protos
 
     - id: unit-test
-      run: go run github.com/onsi/ginkgo/v2/ginkgo -r --procs=4 --compilers=4 --randomize-all --randomize-suites --fail-on-pending --keep-going --cover --race --trace --timeout=10m -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn" -tags=unit_tests
-
-cli:
-  version: 1.20.1
-  shell_hooks:
-    enforce: true
-
-plugins:
-  sources:
-    - id: trunk
-      ref: main
-      uri: https://github.com/dragonfish/trunk-plugins
+      run:
+        go run github.com/onsi/ginkgo/v2/ginkgo -r --procs=4 --compilers=4 --randomize-all
+        --randomize-suites --fail-on-pending --keep-going --cover --race --trace --timeout=10m
+        -ldflags "-X google.golang.org/protobuf/reflect/protoregistry.conflictPolicy=warn"
+        -tags=unit_tests
 
 lint:
   disabled:
     - gokart
-  enabled:
-    - gofumpt@0.5.0
-    - golines@0.12.2
-    - renovate@37.231.2
-    - buildifier@6.4.0
-    - checkov@3.2.32
-    - osv-scanner@1.6.2
-    - terrascan@1.19.1
-    - trivy@0.49.1
-    - trufflehog@3.68.5
-    - yamllint@1.35.1
-    - git-diff-check
-    - shellcheck@0.10.0
-    - shfmt@3.6.0
-    - goimports@0.9.1
-    - actionlint@1.6.27
-    - semgrep@1.64.0
-    - prettier@3.2.5
-    - gitleaks@8.18.2
-    - gofmt@1.20.4
-    - golangci-lint@1.56.2
-    - hadolint@2.12.0
-    - buf-breaking@1.30.0
-    - buf-lint@1.30.0
 
   ignore:
     - linters: [ALL]
       paths:
         - tools
         - "**/node_modules/**"
+        - "**/pnpm-lock.yaml"
 
     - linters: [goimports]
       paths:
         - "**/wire_gen.go"
 
+plugins:
+  sources:
+    - id: trunk
+      ref: v1.4.4
+      uri: https://github.com/trunk-io/plugins
+    - id: trunk-plugins
+      ref: v1.0.0
+      uri: https://github.com/dragonfish/trunk-plugins
+    - id: trunk-configs
+      ref: v1.1.0
+      uri: https://github.com/dragonfish/trunk-configs
+
 merge:
   required_statuses:
     - Build
-
-tools:
-  enabled:
-    - direnv@2.34.0
-    - bazel@7.0.2
