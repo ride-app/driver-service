@@ -39,14 +39,15 @@ jobs:
   #         fail_ci_if_error: true
   #         verbose: true
 
-  cache:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    name: Cache Bazel
+    name: Build
     steps:
       - name: Checkout Code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
+      # This not only uses cache but also populates cache for PRs to use
       - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
         with:
           path: |
