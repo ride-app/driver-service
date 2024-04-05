@@ -23,7 +23,7 @@ require (
 	go.uber.org/mock v0.4.0
 	golang.org/x/net v0.22.0
 	google.golang.org/genproto v0.0.0-20240325203815-454cdb8f5daa
-	google.golang.org/genproto/googleapis/api v0.0.0-20240325203815-454cdb8f5daa
+	google.golang.org/genproto/googleapis/api v0.0.0-20240401170217-c3f982113cda
 	google.golang.org/grpc v1.63.0
 	google.golang.org/protobuf v1.33.0
 )
@@ -78,7 +78,7 @@ require (
 	google.golang.org/api v0.169.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/appengine/v2 v2.0.5 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240318140521-94a12d6c2237 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240325203815-454cdb8f5daa // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 )
