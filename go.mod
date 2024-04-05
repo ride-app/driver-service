@@ -1,6 +1,6 @@
 module github.com/ride-app/driver-service
 
-go 1.22.1
+go 1.22.2
 
 // HACK: pin protobuf version to fix build failure
 replace google.golang.org/protobuf => google.golang.org/protobuf v1.32.0
