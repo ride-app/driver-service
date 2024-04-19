@@ -19,7 +19,7 @@ require (
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/onsi/ginkgo/v2 v2.17.1
-	github.com/onsi/gomega v1.32.0
+	github.com/onsi/gomega v1.33.0
 	go.uber.org/mock v0.4.0
 	golang.org/x/net v0.24.0
 	google.golang.org/genproto v0.0.0-20240415180920-8c6c420018be
