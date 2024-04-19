@@ -7,7 +7,7 @@ replace google.golang.org/protobuf => google.golang.org/protobuf v1.32.0
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.33.0-20240401165935-b983156c5e99.1
-	buf.build/gen/go/ride/wallet/connectrpc/go v1.16.0-20230924153639-d33e5416a9c2.1
+	buf.build/gen/go/ride/wallet/connectrpc/go v1.16.1-20230924153639-d33e5416a9c2.1
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.33.0-20230924153639-d33e5416a9c2.1
 	cloud.google.com/go/firestore v1.15.0
 	connectrpc.com/authn v0.1.0

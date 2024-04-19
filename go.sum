@@ -8,6 +8,8 @@ buf.build/gen/go/ride/wallet/connectrpc/go v1.15.0-20230924153639-d33e5416a9c2.1
 buf.build/gen/go/ride/wallet/connectrpc/go v1.15.0-20230924153639-d33e5416a9c2.1/go.mod h1:NPr8GK+PA2XwjaX+s42P1YDHRaM+EJxqpjD9dD3NQqg=
 buf.build/gen/go/ride/wallet/connectrpc/go v1.16.0-20230924153639-d33e5416a9c2.1 h1:xiIiSs8l5qfnesuUo6hHpumNz1DYMNGI0hkCjqNSdUI=
 buf.build/gen/go/ride/wallet/connectrpc/go v1.16.0-20230924153639-d33e5416a9c2.1/go.mod h1:6572XkLC1GlZG7U7FbPFcPqO8s0fMGBAtA69kF2yTak=
+buf.build/gen/go/ride/wallet/connectrpc/go v1.16.1-20230924153639-d33e5416a9c2.1 h1:v/XPTxpahDyqntGtYDGzqjTPoawPbkvVQgyGTIuY7a0=
+buf.build/gen/go/ride/wallet/connectrpc/go v1.16.1-20230924153639-d33e5416a9c2.1/go.mod h1:3bD7MuJ8j37W6f8kqo0pmbfKYVpiu6KjGxzw8ucxFPk=
 buf.build/gen/go/ride/wallet/protocolbuffers/go v1.33.0-20230924153639-d33e5416a9c2.1 h1:EuvmOYrIs0T0c+x11P9RrqfTJtTdGStgRzSMICRmICc=
 buf.build/gen/go/ride/wallet/protocolbuffers/go v1.33.0-20230924153639-d33e5416a9c2.1/go.mod h1:eUIPL1AGEDv0XMJ141HkZf6C7EoDEzn+Qhc0DiNFCcM=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
