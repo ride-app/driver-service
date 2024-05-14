@@ -4,7 +4,7 @@ go 1.22.2
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.34.1-20240508200655-46a4cf4ba109.1
-	buf.build/gen/go/ride/wallet/connectrpc/go v1.16.1-20230924153639-d33e5416a9c2.1
+	buf.build/gen/go/ride/wallet/connectrpc/go v1.16.2-20230924153639-d33e5416a9c2.1
 	buf.build/gen/go/ride/wallet/protocolbuffers/go v1.34.1-20230924153639-d33e5416a9c2.1
 	cloud.google.com/go/firestore v1.15.0
 	connectrpc.com/authn v0.1.0
