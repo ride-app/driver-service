@@ -2,7 +2,7 @@
   "name": "driver-service",
   "main": "index.ts",
   "devDependencies": {
-    "@types/node": "20.12.11"
+    "@types/node": "20.12.12"
   },
   "dependencies": {
     "@pulumi/gcp": "^7.0.0",
