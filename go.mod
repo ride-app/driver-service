@@ -19,7 +19,7 @@ require (
 	github.com/onsi/gomega v1.33.1
 	go.uber.org/mock v0.4.0
 	golang.org/x/net v0.25.0
-	google.golang.org/genproto v0.0.0-20240520151616-dc85e6b867a5
+	google.golang.org/genproto v0.0.0-20240521202816-d264139d666e
 	google.golang.org/genproto/googleapis/api v0.0.0-20240520151616-dc85e6b867a5
 	google.golang.org/grpc v1.64.0
 	google.golang.org/protobuf v1.34.1
@@ -28,9 +28,9 @@ require (
 require (
 	buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.1-20221025150516-6607b10f00ed.1 // indirect
 	cloud.google.com/go v0.113.0 // indirect
-	cloud.google.com/go/auth v0.3.0 // indirect
+	cloud.google.com/go/auth v0.4.1 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.2 // indirect
-	cloud.google.com/go/compute v1.26.0 // indirect
+	cloud.google.com/go/compute v1.27.0 // indirect
 	cloud.google.com/go/compute/metadata v0.3.0 // indirect
 	cloud.google.com/go/iam v1.1.8 // indirect
 	cloud.google.com/go/longrunning v0.5.7 // indirect
@@ -74,10 +74,10 @@ require (
 	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.20.0 // indirect
-	google.golang.org/api v0.178.0 // indirect
+	google.golang.org/api v0.180.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/appengine/v2 v2.0.5 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240509183442-62759503f434 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240515191416-fc5f0ca64291 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 )
