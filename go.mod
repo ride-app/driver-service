@@ -19,7 +19,7 @@ require (
 	github.com/onsi/gomega v1.33.1
 	go.uber.org/mock v0.4.0
 	golang.org/x/net v0.25.0
-	google.golang.org/genproto v0.0.0-20240528155852-a33235495d66
+	google.golang.org/genproto v0.0.0-20240528184218-531527333157
 	google.golang.org/genproto/googleapis/api v0.0.0-20240528184218-531527333157
 	google.golang.org/grpc v1.64.0
 	google.golang.org/protobuf v1.34.1
@@ -27,7 +27,7 @@ require (
 
 require (
 	buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.1-20221025150516-6607b10f00ed.1 // indirect
-	cloud.google.com/go v0.113.0 // indirect
+	cloud.google.com/go v0.114.0 // indirect
 	cloud.google.com/go/auth v0.4.1 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.2 // indirect
 	cloud.google.com/go/compute v1.27.0 // indirect
