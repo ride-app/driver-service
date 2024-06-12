@@ -14,6 +14,8 @@ buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.0-20221
 buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.0-20221025150516-6607b10f00ed.1/go.mod h1:9YZgAkloLy0c8xCHibsnvSYwLGRw9yCC6i5L4UzgSO4=
 buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.1-20221025150516-6607b10f00ed.1 h1:6jUkYBVPWBO51SZlaVaHwmi++p1BHFFIZCYPJxI3vZk=
 buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.1-20221025150516-6607b10f00ed.1/go.mod h1:9s9jYaHBi5xip+grQBXv6rvaYrD07kzDTkOeDthQ1SA=
+buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.2-20221025150516-6607b10f00ed.2 h1:J4sOr5VeoRGNdgNnMqIePxdm2+SEKGgThZX2G9/y6tM=
+buf.build/gen/go/envoyproxy/protoc-gen-validate/protocolbuffers/go v1.34.2-20221025150516-6607b10f00ed.2/go.mod h1:SnbPPY9GLJ7p3rEkKzq7WdQgQuvzxcDELXVZ26VwrmM=
 buf.build/gen/go/ride/wallet/connectrpc/go v1.16.1-20230924153639-d33e5416a9c2.1 h1:v/XPTxpahDyqntGtYDGzqjTPoawPbkvVQgyGTIuY7a0=
 buf.build/gen/go/ride/wallet/connectrpc/go v1.16.1-20230924153639-d33e5416a9c2.1/go.mod h1:3bD7MuJ8j37W6f8kqo0pmbfKYVpiu6KjGxzw8ucxFPk=
 buf.build/gen/go/ride/wallet/connectrpc/go v1.16.2-20230924153639-d33e5416a9c2.1 h1:gqTdnVthSRCRef2OoqWq0RfpO6aTmagRUZkFNo09Wbs=
@@ -24,6 +26,8 @@ buf.build/gen/go/ride/wallet/protocolbuffers/go v1.34.0-20230924153639-d33e5416a
 buf.build/gen/go/ride/wallet/protocolbuffers/go v1.34.0-20230924153639-d33e5416a9c2.1/go.mod h1:Z8JX5k7I8k7dOqi0+ShIMF5PqCyHzi/KF4lUqleM5us=
 buf.build/gen/go/ride/wallet/protocolbuffers/go v1.34.1-20230924153639-d33e5416a9c2.1 h1:QgQdbKVgZIb3wKj04ZlrfO1K0tcawDur4rkOdJ6OV/g=
 buf.build/gen/go/ride/wallet/protocolbuffers/go v1.34.1-20230924153639-d33e5416a9c2.1/go.mod h1:lBvJ11cwMcwOxQSzkgU64qCXA5YQKvnCdWxYNdBqjIU=
+buf.build/gen/go/ride/wallet/protocolbuffers/go v1.34.2-20230924153639-d33e5416a9c2.2 h1:JkRVNz6RnpyXQEx7WCxCiWZRL9QnTn5v371kYbl12+k=
+buf.build/gen/go/ride/wallet/protocolbuffers/go v1.34.2-20230924153639-d33e5416a9c2.2/go.mod h1:ljbEXHHJWTpyHBPyKsiQ/IPBDWZmDlKe/bD+TQxxb3o=
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.112.2 h1:ZaGT6LiG7dBzi6zNOvVZwacaXlmf3lRqnC4DQzqyRQw=
 cloud.google.com/go v0.112.2/go.mod h1:iEqjp//KquGIJV/m+Pk3xecgKNhV+ry+vVTsy4TbDms=
