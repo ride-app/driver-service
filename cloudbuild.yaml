@@ -20,9 +20,12 @@ steps:
       - tag
       - $_SERVICE_NAME:$COMMIT_SHA
       - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$COMMIT_SHA
+      - --cache-from
+      - asia-south2-docker.pkg.dev/$PROJECT_ID/docker-registry/$_SERVICE_NAME:$BRANCH_NAME
 
   # Step 3: Tag image with BRANCH_NAME
   - name: gcr.io/cloud-builders/docker@sha256:e543590c4a10158844ee0d9c2b8a47407fa50e7f887d4277a1638839925f918d
+    id: tag-branch
     waitFor:
       - build
     args:
@@ -32,6 +35,7 @@ steps:
 
   # Step 4: Tag image as latest
   - name: gcr.io/cloud-builders/docker@sha256:e543590c4a10158844ee0d9c2b8a47407fa50e7f887d4277a1638839925f918d
+    id: tag-latest
     waitFor:
       - build
     args:
@@ -50,6 +54,7 @@ steps:
 
   # Step 6: Deploy to Cloud Run
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk@sha256:9a30b9cc4ca42fc30820b9bb74fe67edd744b064ab5e471b5916232abd948a04
+    id: deploy
     waitFor:
       - push
     entrypoint: gcloud
