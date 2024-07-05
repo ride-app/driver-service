@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 10
     name: Build
     env:
-      TEST_TAG: ride/driver-service/pr:${{ github.event.number }}
+      TEST_TAG: ride/driver-service
     steps:
       - name: Checkout Code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
