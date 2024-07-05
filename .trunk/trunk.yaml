@@ -7,7 +7,6 @@ cli:
 
 actions:
   enabled:
-    - bazel-build-pre-push
     - buf-mod-update
     - generate-di
     - unit-test
