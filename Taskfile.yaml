@@ -47,11 +47,11 @@ tasks:
   #     - docker stop {{.EVENT_IMAGE_NAME}}-container
   #     - docker rm {{.EVENT_IMAGE_NAME}}-container
 
-  clean-all:
-    desc: Remove both Docker images
+  clean:
+    desc: Remove Docker images
     cmds:
       - docker rmi {{.API_IMAGE_NAME}}:{{.TAG}}
-      - docker rmi {{.EVENT_IMAGE_NAME}}:{{.TAG}}
+      # - docker rmi {{.EVENT_IMAGE_NAME}}:{{.TAG}}
 
   default:
     desc: Display help information
