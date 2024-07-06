@@ -20,8 +20,8 @@ actions:
 
     - id: buf-mod-update
       triggers:
-        - files: [api/**/buf.yaml]
-      run: buf mod update pkg/protos
+        - files: [buf.yaml]
+      run: buf mod update
 
     - id: unit-test
       run:
