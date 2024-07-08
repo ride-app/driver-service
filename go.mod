@@ -20,7 +20,7 @@ require (
 	go.uber.org/mock v0.4.0
 	golang.org/x/net v0.27.0
 	google.golang.org/genproto v0.0.0-20240708141625-4ad9e859172b
-	google.golang.org/genproto/googleapis/api v0.0.0-20240701130421-f6361c86f094
+	google.golang.org/genproto/googleapis/api v0.0.0-20240708141625-4ad9e859172b
 	google.golang.org/grpc v1.65.0
 	google.golang.org/protobuf v1.34.2
 )
